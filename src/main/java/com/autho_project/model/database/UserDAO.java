@@ -15,4 +15,11 @@ public class UserDAO {
      *
      * Used to add new user
      */
+    public void addUser(User user) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+
+    }
 }
