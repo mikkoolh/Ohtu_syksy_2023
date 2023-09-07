@@ -28,19 +28,19 @@
                <children>
                   <Label text="Käyttäjätunnus" />
                   <Label text="Salasana" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" fx:id="usernameField" />
-                  <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="passwordField" />
+                  <TextField fx:id="usernameField" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" />
                </VBox.margin>
             </GridPane>
-            <Text fill="#c30000" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" />
+            <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" />
             <VBox alignment="TOP_CENTER" prefHeight="99.0" prefWidth="400.0" spacing="10.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginClick" text="Kirjaudu sisään" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" text="Kirjaudu Google-tilillä" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Luo tili" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginWithGoogleClick" text="Kirjaudu Google-tilillä" />
+                  <Button fx:id="createAccountBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCreateAccountClick" text="Luo tili" />
                </children>
             </VBox>
          </children>
