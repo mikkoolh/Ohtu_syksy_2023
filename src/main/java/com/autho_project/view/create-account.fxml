@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.autho_project.controller.CreateAccountController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luo tili" wrappingWidth="600.091796875">
                <font>
@@ -52,7 +52,7 @@
             <Text fx:id="createAccountErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
             <ButtonBar buttonMinWidth="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
               <buttons>
-                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" text="Takaisin" onAction="#goBack" ButtonBar.buttonData="LEFT" />
+                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goBack" text="Takaisin" ButtonBar.buttonData="LEFT" />
                   <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Luo tili" />
               </buttons>
                <VBox.margin>

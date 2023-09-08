@@ -6,15 +6,16 @@ import com.autho_project.utils.NavigationUtil;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class CreateAccountController {
+    private NavigationUtil nav;
+
+    public CreateAccountController() {
+        this.nav = new NavigationUtil();
+    }
+
     @FXML
     private TextField firstNameField;
 
@@ -39,11 +40,7 @@ public class CreateAccountController {
     @FXML
     protected void goBack(ActionEvent event) throws IOException {
         System.out.println("go back");
-        Parent root = FXMLLoader.load(getClass().getResource("/com/autho_project/view/login.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        nav.openLoginPage(event);
     }
 
     @FXML
@@ -68,7 +65,6 @@ public class CreateAccountController {
             // käyttäjän tallennus
 
             // siirry etusivulle
-            NavigationUtil nav = new NavigationUtil();
             nav.openMainPage(event);
         } else {
             // jos virhe

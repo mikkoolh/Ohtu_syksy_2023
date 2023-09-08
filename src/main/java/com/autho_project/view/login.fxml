@@ -16,7 +16,7 @@
    <children>
       <VBox alignment="CENTER" layoutY="100.0" prefHeight="200.0" prefWidth="400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane vgap="5.0">
+            <GridPane alignment="CENTER" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="97.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="203.0" />
@@ -36,7 +36,7 @@
                </VBox.margin>
             </GridPane>
             <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="99.0" prefWidth="400.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" spacing="10.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginClick" text="Kirjaudu sisään" />
                   <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginWithGoogleClick" text="Kirjaudu Google-tilillä" />
