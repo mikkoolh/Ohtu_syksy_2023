@@ -12,5 +12,7 @@ module com.example.autho_project {
 
 
     opens com.autho_project to javafx.fxml;
+    opens com.autho_project.controller to javafx.fxml;
     exports com.autho_project;
+    exports com.autho_project.controller to javafx.fxml;
 }
