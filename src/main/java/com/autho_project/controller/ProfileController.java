@@ -18,6 +18,9 @@ public class ProfileController {
     private Text role;
 
     @FXML
+    private Text birthday;
+
+    @FXML
     private Text email;
 
     @FXML
@@ -40,5 +43,16 @@ public class ProfileController {
 
         NavigationUtil nav = new NavigationUtil();
         nav.openLoginPage(event);
+    }
+
+    // Kenttien täyttö
+    @FXML
+    private void initialize() {
+        firstName.setText("matti");
+        lastName.setText("meikäläinen");
+        role.setText("Admin"); // vois toteuttaa ehkä enumina tms?
+        birthday.setText("1.3.1800");
+        email.setText("joku@esimerkki.com");
+        phoneNumber.setText("040 123456");
     }
 }
