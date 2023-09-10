@@ -1,5 +1,7 @@
 package com.autho_project.model.database;
 
+import jakarta.persistence.*;
+
 /**
  * Author: Nikita Nossenko
  * 
@@ -19,7 +21,7 @@ public class Device {
     /**
      * Indicates whether the device is currently on or off.
      */
-    @Column(name = "on/off")
+    @Column(name = "onOff")
     private boolean onOff;
 
     /**
@@ -31,8 +33,8 @@ public class Device {
     /**
      * The usage data associated with the device.
      */
-    @Column(name = "usage")
-    private Long usage;
+    @Column(name = "usageData")
+    private long usageData;
 
     /**
      * The name of the device.
@@ -43,7 +45,7 @@ public class Device {
     /**
      * The model code of the device.
      */
-    @Column(name = "model_code")
+    @Column(name = "modelCode")
     private String modelCode;
 
     /**
@@ -56,14 +58,14 @@ public class Device {
      *
      * @param onOff     Whether the device is on or off.
      * @param automation    Whether the device is set for automation.
-     * @param usage     The usage data associated with the device.
+     * @param usageData     The usage data associated with the device.
      * @param name      The name of the device.
      * @param modelCode The model code of the device.
      */
-    public Device(boolean onOff, boolean automation, Long usage, String name, String modelCode) {
+    public Device(boolean onOff, boolean automation, long usageData, String name, String modelCode) {
         this.onOff = onOff;
         this.automation = automation;
-        this.usage = usage;
+        this.usageData = usageData;
         this.name = name;
         this.modelCode = modelCode;
     }
