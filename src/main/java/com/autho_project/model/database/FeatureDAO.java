@@ -1,5 +1,7 @@
 package com.autho_project.model.database;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 /**
@@ -32,5 +34,22 @@ public class FeatureDAO {
         Feature feature = em.find(Feature.class, id);
         em.getTransaction().commit();
         return feature;
+    }
+
+    /**
+     * Fetches all features
+     * @return A list of Feature objects
+     */
+    public List<Feature> getAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            TypedQuery<Feature> query = em.createQuery("SELECT f FROM Feature f", Feature.class);
+            List<Feature> features = query.getResultList();
+            return features;
+        } finally {
+            em.getTransaction().commit();
+        }
     }
 }

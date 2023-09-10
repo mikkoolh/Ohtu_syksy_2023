@@ -1,9 +1,8 @@
 package com.autho_project.model.database;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 /**
  * DAO for Device Type
@@ -39,10 +38,18 @@ public class DeviceTypeDAO {
 
     /**
      * Fetches all device types
-     * @return A list of device types
+     * @return A list of Device Type objects
      */
     public List<DeviceType> getAll() {
-        // TODO
-        return new ArrayList<DeviceType>();
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            TypedQuery<DeviceType> query = em.createQuery("SELECT d FROM DeviceType d", DeviceType.class);
+            List<DeviceType> deviceTypes = query.getResultList();
+            return deviceTypes;
+        } finally {
+            em.getTransaction().commit();
+        }
     }
 }
