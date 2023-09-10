@@ -9,7 +9,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.autho_project.controller.ProfileController">
    <ButtonBar buttonMinWidth="100.0" layoutX="184.0" layoutY="373.0" prefHeight="26.0" prefWidth="202.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="214.0">
-     <buttons>
+     <buttons>      
+               <Button mnemonicParsing="false" text="Takaisin" onAction="#onBackClick" />
+               <Button mnemonicParsing="false" onAction="#onLogoutClick" text="Kirjaudu ulos" />
+     </buttons>
+   </ButtonBar>
+   <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="käyttäjätunnus">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Text>
       <Button mnemonicParsing="false" onAction="#onBackClick" text="Takaisin" />
       <Button mnemonicParsing="false" onAction="#onLogoutClick" text="Kirjaudu ulos" />
      </buttons>
@@ -29,5 +38,4 @@
          <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="phoneNumber"/>
       </children>
    </VBox>
-
 </AnchorPane>
