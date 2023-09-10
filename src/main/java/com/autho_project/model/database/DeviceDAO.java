@@ -1,6 +1,5 @@
 package com.autho_project.model.database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
