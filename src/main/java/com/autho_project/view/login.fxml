@@ -35,7 +35,7 @@
                   <Insets left="50.0" right="50.0" />
                </VBox.margin>
             </GridPane>
-            <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" />
+            <Text fx:id="loginErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" />
             <VBox alignment="TOP_CENTER" spacing="10.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginClick" text="Kirjaudu sisään" />

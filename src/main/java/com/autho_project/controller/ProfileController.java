@@ -6,6 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for the user profile
+ * @author Matleena Kankaanpää
+ * 8.9.2023
+ */
+
 public class ProfileController {
 
     @FXML
