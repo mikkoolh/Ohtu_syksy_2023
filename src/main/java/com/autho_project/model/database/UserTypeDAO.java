@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 /**
-* Author Nikita Nossenko
+* @author Nikita Nossenko
 * 
 * DAO for UserType.
 */

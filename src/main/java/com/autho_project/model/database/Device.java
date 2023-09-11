@@ -3,7 +3,7 @@ package com.autho_project.model.database;
 import jakarta.persistence.*;
 
 /**
- * Author: Nikita Nossenko
+ * @author Nikita Nossenko
  * 
  * This class represents a Device entity that is stored in the database.
  */
