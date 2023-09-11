@@ -1,8 +1,8 @@
 package com.autho_project.model.database;
 
  /**
- * Author Mikko Hänninen
- * 03.09.2023
+ * @author Elmo Erla
+ * 11.09.2023
  *
  * Weekday-table for EventTime
  */
@@ -14,4 +14,50 @@ import java.util.List;
 @Table(name = "weekday")
 public class Weekday {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "weekday_id")
+    private int weekdayId;
+
+    @Column
+    private String name;
+
+    public Weekday() {}
+
+    /**
+     * Parametrized constructor
+     * @param id Weekdays id
+     * @param name name of the day
+     */
+    public Weekday(int id, String name) {
+        this.weekdayId = id;
+        this.name = name;
+    }
+
+    @OneToMany(mappedBy = "weekdays")
+    private List<EventTime> eventTimes;
+
+    public int getWeekdayId() {
+        return weekdayId;
+    }
+
+    public void setWeekdayId(int weekdayId) {
+        this.weekdayId = weekdayId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<EventTime> getEventTimes() {
+        return eventTimes;
+    }
+
+    public void setEventTimes(List<EventTime> eventTimes) {
+        this.eventTimes = eventTimes;
+    }
 }
