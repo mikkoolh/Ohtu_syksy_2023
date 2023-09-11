@@ -12,6 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the app dashboard
+ * @author Matleena Kankaanpää
+ * 8.9.2023
+ */
+
 public class MainPageController {
     
     @FXML
