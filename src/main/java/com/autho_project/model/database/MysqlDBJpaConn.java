@@ -4,6 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+/**
+ * Singleton-luokka tietokantayhteyden muodostamista varten.
+ *
+ * @author Mikko Hänninen
+ */
+
 public class MysqlDBJpaConn {
 
     private static EntityManagerFactory emf = null;
