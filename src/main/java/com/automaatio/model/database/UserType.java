@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /**
  * Author: Nikita Nossenko
- * 
+ *
  * This class represents a UserType entity that is stored in the database.
  */
 
@@ -16,8 +16,8 @@ public class UserType {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userTypeID")
-    private int deviceID;
+    @Column(name = "userTypeID") // Corrected column name
+    private int userTypeID;
 
     /**
      * The description of user type.

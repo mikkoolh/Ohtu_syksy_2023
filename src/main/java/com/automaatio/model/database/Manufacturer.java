@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 
 /**
  * Manufacturer entity
- * @author Matleena Kankaanpää
- * 9.9.2023
+ * Author: Matleena Kankaanpää
+ * Date: 9.9.2023
  */
-
 @Entity
 @Table(name = "manufacturer")
 public class Manufacturer {
@@ -27,11 +26,9 @@ public class Manufacturer {
 
     /**
      * Parameterized constructor
-     * @param manufacturerId Manufacturer ID
      * @param name Manufacturer name
      */
-    public Manufacturer(int manufacturerId, String name) {
-        this.manufacturerId = manufacturerId;
+    public Manufacturer(String name) {
         this.name = name;
     }
 

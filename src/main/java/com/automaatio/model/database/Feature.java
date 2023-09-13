@@ -24,7 +24,7 @@ public class Feature {
 
     // on/off
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean active;
 
     @Column
     private boolean adjustable;
@@ -34,7 +34,7 @@ public class Feature {
 
     @Column(name = "times_used")
     private int timesUsed;
-    
+
     @ManyToMany(mappedBy = "features")
     private List<DeviceType> deviceTypes = new ArrayList<DeviceType>();
 
@@ -47,15 +47,15 @@ public class Feature {
      * Parameterized constructor
      * @param featureId Feature ID
      * @param affectsOthers Boolean indicating whether the feature affects other devices
-     * @param isActive Boolean indicating whether the feature is currently in use
+     * @param active Boolean indicating whether the feature is currently in use
      * @param adjustable Boolean indicating whether the feature is adjustable
      * @param description Description of the feature
      * @param timesUsed The amount of times the feature has been used
      */
-    public Feature(int featureId, boolean affectsOthers, boolean isActive, boolean adjustable, String description, int timesUsed) {
+    public Feature(int featureId, boolean affectsOthers, boolean active, boolean adjustable, String description, int timesUsed) {
         this.featureId = featureId;
         this.affectsOthers = affectsOthers;
-        this.isActive = isActive;
+        this.active = active;
         this.adjustable = adjustable;
         this.description = description;
         this.timesUsed = timesUsed;
@@ -64,12 +64,12 @@ public class Feature {
     public int getFeatureId() {
         return this.featureId;
     }
-    
+
     public void setFeatureId(int featureId) {
         this.featureId = featureId;
     }
 
-    public boolean getAffectsOthers() {
+    public boolean isAffectsOthers() {
         return this.affectsOthers;
     }
 
@@ -77,15 +77,15 @@ public class Feature {
         this.affectsOthers = affectsOthers;
     }
 
-    public boolean getIsActive() {
-        return this.isActive;
+    public boolean isActive() {
+        return this.active;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public boolean getAdjustable() {
+    public boolean isAdjustable() {
         return this.adjustable;
     }
 

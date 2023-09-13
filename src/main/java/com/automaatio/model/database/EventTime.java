@@ -28,7 +28,6 @@ public class EventTime {
     private LocalDateTime endTime;
 
     @ManyToOne
-    @Column(name = "weekday")
     @JoinColumn(name = "weekday_id")
     private Weekday weekday;
 

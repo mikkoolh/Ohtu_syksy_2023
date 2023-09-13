@@ -6,16 +6,16 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 /**
-* Author Nikita Nossenko
-* 
-* DAO for UserType.
-*/
+ * Author Nikita Nossenko
+ *
+ * DAO for UserType.
+ */
 
 public class UserTypeDAO {
-    
+
     /**
-     * Adds new User Type
-     * @param userType new User Type
+     * Adds a new User Type
+     * @param userType A new User Type
      */
     public void addUserType(UserType userType) {
         EntityManager em = MysqlDBJpaConn.getInstance();
@@ -25,7 +25,7 @@ public class UserTypeDAO {
     }
 
     /**
-     * Fetches User Type by it's ID
+     * Fetches a User Type by its ID
      * @param id ID of UserType
      * @return UserType object
      */
@@ -38,7 +38,7 @@ public class UserTypeDAO {
     }
 
     /**
-     * Fetches all UserTypes
+     * Fetches all User Types
      * @return A list of UserType objects
      */
     public List<UserType> getAll() {

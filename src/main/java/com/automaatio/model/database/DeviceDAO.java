@@ -6,14 +6,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 /**
-* Author Nikita Nossenko
-* 
-* DAO for Device
-*/
-
-
+ * Author Nikita Nossenko
+ *
+ * DAO for Device
+ */
 public class DeviceDAO {
-    
+
     /**
      * Adds a new device
      * @param device A new device
@@ -21,8 +19,15 @@ public class DeviceDAO {
     public void addDevice(Device device) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(device);
-        em.getTransaction().commit();
+        try {
+            em.persist(device);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -33,9 +38,16 @@ public class DeviceDAO {
     public Device getDeviceType(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        Device device = em.find(Device.class, id);
-        em.getTransaction().commit();
-        return device;
+        try {
+            Device device = em.find(Device.class, id);
+            em.getTransaction().commit();
+            return device;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -45,13 +57,16 @@ public class DeviceDAO {
     public List<Device> getAll() {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-
         try {
             TypedQuery<Device> query = em.createQuery("SELECT d FROM Device d", Device.class);
             List<Device> devices = query.getResultList();
-            return devices;
-        } finally {
             em.getTransaction().commit();
+            return devices;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
         }
     }
 }

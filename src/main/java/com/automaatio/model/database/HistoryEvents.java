@@ -1,12 +1,5 @@
 package com.automaatio.model.database;
 
- /**
- * Author Mikko Hänninen
- * 02.09.2023
- *
- * Class for history table
- */
-
 import jakarta.persistence.*;
 
 @Entity
@@ -19,7 +12,6 @@ public class HistoryEvents {
     private Long eventId;
 
     @ManyToOne
-    @Column(name = "event_time")
     @JoinColumn(name = "event_time_id")
     private EventTime eventTime;
 
@@ -27,9 +19,13 @@ public class HistoryEvents {
     @JoinColumn(name = "username")
     private User username;
 
-    //TODO private Device device
-    //TODO private Feature feature
+    @ManyToOne
+    @JoinColumn(name = "device_id") // Add the appropriate column name
+    private Device device;
 
+    @ManyToOne
+    @JoinColumn(name = "feature_id") // Add the appropriate column name
+    private Feature feature;
 
     public Long getEventId() {
         return eventId;
@@ -53,5 +49,21 @@ public class HistoryEvents {
 
     public void setUser(User user) {
         username = user;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public Feature getFeature() {
+        return feature;
+    }
+
+    public void setFeature(Feature feature) {
+        this.feature = feature;
     }
 }

@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "device_group")
 public class DeviceGroup {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "device_group_id")
@@ -27,11 +27,9 @@ public class DeviceGroup {
 
     /**
      * Parameterized constructor
-     * @param deviceGroupId Device group ID
      * @param name Device group name
      */
-    public DeviceGroup(int deviceGroupId, String name) {
-        this.deviceGroupId = deviceGroupId;
+    public DeviceGroup(String name) {
         this.name = name;
     }
 

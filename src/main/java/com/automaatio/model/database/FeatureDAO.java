@@ -1,7 +1,6 @@
 package com.automaatio.model.database;
 
 import java.util.List;
-
 import jakarta.persistence.*;
 
 /**
@@ -17,10 +16,11 @@ public class FeatureDAO {
      * @param feature A new feature
      */
     public void addFeature(Feature feature) {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-        em.persist(feature);
-        em.getTransaction().commit();
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            em.persist(feature);
+            em.getTransaction().commit();
+        }
     }
 
     /**
@@ -29,11 +29,12 @@ public class FeatureDAO {
      * @return Feature object
      */
     public Feature getFeature(int id) {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-        Feature feature = em.find(Feature.class, id);
-        em.getTransaction().commit();
-        return feature;
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            Feature feature = em.find(Feature.class, id);
+            em.getTransaction().commit();
+            return feature;
+        }
     }
 
     /**
@@ -41,15 +42,12 @@ public class FeatureDAO {
      * @return A list of Feature objects
      */
     public List<Feature> getAll() {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-
-        try {
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
             TypedQuery<Feature> query = em.createQuery("SELECT f FROM Feature f", Feature.class);
             List<Feature> features = query.getResultList();
-            return features;
-        } finally {
             em.getTransaction().commit();
+            return features;
         }
     }
 }
