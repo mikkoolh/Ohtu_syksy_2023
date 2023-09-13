@@ -16,6 +16,7 @@ public class Main {
 
         Device device = new Device(true, true, 100, "TestiLaite", "ABC1122");
         DeviceDAO deviceDao = new DeviceDAO();
+
         deviceDao.addDevice(device);
     }
 }
