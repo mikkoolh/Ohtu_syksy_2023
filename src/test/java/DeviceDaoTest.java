@@ -20,6 +20,8 @@ public class DeviceDaoTest {
         deviceDAO = new DeviceDAO();
     }
 
+    // Poistaa taulun sisällön testien jälkeen
+    // Samalla deleteAll-metodin testi
     @AfterEach
     public void tearDown() {
         deviceDAO.deleteAll();

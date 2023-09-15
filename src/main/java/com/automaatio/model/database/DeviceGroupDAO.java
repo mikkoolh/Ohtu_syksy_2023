@@ -2,6 +2,7 @@ package com.automaatio.model.database;
 
 import java.util.List;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -50,5 +51,19 @@ public class DeviceGroupDAO {
             em.getTransaction().commit();
             return deviceGroups;
         }
+    }
+
+    public void deleteAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        String sql = "DELETE FROM DeviceGroup ";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " ryhmää.");
     }
 }
