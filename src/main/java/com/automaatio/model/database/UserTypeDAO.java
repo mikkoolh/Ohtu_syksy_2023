@@ -3,6 +3,7 @@ package com.automaatio.model.database;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -52,5 +53,19 @@ public class UserTypeDAO {
         } finally {
             em.getTransaction().commit();
         }
+    }
+
+    public void deleteAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        String sql = "DELETE FROM UserType ";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " käyttäjätyyppiä.");
     }
 }

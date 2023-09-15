@@ -1,16 +1,16 @@
 package com.automaatio.model.database;
 
-import jakarta.persistence.*;
-
-import java.util.List;
-
 /**
- * Author Mikko Hänninen
- * 03.09.2023
+ * @author Mikko Hänninen
+ * @author Elmo Erla
+ * 11.09.2023
  *
  * Weekday-table for EventTime
  */
 
+import jakarta.persistence.*;
+
+import java.util.List;
 @Entity
 @Table(name = "weekday")
 public class Weekday {
@@ -20,26 +20,25 @@ public class Weekday {
     @Column(name = "weekday_id")
     private int weekdayId;
 
-    @Column(name = "name", unique = true)
+    @Column
     private String name;
 
-    @OneToMany(mappedBy = "weekday")
-    @Column(name = "event_times")
-    private List<EventTime> eventTimes;
-
-    /**
-     * Parameterless constructor
-     */
     public Weekday() {}
 
     /**
-     * Constructs a new Weekday with the specified name.
-     *
-     * @param name The name of the weekday.
+     * Parametrized constructor
+     * @param id Weekdays id
+     * @param name name of the day
      */
-    public Weekday(String name) {
+    public Weekday(int id, String name) {
+        this.weekdayId = id;
         this.name = name;
     }
+
+    /*
+    @OneToMany(mappedBy = "weekdays")
+    private List<EventTime> eventTimes;
+     */
 
     public int getWeekdayId() {
         return weekdayId;
@@ -57,6 +56,9 @@ public class Weekday {
         this.name = name;
     }
 
+    /*
+    hajotti testit atm
+
     public List<EventTime> getEventTimes() {
         return eventTimes;
     }
@@ -64,4 +66,6 @@ public class Weekday {
     public void setEventTimes(List<EventTime> eventTimes) {
         this.eventTimes = eventTimes;
     }
+
+     */
 }

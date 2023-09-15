@@ -2,6 +2,7 @@ package com.automaatio.model.database;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.Query;
 import java.util.List;
 
 /**
@@ -74,7 +75,23 @@ public class WeekdayDAO {
         Weekday weekday = em.find(Weekday.class, id);
         if (weekday != null) {
             em.remove(weekday);
+
         }
         em.getTransaction().commit();
+    }
+
+    public void deleteAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        String sql = "DELETE FROM Weekday";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " viikonpäivää.");
+
     }
 }
