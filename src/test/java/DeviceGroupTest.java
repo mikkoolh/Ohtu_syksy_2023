@@ -1,5 +1,3 @@
-package test.java;
-
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceGroup;
 import org.junit.jupiter.api.Assertions;

@@ -1,5 +1,3 @@
-package test.java;
-
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.DeviceGroupDAO;
 import org.junit.jupiter.api.AfterEach;

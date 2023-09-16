@@ -1,5 +1,3 @@
-package test.java;
-
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import org.junit.Test;
