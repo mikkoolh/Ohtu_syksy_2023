@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /**
  * @author Nikita Nossenko
- * 
+ *
  * This class represents a Device entity that is stored in the database.
  */
 @Entity
@@ -67,6 +67,54 @@ public class Device {
         this.automation = automation;
         this.usageData = usageData;
         this.name = name;
+        this.modelCode = modelCode;
+    }
+
+    public int getDeviceID() {
+        return deviceID;
+    }
+
+    public void setDeviceID(int deviceID) {
+        this.deviceID = deviceID;
+    }
+
+    public boolean isOnOff() {
+        return onOff;
+    }
+
+    public void setOnOff(boolean onOff) {
+        this.onOff = onOff;
+    }
+
+    public boolean isAutomation() {
+        return automation;
+    }
+
+    public void setAutomation(boolean automation) {
+        this.automation = automation;
+    }
+
+    public long getUsageData() {
+        return usageData;
+    }
+
+    public void setUsageData(long usageData) {
+        this.usageData = usageData;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
         this.modelCode = modelCode;
     }
 }

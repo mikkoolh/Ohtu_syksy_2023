@@ -1,15 +1,15 @@
 package com.autho_project.model.database;
 
- /**
+import jakarta.persistence.*;
+
+/**
+ * @author Mikko Hänninen
  * @author Elmo Erla
  * 11.09.2023
  *
  * Weekday-table for EventTime
  */
 
-import jakarta.persistence.*;
-
-import java.util.List;
 @Entity
 @Table(name = "weekday")
 public class Weekday {
@@ -34,8 +34,10 @@ public class Weekday {
         this.name = name;
     }
 
+    /*
     @OneToMany(mappedBy = "weekdays")
     private List<EventTime> eventTimes;
+     */
 
     public int getWeekdayId() {
         return weekdayId;
@@ -53,6 +55,9 @@ public class Weekday {
         this.name = name;
     }
 
+    /*
+    hajotti testit atm
+
     public List<EventTime> getEventTimes() {
         return eventTimes;
     }
@@ -60,4 +65,6 @@ public class Weekday {
     public void setEventTimes(List<EventTime> eventTimes) {
         this.eventTimes = eventTimes;
     }
+
+     */
 }

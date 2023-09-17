@@ -2,7 +2,7 @@ package com.autho_project.model.database;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.autho_project.model.database.Feature;
 import jakarta.persistence.*;
 
 /**
@@ -19,7 +19,7 @@ public class DeviceType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "device_type_id")
     private int deviceTypeId;
-    
+
     @Column
     private String description;
 
@@ -28,9 +28,9 @@ public class DeviceType {
 
     @ManyToMany
     @JoinTable(
-        name = "device_features",
-        joinColumns = @JoinColumn(name = "device_type_id"),
-        inverseJoinColumns = @JoinColumn(name = "feature_id")
+            name = "device_features",
+            joinColumns = @JoinColumn(name = "device_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
     private List<Feature> features = new ArrayList<Feature>();
 

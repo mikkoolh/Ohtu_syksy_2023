@@ -2,6 +2,7 @@ package com.autho_project.model.database;
 
 import java.util.List;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -17,10 +18,11 @@ public class DeviceGroupDAO {
      * @param deviceGroup A new device group
      */
     public void addDeviceGroup(DeviceGroup deviceGroup) {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-        em.persist(deviceGroup);
-        em.getTransaction().commit();
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            em.persist(deviceGroup);
+            em.getTransaction().commit();
+        }
     }
 
     /**
@@ -29,11 +31,12 @@ public class DeviceGroupDAO {
      * @return Device Group object
      */
     public DeviceGroup getDeviceGroup(int id) {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-        DeviceGroup deviceGroup = em.find(DeviceGroup.class, id);
-        em.getTransaction().commit();
-        return deviceGroup;
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            DeviceGroup deviceGroup = em.find(DeviceGroup.class, id);
+            em.getTransaction().commit();
+            return deviceGroup;
+        }
     }
 
     /**
@@ -41,15 +44,26 @@ public class DeviceGroupDAO {
      * @return A list of Device Group objects
      */
     public List<DeviceGroup> getAll() {
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            TypedQuery<DeviceGroup> query = em.createQuery("SELECT d FROM DeviceGroup d", DeviceGroup.class);
+            List<DeviceGroup> deviceGroups = query.getResultList();
+            em.getTransaction().commit();
+            return deviceGroups;
+        }
+    }
+
+    public void deleteAll() {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
 
-        try {
-            TypedQuery<DeviceGroup> query = em.createQuery("SELECT d FROM DeviceGroup d", DeviceGroup.class);
-            List<DeviceGroup> deviceGroups = query.getResultList();
-            return deviceGroups;
-        } finally {
-            em.getTransaction().commit();
-        }
+        String sql = "DELETE FROM DeviceGroup ";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " ryhmää.");
     }
 }

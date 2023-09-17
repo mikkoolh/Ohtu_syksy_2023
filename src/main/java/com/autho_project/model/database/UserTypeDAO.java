@@ -3,19 +3,20 @@ package com.autho_project.model.database;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
-* @author Nikita Nossenko
-* 
-* DAO for UserType.
-*/
+ * @author Nikita Nossenko
+ *
+ * DAO for UserType.
+ */
 
 public class UserTypeDAO {
-    
+
     /**
-     * Adds new User Type
-     * @param userType new User Type
+     * Adds a new User Type
+     * @param userType A new User Type
      */
     public void addUserType(UserType userType) {
         EntityManager em = MysqlDBJpaConn.getInstance();
@@ -25,7 +26,7 @@ public class UserTypeDAO {
     }
 
     /**
-     * Fetches User Type by it's ID
+     * Fetches a User Type by its ID
      * @param id ID of UserType
      * @return UserType object
      */
@@ -38,7 +39,7 @@ public class UserTypeDAO {
     }
 
     /**
-     * Fetches all UserTypes
+     * Fetches all User Types
      * @return A list of UserType objects
      */
     public List<UserType> getAll() {
@@ -52,5 +53,19 @@ public class UserTypeDAO {
         } finally {
             em.getTransaction().commit();
         }
+    }
+
+    public void deleteAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        String sql = "DELETE FROM UserType ";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " käyttäjätyyppiä.");
     }
 }
