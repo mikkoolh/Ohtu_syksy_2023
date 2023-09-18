@@ -2,6 +2,7 @@ package com.automaatio.model.database;
 
 import java.util.List;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -19,8 +20,16 @@ public class DeviceTypeDAO {
     public void addDeviceType(DeviceType deviceType) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(deviceType);
-        em.getTransaction().commit();
+
+        try {
+            em.persist(deviceType);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -47,9 +56,30 @@ public class DeviceTypeDAO {
         try {
             TypedQuery<DeviceType> query = em.createQuery("SELECT d FROM DeviceType d", DeviceType.class);
             List<DeviceType> deviceTypes = query.getResultList();
-            return deviceTypes;
-        } finally {
             em.getTransaction().commit();
+            return deviceTypes;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
         }
+    }
+
+    /**
+     * Deletes all device types
+     */
+    public void deleteAll() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        String sql = "DELETE FROM DeviceType ";
+        Query query = em.createQuery(sql);
+
+        int deletedCount = query.executeUpdate();
+
+        em.getTransaction().commit();
+
+        System.out.println("Poistettu " + deletedCount + " laitetyyppiä.");
     }
 }
