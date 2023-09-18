@@ -65,7 +65,7 @@ public class LoginController {
     @FXML
     protected void onCreateAccountClick(ActionEvent event) throws IOException {
         System.out.println("create account");
-        Parent root = FXMLLoader.load(getClass().getResource("/com/autho_project/view/create-account.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/create-account.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

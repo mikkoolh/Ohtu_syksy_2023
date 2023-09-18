@@ -23,7 +23,7 @@ public class MainPageController {
     @FXML
     private void openProfile(ActionEvent event) throws IOException {
         System.out.println("open profile");
-        Parent root = FXMLLoader.load(getClass().getResource("/com/autho_project/view/user-profile.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/user-profile.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

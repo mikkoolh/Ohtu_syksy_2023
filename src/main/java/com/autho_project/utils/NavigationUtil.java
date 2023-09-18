@@ -22,7 +22,7 @@ public class NavigationUtil {
      * @throws IOException
      */
     public void openMainPage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/autho_project/view/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -35,7 +35,7 @@ public class NavigationUtil {
      * @throws IOException
      */
     public void openLoginPage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/autho_project/view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
