@@ -1,8 +1,6 @@
 package com.automaatio;
 
-import com.automaatio.model.database.Device;
-import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.MysqlDBJpaConn;
+import com.automaatio.model.database.*;
 import jakarta.persistence.EntityManager;
 
 /**
@@ -32,7 +30,7 @@ public class Main {
         } finally {
             MysqlDBJpaConn.close();
         }
-        */
+
 
         DeviceDAO deviceDAO = new DeviceDAO();
 
@@ -46,5 +44,6 @@ public class Main {
         } else {
             System.out.println("Device not found.");
         }
+         */
     }
 }

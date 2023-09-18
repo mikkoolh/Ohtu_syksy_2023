@@ -1,5 +1,7 @@
 package com.automaatio.model.database;
 
+import jakarta.persistence.*;
+
 /**
  * @author Mikko Hänninen
  * @author Matleena Kankaanpää
@@ -7,8 +9,6 @@ package com.automaatio.model.database;
  *
  * User data
  */
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user")
