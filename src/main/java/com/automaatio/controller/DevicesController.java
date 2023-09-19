@@ -18,12 +18,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller for managing devices within the application's UI
+ *
+ * @Author Elmo Erla
+ *
+ */
 public class DevicesController {
     DeviceDAO dao = new DeviceDAO();
 
     @FXML
     private TextField deviceNameField;
 
+    /**
+     * Handles the addition of a new device.
+     *
+     * @param event the action event triggering the method.
+     */
     @FXML
     public void addDevice(ActionEvent event) {
         String deviceName = deviceNameField.getText();
@@ -49,6 +60,9 @@ public class DevicesController {
     @FXML
     private VBox devicesVBox;
 
+    /**
+     * Populates the VBox with device rows fetched from the database.
+     */
     public void showDevices() {
         devicesVBox.getChildren().clear();
 
@@ -58,15 +72,21 @@ public class DevicesController {
         }
     }
 
+    /**
+     * Creates a UI row for a given device.
+     *
+     * @param device the device for which the row is created.
+     * @return an HBox containing the device details and associated buttons.
+     */
     private HBox createDeviceRow(Device device) {
         Label deviceLabel = new Label(device.getName());
 
-        Button editButton = new Button("Muokkaa");
+        Button editButton = new Button("Edit");
         editButton.setOnAction(event -> editDevice(device));
 
         HBox deviceRow = new HBox(10);
 
-        Button deleteButton = new Button("Poista");
+        Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(event -> {
             dao.deleteDevice(device.getDeviceID());
             devicesVBox.getChildren().remove(deviceRow);
@@ -77,14 +97,30 @@ public class DevicesController {
         return deviceRow;
     }
 
+    /**
+     * Method for editing a device.
+     *
+     * @param device the device to be edited.
+     */
     private void editDevice(Device device) {
 
     }
 
+    /**
+     * Initializes the controller by populating devices on UI load.
+     */
     public void initialize() {
         showDevices();
     }
 
+
+    /**
+     * Handles the click event of the "Rooms" titled pane.
+     * Switches the scene to the main view.
+     *
+     * @param mouseEvent the mouse event triggering the method.
+     * @throws IOException if there's an error loading the main.fxml resource.
+     */
     @FXML
     private void handleRoomsTitledPaneClick(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));

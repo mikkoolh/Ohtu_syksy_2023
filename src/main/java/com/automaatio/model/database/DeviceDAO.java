@@ -7,7 +7,8 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 /**
- * Author Nikita Nossenko
+ * @Author Nikita Nossenko
+ * @Author Elmo Erla
  *
  * DAO for Device
  */
@@ -25,7 +26,7 @@ public class DeviceDAO {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }
@@ -45,7 +46,7 @@ public class DeviceDAO {
             return device;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }
@@ -65,12 +66,17 @@ public class DeviceDAO {
             return devices;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }
     }
 
+    /**
+     * Deletes all devices from the database.
+     *
+     * Outputs the number of deleted devices to the console.
+     */
     public void deleteAll() {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
@@ -82,9 +88,15 @@ public class DeviceDAO {
 
         em.getTransaction().commit();
 
-        System.out.println("Poistettu " + deletedCount + " laitetta.");
+        System.out.println("Deleted " + deletedCount + " devices");
     }
 
+    /**
+     * Deletes a device with a specific ID from the database.
+     *
+     * @param id The ID of the device to be deleted.
+     * @throws IllegalArgumentException If a device with the given ID is not found.
+     */
     public void deleteDevice(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
@@ -93,7 +105,7 @@ public class DeviceDAO {
             if (device != null) {
                 em.remove(device);
             } else {
-                throw new IllegalArgumentException("Laitetta ID:llä " + id + " ei löytynyt");
+                throw new IllegalArgumentException("device with id  " + id + " was not found");
             }
             em.getTransaction().commit();
         } catch (Exception e) {

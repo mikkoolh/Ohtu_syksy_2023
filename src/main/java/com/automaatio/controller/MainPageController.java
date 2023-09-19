@@ -15,11 +15,18 @@ import javafx.stage.Stage;
 /**
  * Controller for the app dashboard
  * @author Matleena Kankaanpää
+ * @Author Elmo Erla
  * 8.9.2023
  */
 
 public class MainPageController {
-    
+
+    /**
+     * Navigates to the user profile view.
+     *
+     * @param event the action event that triggers the method.
+     * @throws IOException if there's an error loading the user-profile.fxml resource.
+     */
     @FXML
     private void openProfile(ActionEvent event) throws IOException {
         System.out.println("open profile");
@@ -30,6 +37,13 @@ public class MainPageController {
         stage.show();
     }
 
+    /**
+     * Handles the logout click event.
+     * Logs the user out and navigates to the login page.
+     *
+     * @param event the action event that triggers the method.
+     * @throws IOException if there's an error during navigation.
+     */
     @FXML
     private void onLogoutClick(ActionEvent event) throws IOException {
         System.out.println("log out");
@@ -40,6 +54,13 @@ public class MainPageController {
         NavigationUtil nav = new NavigationUtil();
         nav.openLoginPage(event);
     }
+    /**
+     * Handles the click event of the "Devices" titled pane.
+     * Switches the scene to the devices view.
+     *
+     * @param mouseEvent the mouse event that triggers the method.
+     * @throws IOException if there's an error loading the devices.fxml resource.
+     */
     @FXML
     private void handleDeviceTitledPaneClick(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/devices.fxml"));
