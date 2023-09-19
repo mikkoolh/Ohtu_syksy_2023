@@ -1,13 +1,13 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
-
 import com.automaatio.utils.FormInputValidator;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 /**
  * Controller for the registration form
@@ -94,7 +94,7 @@ public class CreateAccountController {
             // käyttäjän tallennus
 
             // siirry etusivulle
-            nav.openMainPage(event);
+            nav.openMainPage(event, username);
         } else {
             // jos virhe
             showError("joku virheilmoitus");

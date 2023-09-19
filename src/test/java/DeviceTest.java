@@ -4,6 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Nikita Nossenko
+ * JUNIT test for Device Entity
+ */
 public class DeviceTest {
 
     @Test

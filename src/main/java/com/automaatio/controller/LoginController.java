@@ -1,18 +1,18 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
-
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Node;
+
+import java.io.IOException;
 
 /**
  * Controller for the login form
@@ -30,7 +30,8 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    
+    private String loggedInUsername;
+
     /** 
      * @param event
      * @throws IOException
@@ -49,9 +50,10 @@ public class LoginController {
             System.out.println("open main page");
 
             // kirjaa käyttäjä sisään
+            loggedInUsername = username;
 
             NavigationUtil nav = new NavigationUtil();
-            nav.openMainPage(event);
+            nav.openMainPage(event, loggedInUsername);
         } else {
             // näytä virhe
             showError("virheilmoitus");

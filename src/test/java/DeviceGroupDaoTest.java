@@ -10,6 +10,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * @author Nikita Nossenko
+ * JUNIT test for DeviceGroupDAO
+ */
 public class DeviceGroupDaoTest {
 
     DeviceGroupDAO dgDao;

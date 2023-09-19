@@ -27,7 +27,8 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-
+    @Column(name = "picture")
+    private String picture;
     /*
     @OneToMany(mappedBy ="user" )
     @Column(name = "history_events")
@@ -49,18 +50,20 @@ public class User {
      * @param lastName
      * @param phoneNumber
      * @param email
+     * @param picture
      * @param password
      * @param age
 
      */
 //   * @param userType
 
-    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
+    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String picture, String password, int age, int userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber =phoneNumber;
         this.email = email;
+        this.picture = picture;
         this.password = password;
         this.age = age;
     }
@@ -77,16 +80,18 @@ public class User {
      * @param lastName
      * @param phoneNumber
      * @param email
+     * @param picture
      * @param password
      * @param age
      * @param userType
      */
-    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
+    public User(String username, String firstName, String lastName, String phoneNumber, String email, String picture, String password, int age, int userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.picture = picture;
         this.password = password;
         this.age = age;
         this.userType = userType;
@@ -131,6 +136,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPicture() { return picture; }
+
+    public void setPicture() { this.picture = picture; }
 
     public String getPassword() {
         return password;

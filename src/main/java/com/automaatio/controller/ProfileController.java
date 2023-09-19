@@ -1,11 +1,12 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
-
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 /**
  * Controller for the user profile
@@ -15,12 +16,16 @@ import javafx.scene.text.Text;
 
 public class ProfileController {
 
+
+    @FXML
+    private Text etusivuText;
+
     @FXML
     private Text firstName;
-    
+
     @FXML
     private Text lastName;
-    
+
     @FXML
     private Text role;
 
@@ -34,14 +39,22 @@ public class ProfileController {
     private Text phoneNumber;
 
     @FXML
-    private Text username;
+    private Label usernameLabel;
+
+    private String loggedInUsername; // Lisätty käyttäjänimi-muuttuja
+
+    public ProfileController() {};
+
+    public void setUsername(String username) {
+        this.loggedInUsername = username;
+    }
 
     @FXML
     private void onBackClick(ActionEvent event) throws IOException {
         System.out.println("return to main page");
 
         NavigationUtil nav = new NavigationUtil();
-        nav.openMainPage(event);
+        nav.openMainPage(event, loggedInUsername);
     }
 
     @FXML
@@ -55,11 +68,18 @@ public class ProfileController {
     // Kenttien täyttö
     @FXML
     private void initialize() {
-        firstName.setText("matti");
-        lastName.setText("meikäläinen");
-        role.setText("Admin"); // vois toteuttaa ehkä enumina tms?
+        firstName.setText("Matti");
+        lastName.setText("Meikäläinen");
+        role.setText("Admin"); // Voisit toteuttaa tämän esimerkiksi enumina tms.
         birthday.setText("1.3.1800");
         email.setText("joku@esimerkki.com");
         phoneNumber.setText("040 123456");
+    }
+
+    @FXML
+    public void setUsernames(String loggedInUsername) {
+        System.out.println("LoggedInUsername: " + loggedInUsername);
+        usernameLabel.setText(loggedInUsername);
+        etusivuText.setText(loggedInUsername);
     }
 }

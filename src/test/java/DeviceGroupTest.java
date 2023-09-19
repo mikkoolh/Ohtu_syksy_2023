@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * @author Nikita Nossenko
+ * JUNIT test for DeviceGroup entity
+ */
 public class DeviceGroupTest {
 
     //Testataan konstruktoria ja gettereita

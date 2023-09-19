@@ -7,6 +7,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Nikita Nossenko
+ * JUNIT test for DeviceDAO
+ */
 public class DeviceDaoTest {
 
     DeviceDAO deviceDAO;
