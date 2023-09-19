@@ -2,7 +2,6 @@ package com.automaatio.controller;
 
 import java.io.IOException;
 import java.util.List;
-
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
@@ -11,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Controller for the registration form
@@ -84,7 +84,6 @@ public class CreateAccountController {
      */
     @FXML
     protected void goBack(ActionEvent event) throws IOException {
-        System.out.println("go back");
         nav.openLoginPage(event);
     }
 
@@ -160,7 +159,9 @@ public class CreateAccountController {
 
         if (inputOk) {
             System.out.println("ok");
-            User user = new User(username, firstName, lastName, phoneNumber, email, password, 0, 1);
+
+            User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1);
+            System.out.println(user);
             saveUser(user);
 
             // käyttäjän tallennus
@@ -170,7 +171,7 @@ public class CreateAccountController {
         } else {
             // jos virhe
             System.out.println("input error");
-            createAccountErrorText.setText(":/");
+            //createAccountErrorText.setText(":/");
         }
     }
 
@@ -246,11 +247,14 @@ public class CreateAccountController {
 
     @FXML
     private void initialize() {
+        /*
         try {
             List<User> users = userDAO.getAll();
             System.out.println(users.size() + " users in db");
         } catch (Exception e) {
             createAccountErrorText.setText("Unable to connect to the database");
         }
+
+         */
     }
 }

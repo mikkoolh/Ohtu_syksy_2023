@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.CreateAccountController">
    <children>
@@ -29,46 +29,43 @@
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" /> <!-- Username error -->
+                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" /> <!-- First name error -->
+                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" /> <!-- Last name error -->
+                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" /> <!-- Email error -->
+                  <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" /> <!-- Phone error -->
+                  <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="First name" GridPane.rowIndex="2" />
                   <Label text="Last name" GridPane.rowIndex="4" />
-                  <Label text="Email" GridPane.rowIndex="7" />
+                  <Label text="Email" GridPane.rowIndex="6" />
                   <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label text="Phone number" GridPane.rowIndex="9" />
+                  <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="Phone number" GridPane.rowIndex="8" />
                   <Label minHeight="30.0" text="Username" />
-                  <Label text="Password" GridPane.rowIndex="11" />
-                  <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label text="Password" GridPane.rowIndex="10" />
+                  <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <TextField fx:id="usernameField" maxHeight="30.0" minHeight="30.0" GridPane.columnIndex="1" />
-                  <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label text="Age" GridPane.rowIndex="6" />
-                  <Spinner GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Text fx:id="usernameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                  <Text fx:id="firstNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="3" GridPane.columnIndex="1" />
-                  <Text fx:id="lastNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="5" GridPane.columnIndex="1" />
-                  <Text fx:id="emailError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="8" GridPane.columnIndex="1" />
-                  <Text fx:id="phoneError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="10" GridPane.columnIndex="1" />
-                  <Text fx:id="passwordError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="12" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Text fx:id="usernameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text fx:id="firstNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Text fx:id="lastNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Text fx:id="emailError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Text fx:id="phoneError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Text fx:id="passwordError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
             </GridPane>
              <Text fx:id="createAccountErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
             <ButtonBar buttonMinWidth="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
               <buttons>
-                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goBack" text="Back" ButtonBar.buttonData="LEFT" />
+                <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goBack" text="Cancel" ButtonBar.buttonData="LEFT" />
                   <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Create account" />
               </buttons>
                <VBox.margin>
