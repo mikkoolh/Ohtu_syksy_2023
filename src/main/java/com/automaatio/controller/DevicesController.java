@@ -5,19 +5,18 @@ import com.automaatio.model.database.DeviceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,6 +58,9 @@ public class DevicesController {
     @FXML
     private VBox devicesVBox;
 
+    @FXML
+    private ScrollPane devicesScrollPane;
+
     /**
      * Populates the VBox with device rows fetched from the database.
      */
@@ -79,7 +81,8 @@ public class DevicesController {
      */
     private VBox createDeviceRow(Device device) {
         Label deviceLabel = new Label(device.getName());
-        deviceLabel.setTextFill(Color.web("#FFFFFF"));
+        deviceLabel.setTextFill(Color.web("#070707"));
+        deviceLabel.setFont(new Font(30));
 
         Button editButton = new Button("Edit");
         editButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
@@ -87,7 +90,10 @@ public class DevicesController {
         editButton.setOnAction(event -> editDevice(device));
 
         VBox deviceRow = new VBox(10);
-        deviceRow.setStyle("-fx-background-color: #353535;");
+        deviceRow.setStyle("-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: #353535;");
 
 
         Button deleteButton = new Button("Delete");
@@ -99,24 +105,29 @@ public class DevicesController {
 
         ToggleButton toggleButton = new ToggleButton();
         toggleButton.setText("Off");
+        toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
         toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
                 toggleButton.setText("On");
                 toggleButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
             } else {
                 toggleButton.setText("Off");
-                toggleButton.setStyle("-fx-background-color: #FFFFFF;");
+                toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
             }
         });
 
         Pane spacer = new Pane();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
 
         HBox buttonsRow = new HBox(20);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
         buttonsRow.getChildren().addAll(editButton, deleteButton, spacer, toggleButton);
         buttonsRow.setAlignment(Pos.TOP_LEFT);
 
-        deviceRow.setStyle("-fx-background-color: #353535;");
+        deviceRow.setStyle("-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: #353535;");
         deviceRow.getChildren().addAll(deviceLabel, buttonsRow);
 
         return deviceRow;

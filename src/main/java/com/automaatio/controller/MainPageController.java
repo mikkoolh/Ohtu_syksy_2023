@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -20,6 +21,9 @@ import javafx.stage.Stage;
  */
 
 public class MainPageController {
+
+    @FXML
+    AnchorPane infoPage;
 
     /**
      * Navigates to the user profile view.
@@ -55,7 +59,7 @@ public class MainPageController {
         nav.openLoginPage(event);
     }
     /**
-     * Handles the click event of the "Devices" titled pane.
+ * Handles the click event of the "Devices" titled pane.
      * Switches the scene to the devices view.
      *
      * @param mouseEvent the mouse event that triggers the method.
@@ -63,10 +67,11 @@ public class MainPageController {
      */
     @FXML
     private void handleDeviceTitledPaneClick(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/devices.fxml"));
-        Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            AnchorPane loader = FXMLLoader.load(getClass().getResource("/view/devices.fxml"));
+            infoPage.getChildren().setAll(loader);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
