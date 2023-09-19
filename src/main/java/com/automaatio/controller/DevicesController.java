@@ -48,13 +48,7 @@ public class DevicesController {
             return;
         }
 
-        Device device = new Device();
-        device.setName(deviceName);
-
-        device.setOnOff(true);
-        device.setAutomation(false);
-        device.setUsageData(0);
-        device.setModelCode(null);
+        Device device = new Device(false, false, 0, deviceName, null);
 
         dao.addDevice(device);
         deviceNameField.clear();
@@ -94,6 +88,7 @@ public class DevicesController {
 
         VBox deviceRow = new VBox(10);
         deviceRow.setStyle("-fx-background-color: #353535;");
+
 
         Button deleteButton = new Button("Delete");
         deleteButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
