@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -99,8 +102,23 @@ public class DevicesController {
             devicesVBox.getChildren().remove(deviceRow);
         });
 
+        ToggleButton toggleButton = new ToggleButton();
+        toggleButton.setText("Off");
+        toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                toggleButton.setText("On");
+                toggleButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
+            } else {
+                toggleButton.setText("Off");
+                toggleButton.setStyle("-fx-background-color: #FFFFFF;");
+            }
+        });
+
+        Pane spacer = new Pane();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
         HBox buttonsRow = new HBox(20);
-        buttonsRow.getChildren().addAll(editButton, deleteButton);
+        buttonsRow.getChildren().addAll(editButton, deleteButton, spacer, toggleButton);
         buttonsRow.setAlignment(Pos.TOP_LEFT);
 
         deviceRow.setStyle("-fx-background-color: #353535;");
