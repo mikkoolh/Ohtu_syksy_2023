@@ -7,7 +7,7 @@ package com.automaatio.utils;
  */
 
 public class FormInputValidator {
-    private Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, FIRSTNAME_MIN_LENGTH, LASTNAME_MIN_LENGTH,
+    private final Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, FIRSTNAME_MIN_LENGTH, LASTNAME_MIN_LENGTH,
     USERNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH, FIRSTNAME_MAX_LENGTH, LASTNAME_MAX_LENGTH, PHONE_MIN_LENGTH, PHONE_MAX_LENGTH;
  
     /**
@@ -21,10 +21,10 @@ public class FormInputValidator {
         this.PASSWORD_MIN_LENGTH = 8;
         this.PASSWORD_MAX_LENGTH = 20;
 
-        this.FIRSTNAME_MIN_LENGTH = 2;
+        this.FIRSTNAME_MIN_LENGTH = 1;
         this.FIRSTNAME_MAX_LENGTH = 20;
 
-        this.LASTNAME_MIN_LENGTH = 2;
+        this.LASTNAME_MIN_LENGTH = 1;
         this.LASTNAME_MAX_LENGTH = 20;
 
         this.PHONE_MIN_LENGTH = 7;
@@ -85,5 +85,46 @@ public class FormInputValidator {
     public Boolean phoneFormatCorrect(String phone) {
         //return phone.matches("^+?[0-9]{7,14}$");
         return phone.matches("^+?[0-9]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$");
+    }
+
+
+    public Integer getUSERNAME_MIN_LENGTH() {
+        return USERNAME_MIN_LENGTH;
+    }
+
+    public Integer getPASSWORD_MIN_LENGTH() {
+        return PASSWORD_MIN_LENGTH;
+    }
+
+    public Integer getFIRSTNAME_MIN_LENGTH() {
+        return FIRSTNAME_MIN_LENGTH;
+    }
+
+    public Integer getLASTNAME_MIN_LENGTH() {
+        return LASTNAME_MIN_LENGTH;
+    }
+
+    public Integer getUSERNAME_MAX_LENGTH() {
+        return USERNAME_MAX_LENGTH;
+    }
+
+    public Integer getPASSWORD_MAX_LENGTH() {
+        return PASSWORD_MAX_LENGTH;
+    }
+
+    public Integer getFIRSTNAME_MAX_LENGTH() {
+        return FIRSTNAME_MAX_LENGTH;
+    }
+
+    public Integer getLASTNAME_MAX_LENGTH() {
+        return LASTNAME_MAX_LENGTH;
+    }
+
+    public Integer getPHONE_MIN_LENGTH() {
+        return PHONE_MIN_LENGTH;
+    }
+
+    public Integer getPHONE_MAX_LENGTH() {
+        return PHONE_MAX_LENGTH;
     }
 }

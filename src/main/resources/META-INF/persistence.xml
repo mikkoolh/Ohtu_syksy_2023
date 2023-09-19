@@ -10,7 +10,7 @@
             <property name="jakarta.persistence.jdbc.user" value="nikitano"/>
             <property name="jakarta.persistence.jdbc.password" value="OTP2023"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/> <!-- Updated driver class -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/> <!-- Updated dialect -->
         </properties>
