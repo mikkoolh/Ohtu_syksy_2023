@@ -84,7 +84,7 @@ public class FormInputValidator {
      */
     public Boolean phoneFormatCorrect(String phone) {
         //return phone.matches("^+?[0-9]{7,14}$");
-        return phone.matches("^+?[0-9]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$");
+        return phone.matches("^+?[0-9-]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$");
     }
 
 

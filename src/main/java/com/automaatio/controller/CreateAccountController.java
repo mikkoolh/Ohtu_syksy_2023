@@ -6,8 +6,10 @@ import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
 import com.automaatio.utils.NavigationUtil;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.mindrot.jbcrypt.BCrypt;
@@ -19,10 +21,9 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 
 public class CreateAccountController {
-    private NavigationUtil nav;
-    private FormInputValidator validator;
-
-    private UserDAO userDAO;
+    private final NavigationUtil nav;
+    private final FormInputValidator validator;
+    private final UserDAO userDAO;
 
     /**
      * Constructor
@@ -74,8 +75,8 @@ public class CreateAccountController {
     @FXML
     private Text passwordError;
 
-    // Virheilmoitusten tekstit
-    private String usernameErrorText, firstNameErrorText, lastNameErrorText, emailErrorText, phoneErrorText, passwordErrorText;
+    @FXML
+    private Button saveButton;
 
     /**
      * Navigates back to the login page
@@ -108,137 +109,100 @@ public class CreateAccountController {
         System.out.println(phoneNumber);
         System.out.println(password);
 
-        boolean inputOk = usernameValid(username)
-                && firstNameValid(firstName)
-                && lastNameValid(lastName)
-                && emailValid(email)
-                && phoneValid(phoneNumber)
-                && passwordValid(password);
+        // Käyttäjän luonti
+        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1);
+        System.out.println(user);
+        saveUser(user);
 
-        // username
-        if (!usernameValid(username)) {
-            usernameError.setText(usernameErrorText);
-        } else {
-            usernameError.setText("");
-        }
+        // käyttäjän tallennus
 
-        // first name
-        if (!firstNameValid(firstName)) {
-            firstNameError.setText(firstNameErrorText);
-        } else {
-            firstNameError.setText("");
-        }
-
-        // last name
-        if (!lastNameValid(lastName)) {
-            lastNameError.setText(lastNameErrorText);
-        } else {
-            lastNameError.setText("");
-        }
-
-        // email
-        if (!emailValid(email)) {
-            emailError.setText(emailErrorText);
-        } else {
-            emailError.setText("");
-        }
-
-        // phone
-        if (!phoneValid(phoneNumber)) {
-            phoneError.setText(phoneErrorText);
-        } else {
-            phoneError.setText("");
-        }
-
-        // password
-        if (!passwordValid(password)) {
-            passwordError.setText(passwordErrorText);
-        } else {
-            passwordError.setText("");
-        }
-
-        if (inputOk) {
-            System.out.println("ok");
-
-            User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1);
-            System.out.println(user);
-            saveUser(user);
-
-            // käyttäjän tallennus
-            
-            createAccountErrorText.setText("");
-            nav.openMainPage(event);
-        } else {
-            // jos virhe
-            System.out.println("input error");
-            //createAccountErrorText.setText(":/");
-        }
+        createAccountErrorText.setText("");
+        nav.openMainPage(event);
     }
-
 
     /*
     Käyttäjätunnuksen validointi ja tarkistus ettei
     samaa käyttäjätunnusta löydy jo tietokannasta
      */
-    private boolean usernameValid(String username) {
-        if (!validator.usernameLengthCorrect(username)) {
-            usernameErrorText = "Username must be " + validator.getUSERNAME_MIN_LENGTH() + "-" + validator.getUSERNAME_MAX_LENGTH() + " characters";
+    private boolean validateUsername(String username) {
+        if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
+            usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
             return false;
+        } else if (username.length() > validator.getUSERNAME_MAX_LENGTH()) {
+            usernameError.setText("Username must be " + validator.getUSERNAME_MAX_LENGTH() + " characters or less");
+            return false;
+
         } else if (userDAO.getUser(username) != null) {
-            usernameErrorText = "Username already taken";
+            usernameError.setText("Username already taken");
             return false;
         }
+        usernameError.setText("Username available");
         return true;
     }
 
-    private boolean firstNameValid(String firstName) {
-        if (!validator.firstNameLengthCorrect(firstName)) {
-            firstNameErrorText = "First name must be " + validator.getFIRSTNAME_MIN_LENGTH() + "-" + validator.getFIRSTNAME_MAX_LENGTH() + " characters";
+    // samat? min length voi poistaa?
+    private boolean validateFirstName(String firstName) {
+        if (firstName.isEmpty()) {
+            firstNameError.setText("First name can't be empty");
+            return false;
+        } else if (firstName.length() > validator.getFIRSTNAME_MAX_LENGTH()) {
+            firstNameError.setText("First name must be " + validator.getFIRSTNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
+        firstNameError.setText("");
         return true;
     }
 
-    private boolean lastNameValid(String lastName) {
-        if (!validator.lastNameLengthCorrect(lastName)) {
-            lastNameErrorText = "Last name must be " + validator.getLASTNAME_MIN_LENGTH() + "-" + validator.getLASTNAME_MAX_LENGTH() + " characters";
+    private boolean validateLastName(String lastName) {
+        if (lastName.isEmpty()) {
+            lastNameError.setText("Last name can't be empty");
+            return false;
+        } else if (lastName.length() > validator.getLASTNAME_MAX_LENGTH()) {
+            lastNameError.setText("Last name must be " + validator.getLASTNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
+        lastNameError.setText("");
         return true;
     }
 
-    private boolean emailValid(String email) {
+    private boolean validateEmail(String email) {
         if (!validator.emailFormatCorrect(email)) {
-            emailErrorText = "Invalid email format";
+            emailError.setText("Email address must be in the format yourname@domain.com");
             return false;
         }
+        emailError.setText("");
         return true;
     }
 
-    private boolean phoneValid(String phone) {
+    private boolean validatePhoneNumber(String phone) {
         if (!validator.phoneFormatCorrect(phone)) {
-            phoneErrorText = "Invalid phone number format";
+            phoneError.setText("Phone number can contain numbers and dashes");
             return false;
         }
+        phoneError.setText("");
         return true;
     }
 
-    private boolean passwordValid(String password) {
-        if (!validator.passwordLengthCorrect(password)) {
-            passwordErrorText = "Password must be " + validator.getPASSWORD_MIN_LENGTH() + "-" + validator.getPASSWORD_MAX_LENGTH() + " characters";
+    private boolean validatePassword(String password) {
+        if (password.length() < validator.getPASSWORD_MIN_LENGTH()) {
+            passwordError.setText("Password must be at least " + validator.getPASSWORD_MIN_LENGTH() + " characters");
+            return false;
+        } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
+            passwordError.setText("Password must be " + validator.getPASSWORD_MAX_LENGTH() + " characters or less");
             return false;
         }
+        passwordError.setText("");
         return true;
     }
 
+    /*
+    Creates a new user into the database
+    when the save button is clicked
+     */
     private void saveUser(User user) {
         try {
             userDAO.addUser(user);
             System.out.println("created user");
-
-            // testaukseen
-            List<User> users = userDAO.getAll();
-            System.out.println(users.size() + " users in db");
         } catch (Exception e) {
             System.out.println(e);
             createAccountErrorText.setText("Error creating account");
@@ -247,14 +211,75 @@ public class CreateAccountController {
 
     @FXML
     private void initialize() {
-        /*
-        try {
-            List<User> users = userDAO.getAll();
-            System.out.println(users.size() + " users in db");
-        } catch (Exception e) {
-            createAccountErrorText.setText("Unable to connect to the database");
-        }
+        saveButton.setDisable(true);
+        Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
 
-         */
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        String email = emailField.getText().trim();
+        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        // Set the input guidelines on screen
+        validateUsername(username);
+        validateFirstName(firstName);
+        validateLastName(lastName);
+        validateEmail(email);
+        validatePhoneNumber(phoneNumber);
+        validatePassword(password);
+
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateUsername(newValue.trim());
+            toggleButton();
+        });
+
+        firstNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateFirstName(newValue.trim());
+            toggleButton();
+        });
+
+        lastNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateLastName(newValue.trim());
+            toggleButton();
+        });
+
+        emailField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateEmail(newValue.trim());
+            toggleButton();
+        });
+
+        phoneNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validatePhoneNumber(newValue.trim().replaceAll("\\s", ""));
+            toggleButton();
+        });
+
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            validatePassword(newValue.trim());
+            toggleButton();
+        });
+    }
+
+    /*
+    Enables/disables the save button depending on
+    whether all fields are ok
+     */
+    private void toggleButton() {
+        // :p
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        String email = emailField.getText().trim();
+        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Poistaa välilyönnit
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        boolean inputOk = validateUsername(username)
+                && validateFirstName(firstName)
+                && validateLastName(lastName)
+                && validateEmail(email)
+                && validatePhoneNumber(phoneNumber)
+                && validatePassword(password);
+
+        saveButton.setDisable(!inputOk);
     }
 }

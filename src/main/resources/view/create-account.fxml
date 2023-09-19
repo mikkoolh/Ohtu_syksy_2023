@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.PasswordField?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.CreateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.CreateAccountController">
    <children>
       <VBox alignment="TOP_CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,7 +22,7 @@
                <font>
                   <Font size="20.0" />
                </font></Text>
-            <GridPane prefWidth="600.0">
+            <GridPane prefWidth="500.0" maxWidth="500.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -54,19 +54,19 @@
                   <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <TextField fx:id="usernameField" maxHeight="30.0" minHeight="30.0" GridPane.columnIndex="1" />
                   <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Text fx:id="usernameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Text fx:id="firstNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Text fx:id="lastNameError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Text fx:id="emailError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Text fx:id="phoneError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Text fx:id="passwordError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Text fx:id="usernameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text fx:id="firstNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Text fx:id="lastNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Text fx:id="emailError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Text fx:id="phoneError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
             </GridPane>
              <Text fx:id="createAccountErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
             <ButtonBar buttonMinWidth="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
               <buttons>
                 <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goBack" text="Cancel" ButtonBar.buttonData="LEFT" />
-                  <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Create account" />
+                  <Button fx:id="saveButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Create account" />
               </buttons>
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
