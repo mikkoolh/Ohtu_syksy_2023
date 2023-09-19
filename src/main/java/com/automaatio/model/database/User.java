@@ -85,13 +85,12 @@ public class User {
      * @param age
      * @param userType
      */
-    public User(String username, String firstName, String lastName, String phoneNumber, String email, String picture, String password, int age, int userType) {
+    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.picture = picture;
         this.password = password;
         this.age = age;
         this.userType = userType;

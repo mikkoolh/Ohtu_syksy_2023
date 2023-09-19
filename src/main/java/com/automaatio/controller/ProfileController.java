@@ -5,8 +5,8 @@ import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
@@ -19,33 +19,26 @@ import java.io.IOException;
 
 public class ProfileController {
 
+    @FXML
+    private TextField fnameField;
+
+    @FXML
+    private TextField lnameField;
+
+    @FXML
+    private TextField bdayField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private PasswordField passField;
+
     private UserDAO userDAO = new UserDAO();
 
     private User user;
-
-    @FXML
-    private Text etusivuText;
-
-    @FXML
-    private Text firstName;
-
-    @FXML
-    private Text lastName;
-
-    @FXML
-    private Text role;
-
-    @FXML
-    private Text birthday;
-
-    @FXML
-    private Text email;
-
-    @FXML
-    private Text phoneNumber;
-
-    @FXML
-    private Label usernameLabel;
 
     private String loggedInUsername; // Lisätty käyttäjänimi-muuttuja
 
@@ -85,7 +78,7 @@ public class ProfileController {
      */
     @FXML
     private void initialize() {
-        user = userDAO.getUser(loggedInUsername);
+        /*user = userDAO.getUser(loggedInUsername);
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         if (user.getUserType() == 1) {
@@ -95,13 +88,13 @@ public class ProfileController {
         }
         birthday.setText("korjattava");
         email.setText(user.getEmail());
-        phoneNumber.setText((user.getPhoneNumber()));
-        /*firstName.setText("Matti");
-        lastName.setText("Meikäläinen");
-        role.setText("Admin"); // Voisit toteuttaa tämän esimerkiksi enumina tms.
-        birthday.setText("1.3.1800");
-        email.setText("joku@esimerkki.com");
-        phoneNumber.setText("040 123456");*/
+        phoneNumber.setText((user.getPhoneNumber()));*/
+        fnameField.setText("Matti");
+        lnameField.setText("Meikäläinen");
+        bdayField.setText("1.1.2000");
+        emailField.setText("joku@esimerkki.com");
+        phoneField.setText("040 123456");
+        passField.setText("Salainen_;)");
     }
 
     /**
@@ -111,8 +104,6 @@ public class ProfileController {
      */
     @FXML
     public void setUsernames(String loggedInUsername) {
-        System.out.println("LoggedInUsername: " + loggedInUsername);
-        usernameLabel.setText(loggedInUsername);
-        etusivuText.setText(loggedInUsername);
+
     }
 }
