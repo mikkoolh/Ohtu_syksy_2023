@@ -1,5 +1,7 @@
 package com.automaatio.controller;
 
+import com.automaatio.model.database.User;
+import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,9 @@ import java.io.IOException;
 
 public class ProfileController {
 
+    private UserDAO userDAO = new UserDAO();
+
+    private User user;
 
     @FXML
     private Text etusivuText;
@@ -80,12 +85,23 @@ public class ProfileController {
      */
     @FXML
     private void initialize() {
-        firstName.setText("Matti");
+        user = userDAO.getUser(loggedInUsername);
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        if (user.getUserType() == 1) {
+            role.setText("Admin");
+        } else {
+            role.setText("User");
+        }
+        birthday.setText("korjattava");
+        email.setText(user.getEmail());
+        phoneNumber.setText((user.getPhoneNumber()));
+        /*firstName.setText("Matti");
         lastName.setText("Meikäläinen");
         role.setText("Admin"); // Voisit toteuttaa tämän esimerkiksi enumina tms.
         birthday.setText("1.3.1800");
         email.setText("joku@esimerkki.com");
-        phoneNumber.setText("040 123456");
+        phoneNumber.setText("040 123456");*/
     }
 
     /**
