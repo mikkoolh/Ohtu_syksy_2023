@@ -83,6 +83,25 @@ public class DeviceDAO {
         em.getTransaction().commit();
 
         System.out.println("Poistettu " + deletedCount + " laitetta.");
+    }
+
+    public void deleteDevice(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Device device = em.find(Device.class, id);
+            if (device != null) {
+                em.remove(device);
+            } else {
+                throw new IllegalArgumentException("Laitetta ID:llä " + id + " ei löytynyt");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package com.automaatio.controller;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import com.automaatio.utils.NavigationUtil;
@@ -38,5 +39,13 @@ public class MainPageController {
         // Siirry login-sivulle
         NavigationUtil nav = new NavigationUtil();
         nav.openLoginPage(event);
+    }
+    @FXML
+    private void handleDeviceTitledPaneClick(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/devices.fxml"));
+        Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
