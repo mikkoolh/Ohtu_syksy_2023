@@ -18,4 +18,20 @@ public class CacheSingleton {
         }
         return instance;
     }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public void setRoom(DeviceGroup room) {
+        this.room = room;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public DeviceGroup getRoom(){
+        return room;
+    }
 }
