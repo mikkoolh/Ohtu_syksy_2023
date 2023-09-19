@@ -102,6 +102,11 @@ public class CreateAccountController {
         }
     }
 
+    /**
+     * Display an error message on the registration form.
+     *
+     * @param errorMessage The error message to be displayed.
+     */
     private void showError(String errorMessage) {
         createAccountErrorText.setText(errorMessage);
     }

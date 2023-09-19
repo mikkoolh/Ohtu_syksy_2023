@@ -32,9 +32,11 @@ public class LoginController {
 
     private String loggedInUsername;
 
-    /** 
-     * @param event
-     * @throws IOException
+    /**
+     * Handle the login button click event.
+     *
+     * @param event The button click event that triggers the login action.
+     * @throws IOException If an error occurs during navigation to the main page.
      */
     @FXML
     protected void onLoginClick(ActionEvent event) throws IOException {
@@ -60,11 +62,21 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handle the login with Google button click event.
+     */
+    //Halutaanko edes?
     @FXML
     protected void onLoginWithGoogleClick() {
         System.out.println("login with google");
     }
 
+    /**
+     * Handle the create account button click event.
+     *
+     * @param event The button click event that triggers the navigation to the create account view.
+     * @throws IOException If an error occurs during navigation to the create account view.
+     */
     @FXML
     protected void onCreateAccountClick(ActionEvent event) throws IOException {
         System.out.println("create account");
@@ -75,6 +87,11 @@ public class LoginController {
         stage.show();
     }
 
+    /**
+     * Display an error message on the login view.
+     *
+     * @param errorMessage The error message to be displayed.
+     */
     private void showError(String errorMessage) {
         loginErrorText.setText(errorMessage);
     }

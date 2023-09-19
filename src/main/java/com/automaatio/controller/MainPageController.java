@@ -15,6 +15,7 @@ import java.io.IOException;
 /**
  * Controller for the app dashboard
  * @author Matleena Kankaanpää
+ * @author Nikita Nossenko
  * 8.9.2023
  */
 
@@ -25,8 +26,17 @@ public class MainPageController {
 
     private String loggedInUsername;
 
+    /**
+     * Default constructor for the MainPageController class.
+     */
     public MainPageController(){};
 
+    /**
+     * Open the user profile page.
+     *
+     * @param event Button click event that triggers the navigation.
+     * @throws IOException If an error occurs while loading the user profile view.
+     */
     @FXML
     private void openProfile(ActionEvent event) throws IOException {
         System.out.println("open profile");
@@ -41,7 +51,12 @@ public class MainPageController {
     }
 
 
-
+    /**
+     * Handle the logout action.
+     *
+     * @param event Button click event that triggers the logout.
+     * @throws IOException If an error occurs during navigation to the login page.
+     */
     @FXML
     private void onLogoutClick(ActionEvent event) throws IOException {
         System.out.println("log out");
@@ -53,11 +68,21 @@ public class MainPageController {
         nav.openLoginPage(event);
     }
 
+    /**
+     * Set the logged-in username and display it on the dashboard.
+     *
+     * @param username The username of the logged-in user.
+     */
     public void setLoggedInUsername(String username) {
         this.loggedInUsername = username;
         usernameLabel.setText(username);
     }
 
+    /**
+     * Get the logged-in username.
+     *
+     * @return The username of the logged-in user.
+     */
     public String getLoggedInUsername() {
         return this.loggedInUsername;
     }

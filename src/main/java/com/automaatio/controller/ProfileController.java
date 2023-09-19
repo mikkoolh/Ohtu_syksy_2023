@@ -11,6 +11,7 @@ import java.io.IOException;
 /**
  * Controller for the user profile
  * @author Matleena Kankaanpää
+ * @author Nikita Nossenko
  * 8.9.2023
  */
 
@@ -43,8 +44,16 @@ public class ProfileController {
 
     private String loggedInUsername; // Lisätty käyttäjänimi-muuttuja
 
+    /**
+     * Default constructor for the ProfileController class.
+     */
     public ProfileController() {};
 
+    /**
+     * Set the logged-in username.
+     *
+     * @param username The username of the logged-in user.
+     */
     public void setUsername(String username) {
         this.loggedInUsername = username;
     }
@@ -65,7 +74,10 @@ public class ProfileController {
         nav.openLoginPage(event);
     }
 
-    // Kenttien täyttö
+    /**
+     * Initialize the user profile fields with default values.
+     * This method is automatically called when the FXML file is loaded.
+     */
     @FXML
     private void initialize() {
         firstName.setText("Matti");
@@ -76,6 +88,11 @@ public class ProfileController {
         phoneNumber.setText("040 123456");
     }
 
+    /**
+     * Set the displayed username in the profile view.
+     *
+     * @param loggedInUsername The username of the logged-in user.
+     */
     @FXML
     public void setUsernames(String loggedInUsername) {
         System.out.println("LoggedInUsername: " + loggedInUsername);

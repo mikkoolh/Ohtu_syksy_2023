@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 /**
  * Author: Nikita Nossenko
- * 
  * This class represents a Device entity that is stored in the database.
  */
 @Entity
