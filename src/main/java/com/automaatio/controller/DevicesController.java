@@ -5,6 +5,7 @@ import com.automaatio.model.database.DeviceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -76,23 +78,33 @@ public class DevicesController {
      * Creates a UI row for a given device.
      *
      * @param device the device for which the row is created.
-     * @return an HBox containing the device details and associated buttons.
+     * @return an VBox containing the device details and associated buttons.
      */
-    private HBox createDeviceRow(Device device) {
+    private VBox createDeviceRow(Device device) {
         Label deviceLabel = new Label(device.getName());
+        deviceLabel.setTextFill(Color.web("#FFFFFF"));
 
         Button editButton = new Button("Edit");
+        editButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
+
         editButton.setOnAction(event -> editDevice(device));
 
-        HBox deviceRow = new HBox(10);
+        VBox deviceRow = new VBox(10);
+        deviceRow.setStyle("-fx-background-color: #353535;");
 
         Button deleteButton = new Button("Delete");
+        deleteButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
         deleteButton.setOnAction(event -> {
             dao.deleteDevice(device.getDeviceID());
             devicesVBox.getChildren().remove(deviceRow);
         });
 
-        deviceRow.getChildren().addAll(deviceLabel, editButton, deleteButton);
+        HBox buttonsRow = new HBox(20);
+        buttonsRow.getChildren().addAll(editButton, deleteButton);
+        buttonsRow.setAlignment(Pos.TOP_LEFT);
+
+        deviceRow.setStyle("-fx-background-color: #353535;");
+        deviceRow.getChildren().addAll(deviceLabel, buttonsRow);
 
         return deviceRow;
     }
