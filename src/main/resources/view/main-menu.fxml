@@ -9,9 +9,9 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.automaatio.controller.MainMenuController"
             prefHeight="400.0" prefWidth="600.0">
-    <Accordion maxWidth="463.0" prefHeight="699.0" prefWidth="463.0">
+    <Accordion maxWidth="400.0" prefHeight="699.0" prefWidth="463.0" expandedPane="$rooms">
         <panes>
-            <TitledPane animated="false" prefHeight="540.0" text="Rooms">
+            <TitledPane fx:id="rooms" animated="false" prefHeight="540.0" text="Rooms">
                 <content>
                     <AnchorPane>
                         <children>
