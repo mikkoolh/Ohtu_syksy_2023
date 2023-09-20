@@ -1,20 +1,49 @@
 package com.automaatio.controller.mainpage.menu;
 
-public class RoomsController {
-/*
+import com.automaatio.model.database.DeviceGroup;
+
+import com.automaatio.utils.CacheSingleton;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class RoomsController implements Initializable {
+    private final CacheSingleton cache = CacheSingleton.getInstance();
+    @FXML
+    private TextField newRoomTextField;
+    @FXML
+    private VBox roomsVBox;
+    private Pane mainPane;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        mainPane = cache.getMainPane();
+    }
+
     @FXML
     private void onShowRoomClick(ActionEvent event, DeviceGroup room) throws IOException {
         System.out.print("show room\n");
-
-        Pane mainView = mainController.getMainPane();       //get the pane from mainController
         cache.setRoom(room);                                //set the room in singleton
 
         //Load the new room FXML-file, clear the mainView and set the newView
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/room.fxml"));
             Parent newView = loader.load();
-            mainView.getChildren().clear();
-            mainView.getChildren().add(newView);
+            mainPane.getChildren().clear();
+            mainPane.getChildren().add(newView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,5 +87,5 @@ public class RoomsController {
         box.getChildren().add(title);
         box.getChildren().add(showRoom);
         return box;
-    }*/
+    }
 }

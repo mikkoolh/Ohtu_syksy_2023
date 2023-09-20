@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.automaatio.controller.mainpage.MainMenuController;
+import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,27 +21,21 @@ import javafx.scene.layout.Pane;
 public class MainPageController implements Initializable {
     @FXML
     private Pane mainPane, menuPane;
+    private CacheSingleton cache = CacheSingleton.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cache.setMenuPane(menuPane);
+        cache.setMainPane(mainPane);
         setMainPane();
         setMenuPane();
     }
 
-    public Pane getMainPane(){
-        return mainPane;
-    }
-
-    public Pane getMenuPane(){
-        return menuPane;
-    }
 
     public void setMenuPane(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main-menu.fxml"));
             Parent firstView = loader.load();
-            MainMenuController menuController = loader.getController();
-            menuController.setMainController(this);
             menuPane.getChildren().add(firstView);
         } catch (IOException e) {
             System.out.println(e);

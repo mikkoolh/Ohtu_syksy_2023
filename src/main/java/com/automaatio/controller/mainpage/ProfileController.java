@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -20,19 +21,9 @@ import java.io.IOException;
 public class ProfileController {
 
     @FXML
-    private TextField fnameField;
-
+    private TextField fnameField, lnameField, bdayField, emailField, phoneField;
     @FXML
-    private TextField lnameField;
-
-    @FXML
-    private TextField bdayField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField phoneField;
+    Text etusivuText;
     @FXML
     private PasswordField passField;
 
@@ -41,11 +32,6 @@ public class ProfileController {
     private User user;
 
     private String loggedInUsername; // Lisätty käyttäjänimi-muuttuja
-
-    /**
-     * Default constructor for the ProfileController class.
-     */
-    public ProfileController() {};
 
     /**
      * Set the logged-in username.
@@ -78,7 +64,7 @@ public class ProfileController {
      */
     @FXML
     private void initialize() {
-
+        etusivuText.setText("Käyttäjänimi Keijo");
         fnameField.setText("Matti");
         lnameField.setText("Meikäläinen");
         bdayField.setText("1.1.2000");
