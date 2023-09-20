@@ -1,5 +1,6 @@
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
+import com.automaatio.model.database.DeviceGroup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,6 @@ public class DeviceDaoTest {
     public void testAddDevice() {
         Device device = new Device();
         device.setName("TestiLaite");
-        device.setAutomation(true);
         device.setOnOff(false);
         device.setModelCode("OOO222");
         device.setUsageData(50L);
@@ -48,8 +48,9 @@ public class DeviceDaoTest {
 
     @Test
     public void testGetAll() {
-        Device device1 = new Device(false, false, 1, "TestiLaite1", "ABC123");
-        Device device2 = new Device(true, true, 2, "TestiLaite2", "CBA321");
+        DeviceGroup group1 = new DeviceGroup("Testiryhmä");
+        Device device1 = new Device(1, "TestiLaite1", "ABC123", group1);
+        Device device2 = new Device(2, "TestiLaite2", "CBA321", group1);
 
         deviceDAO.addDevice(device1);
         deviceDAO.addDevice(device2);

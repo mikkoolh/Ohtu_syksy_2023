@@ -1,5 +1,5 @@
 import com.automaatio.model.database.Device;
-import com.automaatio.model.database.DeviceDAO;
+import com.automaatio.model.database.DeviceGroup;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,8 +8,11 @@ public class DeviceTest {
 
     @Test
     public void testDeviceConstructor() {
+        // luodaan ryhmä
+        DeviceGroup group1 = new DeviceGroup("Testiryhmä");
+
         // Luodaan laite
-        Device device = new Device(true, true, 100L, "TestiLaite", "Malli1");
+        Device device = new Device(100L, "TestiLaite", "Malli1", group1);
 
         // Tarkistetaan arvot
         assertTrue(device.isOnOff());

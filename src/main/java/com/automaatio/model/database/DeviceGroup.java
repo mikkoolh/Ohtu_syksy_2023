@@ -2,6 +2,8 @@ package com.automaatio.model.database;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * Device group entity
  * @author Matleena Kankaanpää
@@ -19,6 +21,10 @@ public class DeviceGroup {
 
     @Column
     private String name;
+
+    @Column
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    private List<Device> deviceList;
 
     /**
      * Parameterless constructor
@@ -47,5 +53,17 @@ public class DeviceGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addDevice(Device device){
+        deviceList.add(device);
+    }
+
+    public void setDeviceList(List<Device> deviceList){
+        this.deviceList = deviceList;
+    }
+
+    public List<Device> getDeviceList() {
+        return deviceList;
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 /**
  * Author: Nikita Nossenko
+ * Author: Mikko Hänninen
  * 
  * This class represents a Device entity that is stored in the database.
  */
@@ -48,6 +49,13 @@ public class Device {
     @Column(name = "modelCode")
     private String modelCode;
 
+
+    @ManyToOne
+    @JoinColumn(name = "device_group_id")
+    private DeviceGroup deviceGroup;
+
+
+
     /**
      * Default constructor for creating a new Device instance.
      */
@@ -56,26 +64,22 @@ public class Device {
     /**
      * Constructs a new Device instance with the specified parameters.
      *
-     * @param onOff     Whether the device is on or off.
-     * @param automation    Whether the device is set for automation.
-     * @param usageData     The usage data associated with the device.
-     * @param name      The name of the device.
-     * @param modelCode The model code of the device.
+     * @param usageData   The usage data associated with the device.
+     * @param name        The name of the device.
+     * @param modelCode   The model code of the device.
+     * @param deviceGroup
      */
-    public Device(boolean onOff, boolean automation, long usageData, String name, String modelCode) {
-        this.onOff = onOff;
-        this.automation = automation;
+    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup) {
+        this.onOff = false;
+        this.automation = false;
         this.usageData = usageData;
         this.name = name;
         this.modelCode = modelCode;
+        this.deviceGroup = deviceGroup;
     }
 
     public int getDeviceID() {
         return deviceID;
-    }
-
-    public void setDeviceID(int deviceID) {
-        this.deviceID = deviceID;
     }
 
     public boolean isOnOff() {
@@ -116,5 +120,13 @@ public class Device {
 
     public void setModelCode(String modelCode) {
         this.modelCode = modelCode;
+    }
+
+    public void setDeviceGroup(DeviceGroup deviceGroup) {
+        this.deviceGroup = deviceGroup;
+    }
+
+    public DeviceGroup getDeviceGroup() {
+        return deviceGroup;
     }
 }
