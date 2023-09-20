@@ -24,6 +24,7 @@ public class CacheSingleton {
     }
 
     public void setRoom(DeviceGroup room) {
+        System.out.println("room set in singleton: " +room.getName());
         this.room = room;
     }
 
@@ -32,6 +33,7 @@ public class CacheSingleton {
     }
 
     public DeviceGroup getRoom(){
+        System.out.println("getRoom in singleton: " +room.getName());
         return room;
     }
 }

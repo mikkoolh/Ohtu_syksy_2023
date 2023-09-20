@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.automaatio.controller.MainMenuController"
+            prefHeight="400.0" prefWidth="600.0">
+    <Accordion maxWidth="463.0" prefHeight="699.0" prefWidth="463.0">
+        <panes>
+            <TitledPane animated="false" prefHeight="540.0" text="Rooms">
+                <content>
+                    <AnchorPane>
+                        <children>
+                            <VBox fx:id="roomsVBox" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                    <HBox prefHeight="30.0" prefWidth="359.0" spacing="10.0">
+                                        <children>
+                                            <TextField fx:id="newRoomTextField" prefHeight="34.0" prefWidth="310.0" promptText="Room name" />
+                                            <Button fx:id="addBtn" mnemonicParsing="false" onAction="#onAddGroupClick" prefHeight="34.0" prefWidth="78.0" text="Add" />
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets />
+                                        </VBox.margin>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                        </children>
+                    </AnchorPane>
+                </content>
+                <font>
+                    <Font name="Copperplate Gothic Bold" size="24.0" />
+                </font>
+            </TitledPane>
+            <TitledPane animated="false" prefHeight="540.0" text="Devices">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+                <font>
+                    <Font name="Copperplate Gothic Bold" size="24.0" />
+                </font>
+            </TitledPane>
+            <TitledPane animated="false" prefHeight="540.0" prefWidth="400.0" text="Routines">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+                <font>
+                    <Font name="Copperplate Gothic Bold" size="24.0" />
+                </font>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="10.0" layoutY="98.0" prefHeight="540.0" prefWidth="400.0" text="Profile">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+                <font>
+                    <Font name="Copperplate Gothic Bold" size="24.0" />
+                </font>
+            </TitledPane>
+        </panes>
+    </Accordion>
+</AnchorPane>

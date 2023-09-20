@@ -19,6 +19,8 @@
          <Font size="20.0" />
       </font>
    </Text>
+   <ButtonBar>
+    <buttons>
       <Button mnemonicParsing="false" onAction="#onBackClick" text="Takaisin" />
       <Button mnemonicParsing="false" onAction="#onLogoutClick" text="Kirjaudu ulos" />
      </buttons>

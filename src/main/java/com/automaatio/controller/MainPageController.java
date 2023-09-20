@@ -1,42 +1,59 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
 
-import com.automaatio.utils.NavigationUtil;
-import javafx.event.ActionEvent;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
+
 
 /**
  * Controller for the app dashboard
- * @author Matleena Kankaanpää
- * 8.9.2023
+ * @author Mikko Hänninen 19.9.2023
  */
 
-public class MainPageController {
-    
+public class MainPageController implements Initializable {
     @FXML
-    private void openProfile(ActionEvent event) throws IOException {
-        System.out.println("open profile");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/user-profile.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private Pane mainPane, menuPane;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setMainPane();
+        setMenuPane();
     }
 
-    @FXML
-    private void onLogoutClick(ActionEvent event) throws IOException {
-        System.out.println("log out");
+    public Pane getMainPane(){
+        return mainPane;
+    }
 
-        // logout
+    public Pane getMenuPane(){
+        return menuPane;
+    }
 
-        // Siirry login-sivulle
-        NavigationUtil nav = new NavigationUtil();
-        nav.openLoginPage(event);
+    public void setMenuPane(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main-menu.fxml"));
+            Parent firstView = loader.load();
+            MainMenuController menuController = loader.getController();
+            menuController.setMainController(this);
+            menuPane.getChildren().add(firstView);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void setMainPane(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main-welcome.fxml"));
+            Parent firstView = loader.load();
+            mainPane.getChildren().add(firstView);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }
