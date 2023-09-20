@@ -9,11 +9,11 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ShowRoomController implements Initializable {
+public class RoomController implements Initializable {
     @FXML
     private Text roomName;
 
-    public ShowRoomController(){
+    public RoomController(){
 
     }
     @Override
