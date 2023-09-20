@@ -114,7 +114,7 @@ public class CreateAccountController {
         System.out.println(user);
         saveUser(user);
 
-        // käyttäjän tallennus
+        // Käyttäjän tallennus välimuistiin
 
         createAccountErrorText.setText("");
         nav.openMainPage(event);
@@ -125,25 +125,38 @@ public class CreateAccountController {
     samaa käyttäjätunnusta löydy jo tietokannasta
      */
     private boolean validateUsername(String username) {
-        if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
-            usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
-            return false;
-        } else if (username.length() > validator.getUSERNAME_MAX_LENGTH()) {
-            usernameError.setText("Username must be " + validator.getUSERNAME_MAX_LENGTH() + " characters or less");
-            return false;
 
-        } else if (userDAO.getUser(username) != null) {
-            usernameError.setText("Username already taken");
+        try {
+            if (username.isEmpty()) {
+                usernameError.setText("Required field");
+                return false;
+            } else if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
+                usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
+                return false;
+            } else if (username.length() > validator.getUSERNAME_MAX_LENGTH()) {
+                usernameError.setText("Username must be " + validator.getUSERNAME_MAX_LENGTH() + " characters or less");
+                return false;
+            } else if (userDAO.getUser(username) != null) {
+                usernameError.setText("Username already taken");
+                return false;
+            }
+        } catch (Exception e) {
+            // Can't connect to the database to check if the username is available
+            System.out.println("not connected to db");
+            createAccountErrorText.setText("Error. Please try again shortly");
             return false;
         }
+
+        // Username valid and available
         usernameError.setText("Username available");
+        createAccountErrorText.setText("");
         return true;
     }
 
     // samat? min length voi poistaa?
     private boolean validateFirstName(String firstName) {
         if (firstName.isEmpty()) {
-            firstNameError.setText("First name can't be empty");
+            firstNameError.setText("Required field");
             return false;
         } else if (firstName.length() > validator.getFIRSTNAME_MAX_LENGTH()) {
             firstNameError.setText("First name must be " + validator.getFIRSTNAME_MAX_LENGTH() + " characters or less");
@@ -155,7 +168,7 @@ public class CreateAccountController {
 
     private boolean validateLastName(String lastName) {
         if (lastName.isEmpty()) {
-            lastNameError.setText("Last name can't be empty");
+            lastNameError.setText("Required field");
             return false;
         } else if (lastName.length() > validator.getLASTNAME_MAX_LENGTH()) {
             lastNameError.setText("Last name must be " + validator.getLASTNAME_MAX_LENGTH() + " characters or less");
@@ -166,8 +179,11 @@ public class CreateAccountController {
     }
 
     private boolean validateEmail(String email) {
-        if (!validator.emailFormatCorrect(email)) {
-            emailError.setText("Email address must be in the format yourname@domain.com");
+        if (email.isEmpty()){
+            emailError.setText("Required field");
+            return false;
+        } else if (!validator.emailFormatCorrect(email)) {
+            emailError.setText("Invalid email address");
             return false;
         }
         emailError.setText("");
@@ -175,8 +191,11 @@ public class CreateAccountController {
     }
 
     private boolean validatePhoneNumber(String phone) {
-        if (!validator.phoneFormatCorrect(phone)) {
-            phoneError.setText("Phone number can contain numbers and dashes");
+        if (phone.isEmpty()){
+            phoneError.setText("Required field");
+            return false;
+        } else if (!validator.phoneFormatCorrect(phone)) {
+            phoneError.setText("Invalid phone number");
             return false;
         }
         phoneError.setText("");
@@ -184,7 +203,10 @@ public class CreateAccountController {
     }
 
     private boolean validatePassword(String password) {
-        if (password.length() < validator.getPASSWORD_MIN_LENGTH()) {
+        if (password.isEmpty()){
+            passwordError.setText("Required field");
+            return false;
+        } else if (password.length() < validator.getPASSWORD_MIN_LENGTH()) {
             passwordError.setText("Password must be at least " + validator.getPASSWORD_MIN_LENGTH() + " characters");
             return false;
         } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
