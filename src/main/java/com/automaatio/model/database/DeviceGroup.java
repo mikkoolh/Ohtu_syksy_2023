@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * Device group entity
- * @author Matleena Kankaanpää
- * 10.9.2023
+ * @author Matleena Kankaanpää 10.9.2023
+ * @author Mikko Hänninen 20.9.2023
  */
 
 @Entity

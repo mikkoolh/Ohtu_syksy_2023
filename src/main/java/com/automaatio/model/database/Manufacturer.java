@@ -2,6 +2,8 @@ package com.automaatio.model.database;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * Manufacturer entity
  * @author Matleena Kankaanpää
@@ -19,6 +21,11 @@ public class Manufacturer {
 
     @Column
     private String name;
+
+    @Column
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    private List<Device> deviceList;
+
 
     /**
      * Parameterless constructor

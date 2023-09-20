@@ -4,7 +4,8 @@ package com.automaatio.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.automaatio.utils.CacheSingleton;
+
+import com.automaatio.controller.mainpage.MainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,7 +50,7 @@ public class MainPageController implements Initializable {
 
     public void setMainPane(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main-welcome.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/welcome.fxml"));
             Parent firstView = loader.load();
             mainPane.getChildren().add(firstView);
         } catch (IOException e) {

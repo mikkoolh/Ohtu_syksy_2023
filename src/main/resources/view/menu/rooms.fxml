@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="com.automaatio.controller.mainpage.MainMenuController">
+<children>
+    <VBox fx:id="roomsVBox" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <HBox prefHeight="30.0" prefWidth="359.0" spacing="10.0">
+                <children>
+                    <TextField fx:id="newRoomTextField" prefHeight="34.0" prefWidth="310.0" promptText="Room name" />
+                    <Button fx:id="addBtn" mnemonicParsing="false" onAction="#onAddGroupClick" prefHeight="34.0" prefWidth="78.0" text="Add" />
+                </children>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </HBox>
+        </children>
+    </VBox>
+</children>
+</AnchorPane>

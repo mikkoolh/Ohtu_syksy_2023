@@ -1,4 +1,4 @@
-package com.automaatio.controller;
+package com.automaatio.controller.mainpage;
 
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;

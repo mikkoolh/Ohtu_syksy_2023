@@ -1,5 +1,6 @@
-package com.automaatio.controller;
+package com.automaatio.controller.mainpage;
 
+import com.automaatio.controller.MainPageController;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
@@ -28,15 +29,41 @@ public class MainMenuController implements Initializable {
     private TextField newRoomTextField;
     @FXML
     private VBox roomsVBox;
+    @FXML
+    private Text etusivuText;
+
+    private Pane mainView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            mainView = mainController.getMainPane();
+            System.out.println(mainView);
+        } catch (Exception e) {
+            System.out.println("faillllll");
+        }
+
     }
 
     public void setMainController(MainPageController mainController){
         this.mainController = mainController;
     }
 
+    @FXML
+    private void openProfile(ActionEvent event) throws IOException {
+        System.out.println("open profile");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/user-profile.fxml"));
+            Parent newView = loader.load();
+            mainView.getChildren().clear();
+            mainView.getChildren().add(newView);
+
+        //    etusivuText.setText(loggedInUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void onShowRoomClick(ActionEvent event, DeviceGroup room) throws IOException {
         System.out.print("show room\n");
@@ -46,7 +73,7 @@ public class MainMenuController implements Initializable {
 
             //Load the new room FXML-file, clear the mainView and set the newView
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/show-room.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/room.fxml"));
                 Parent newView = loader.load();
                 mainView.getChildren().clear();
                 mainView.getChildren().add(newView);

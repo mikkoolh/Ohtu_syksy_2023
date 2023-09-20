@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.automaatio.controller.mainpage.MainMenuController"
+            prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <ImageView fx:id="UserPic" fitHeight="150.0" fitWidth="200.0" layoutX="99.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/paulallenscard.jpg" />
+                    </image>
+                </ImageView>
+                <HBox alignment="CENTER" layoutX="6.0" layoutY="146.0" prefHeight="40.0" prefWidth="387.0">
+                    <children>
+                        <Text fx:id="usernameTXT" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="382.3125">
+                            <font>
+                                <Font name="Copperplate Gothic Bold" size="16.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </HBox>
+                <Button fx:id="SettingsBtn" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" onAction="#openProfile" prefHeight="33.0" prefWidth="124.0" text="Edit Profile">
+                    <font>
+                        <Font name="Copperplate Gothic Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="logoutBtn" layoutX="262.0" layoutY="484.0" mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="33.0" prefWidth="124.0" text="Log Out">
+                    <font>
+                        <Font name="Copperplate Gothic Bold" size="14.0" />
+                    </font>
+                </Button>
+                <HBox alignment="CENTER" layoutX="6.0" layoutY="186.0" prefHeight="40.0" prefWidth="387.0">
+                    <children>
+                        <Text fx:id="nameTXT" strokeType="OUTSIDE" strokeWidth="0.0" text="Tähän sitten nimi/tervehdys" textAlignment="CENTER" wrappingWidth="382.3125">
+                            <font>
+                                <Font name="Copperplate Gothic Bold" size="16.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </HBox>
+            </children>
+</AnchorPane>

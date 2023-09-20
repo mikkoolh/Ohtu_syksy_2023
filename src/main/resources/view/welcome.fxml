@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.automaatio.controller.MainWelcomeController"
+            fx:controller="com.automaatio.controller.mainpage.WelcomeController"
             prefWidth="850.0">
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Home Automation" textAlignment="CENTER" wrappingWidth="850.0" AnchorPane.topAnchor="10.0">
                         <font>
