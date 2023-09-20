@@ -18,12 +18,21 @@ public class ProfileController implements Initializable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private Pane mainPane;
 
+    private String username = cache.getUser().getUsername();
+
+    private String name = cache.getUser().getFirstName();
+
+    @FXML
+    Text usernameTXT, nameTXT;
+
     public ProfileController() {
         mainPane = cache.getMainPane();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        usernameTXT.setText(username);
+        nameTXT.setText("Tervetuloa " + name + "!");
     }
 
     public void openProfile() {
@@ -33,7 +42,6 @@ public class ProfileController implements Initializable {
             Parent newView = loader.load();
             mainPane.getChildren().clear();
             mainPane.getChildren().add(newView);
-            //TODO set teksti käyttäjälle
         } catch (Exception e) {
             e.printStackTrace();
         }

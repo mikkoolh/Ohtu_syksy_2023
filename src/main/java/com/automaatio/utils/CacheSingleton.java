@@ -23,7 +23,7 @@ public class CacheSingleton {
     }
 
     public void setUser(User user){
-        this.user = user;
+        this.user = new User(user.getUsername(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getEmail(), user.getPassword(), user.getAge(), user.getUserType());
     }
 
     public void setRoom(DeviceGroup room) {

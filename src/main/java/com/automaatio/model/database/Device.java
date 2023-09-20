@@ -56,6 +56,7 @@ public class Device {
 
 
 
+
     /**
      * Default constructor for creating a new Device instance.
      */

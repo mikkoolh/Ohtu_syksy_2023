@@ -1,18 +1,21 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
-
+import com.automaatio.model.database.User;
+import com.automaatio.model.database.UserDAO;
+import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Node;
+
+import java.io.IOException;
 
 /**
  * Controller for the login form
@@ -29,6 +32,10 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordField;
+
+    private CacheSingleton cache = CacheSingleton.getInstance();
+
+    private UserDAO userDAO = new UserDAO();
 
     
     /** 
@@ -49,8 +56,14 @@ public class LoginController {
             System.out.println("open main page");
 
             // kirjaa käyttäjä sisään
+            cache.setUser(userDAO.getUser(username));
+            User user = cache.getUser();
+            String usernamecache = user.getUsername();
+            System.out.println(username);
+            System.out.println("cacheusername: " + usernamecache);
 
             NavigationUtil nav = new NavigationUtil();
+
             nav.openMainPage(event);
         } else {
             // näytä virhe

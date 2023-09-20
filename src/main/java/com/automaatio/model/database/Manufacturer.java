@@ -23,7 +23,7 @@ public class Manufacturer {
     private String name;
 
     @Column
-    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deviceID", cascade = CascadeType.ALL)
     private List<Device> deviceList;
 
 

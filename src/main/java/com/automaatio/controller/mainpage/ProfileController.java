@@ -2,6 +2,7 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
+import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,24 +24,17 @@ public class ProfileController {
     @FXML
     private TextField fnameField, lnameField, bdayField, emailField, phoneField;
     @FXML
-    Text etusivuText;
+    Text etusivuText, usernameTXT, nameTXT;
     @FXML
     private PasswordField passField;
 
     private UserDAO userDAO = new UserDAO();
 
-    private User user;
+    private User user = CacheSingleton.getInstance().getUser();
+    private CacheSingleton cache = CacheSingleton.getInstance();
 
-    private String loggedInUsername; // Lisätty käyttäjänimi-muuttuja
-
-    /**
-     * Set the logged-in username.
-     *
-     * @param username The username of the logged-in user.
-     */
-    public void setUsername(String username) {
-        this.loggedInUsername = username;
-    }
+    private String loggedInUsername = user.getUsername();
+    private String loggedInName = user.getFirstName();
 
     @FXML
     private void onBackClick(ActionEvent event) throws IOException {
@@ -64,22 +58,13 @@ public class ProfileController {
      */
     @FXML
     private void initialize() {
-        etusivuText.setText("Käyttäjänimi Keijo");
-        fnameField.setText("Matti");
-        lnameField.setText("Meikäläinen");
-        bdayField.setText("1.1.2000");
-        emailField.setText("joku@esimerkki.com");
-        phoneField.setText("040 123456");
-        passField.setText("Salainen_;)");
+        etusivuText.setText("Käyttäjänimi " + loggedInUsername);
+        fnameField.setText(loggedInName);
+        lnameField.setText(user.getLastName());
+        bdayField.setText("Tätä pitää viel muuttaa");
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
+        passField.setText(user.getPassword());
     }
 
-    /**
-     * Set the displayed username in the profile view.
-     *
-     * @param loggedInUsername The username of the logged-in user.
-     */
-    @FXML
-    public void setUsernames(String loggedInUsername) {
-
-    }
 }
