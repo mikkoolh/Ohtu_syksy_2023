@@ -10,7 +10,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -24,15 +28,12 @@ public class CreateAccountController {
     private final NavigationUtil nav;
     private final FormInputValidator validator;
     private final UserDAO userDAO;
+    private final int ICON_SIZE;
 
-    /**
-     * Constructor
-     */
-    public CreateAccountController() {
-        this.nav = new NavigationUtil();
-        this.validator = new FormInputValidator();
-        this.userDAO = new UserDAO();
-    }
+    private final Image show, hide;
+    @FXML
+    private final ImageView sauron;
+
 
     @FXML
     private TextField firstNameField;
@@ -55,8 +56,6 @@ public class CreateAccountController {
     @FXML
     private Text createAccountErrorText;
 
-
-    // Kenttien virheilmoitukset
     @FXML
     private Text usernameError;
 
@@ -77,6 +76,37 @@ public class CreateAccountController {
 
     @FXML
     private Button saveButton;
+
+    @FXML
+    private GridPane formGrid;
+
+    private boolean hidePassword;
+
+    @FXML
+    private Button togglePassword;
+
+    /*
+     To keep track of what's typed in the password field
+     while switching the field type
+     */
+    private String currentPassword;
+
+    /**
+     * Constructor
+     */
+    public CreateAccountController() {
+        this.nav = new NavigationUtil();
+        this.validator = new FormInputValidator();
+        this.userDAO = new UserDAO();
+        this.hidePassword = true;
+        this.currentPassword = "";
+        this.ICON_SIZE = 22; // Eye icon dimensions
+        this.sauron = new ImageView();
+
+        // Voi vaihtaa tai tehdä kokonaan erilaisen buttonin
+        this.show = new Image("images/eye-open-svgrepo-com.png");
+        this.hide = new Image("images/eye-hidden-svgrepo-com.png");
+    }
 
     /**
      * Navigates back to the login page
@@ -100,7 +130,7 @@ public class CreateAccountController {
         String email = emailField.getText().trim();
         String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Poistaa välilyönnit
         String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String password = currentPassword;
 
         System.out.println(username);
         System.out.println(firstName);
@@ -212,6 +242,9 @@ public class CreateAccountController {
         } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
             passwordError.setText("Password must be " + validator.getPASSWORD_MAX_LENGTH() + " characters or less");
             return false;
+        } else if (!password.trim().replaceAll("\\s", "").equals(password)) {
+            passwordError.setText("Password cannot contain spaces");
+            return false;
         }
         passwordError.setText("");
         return true;
@@ -235,13 +268,14 @@ public class CreateAccountController {
     private void initialize() {
         saveButton.setDisable(true);
         Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
+        currentPassword = passwordField.getText();
 
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
         String email = emailField.getText().trim();
         String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
         String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String password = currentPassword;
 
         // Set the input guidelines on screen
         validateUsername(username);
@@ -277,9 +311,19 @@ public class CreateAccountController {
         });
 
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validatePassword(newValue.trim());
+            validatePassword(newValue);
+            currentPassword = newValue;
             toggleButton();
         });
+
+        // Image view of the open/closed eye
+        sauron.setImage(show);
+        sauron.setPreserveRatio(true);
+        sauron.setFitHeight(ICON_SIZE);
+
+        // Button containing the image
+        togglePassword.setStyle("-fx-border-color: transparent; -fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent;");
+        togglePassword.setGraphic(sauron);
     }
 
     /*
@@ -291,9 +335,9 @@ public class CreateAccountController {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
         String email = emailField.getText().trim();
-        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Poistaa välilyönnit
+        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
         String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String password = currentPassword;
 
         boolean inputOk = validateUsername(username)
                 && validateFirstName(firstName)
@@ -303,5 +347,44 @@ public class CreateAccountController {
                 && validatePassword(password);
 
         saveButton.setDisable(!inputOk);
+    }
+
+    /*
+     Change the eye icon and switch the text field into
+     a password field (or vice versa) and pass whatever is typed
+     */
+    @FXML
+    private void togglePassword(ActionEvent event) {
+        if (hidePassword) {
+            // Create a text field
+            TextField textPassword = new TextField();
+            textPassword.setText(currentPassword);
+
+            //
+            textPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+                currentPassword = newValue;
+                validatePassword(newValue);
+                toggleButton();
+            });
+
+            formGrid.add(textPassword, 1, 10);
+            sauron.setImage(hide);
+        } else {
+            // Create a password field
+            PasswordField hiddenPassword = new PasswordField();
+            hiddenPassword.setText(currentPassword);
+
+            //
+            hiddenPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+                currentPassword = newValue;
+                validatePassword(newValue.trim());
+                toggleButton();
+            });
+
+            formGrid.add(hiddenPassword, 1, 10);
+            sauron.setImage(show);
+        }
+
+        this.hidePassword = !hidePassword;
     }
 }
