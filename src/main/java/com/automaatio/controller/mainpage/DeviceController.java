@@ -1,24 +1,26 @@
 package com.automaatio.controller.mainpage;
 
+import com.automaatio.model.database.Device;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
-import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RoomController implements Initializable {
+public class DeviceController implements Initializable {
+
     @FXML
-    private Text roomName;
+    private TextArea deviceNameField;
 
-    public RoomController() {
+    private Device device = CacheSingleton.getInstance().getDevice();
 
-    }
+    public DeviceController() {}
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CacheSingleton cache = CacheSingleton.getInstance();
-        roomName.setText(cache.getRoom().getName());
+        deviceNameField.setText(device.getName());
     }
 }

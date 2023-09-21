@@ -1,5 +1,6 @@
 package com.automaatio.utils;
 
+import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.User;
 import javafx.scene.layout.Pane;
@@ -9,6 +10,7 @@ public class CacheSingleton {
     private static CacheSingleton instance;
     private DeviceGroup room;
     private User user;
+    private Device device;
 
     private Pane mainPane, menuPane;
 
@@ -31,13 +33,20 @@ public class CacheSingleton {
         this.room = room;
     }
 
+    public void setDevice(Device device) {
+        System.out.println("device set in singleton: " + device.getName());
+        this.device = device;
+    }
+
     public User getUser(){
         return user;
     }
 
-    public DeviceGroup getRoom(){
-        System.out.println("getRoom in singleton: " +room.getName());
-        return room;
+    public DeviceGroup getRoom(){ return room; }
+
+    public Device getDevice() {
+        System.out.println("getDevice in singleton: " + device.getName());
+        return device;
     }
 
     public Pane getMainPane() {

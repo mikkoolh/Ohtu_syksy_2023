@@ -85,4 +85,30 @@ public class DeviceDAO {
         System.out.println("Poistettu " + deletedCount + " laitetta.");
 
     }
+
+    /**
+     * Deletes a device with a specific ID from the database.
+     *
+     * @param id The ID of the device to be deleted.
+     * @throws IllegalArgumentException If a device with the given ID is not found.
+     */
+    public void deleteDevice(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Device device = em.find(Device.class, id);
+            if (device != null) {
+                em.remove(device);
+            } else {
+                throw new IllegalArgumentException("device with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
 }

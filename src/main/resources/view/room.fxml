@@ -11,78 +11,78 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoomController">
-      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <Text fx:id="roomName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Some Room&gt;" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="Copperplate Gothic Bold" size="24.0" />
-               </font>
-            </Text>
-         </top>
-         <bottom>
-            <HBox prefHeight="50.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
-               </children>
-               <padding>
-                  <Insets left="300.0" />
-               </padding>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-            </HBox>
-         </bottom>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox prefHeight="37.0" prefWidth="600.0" spacing="10.0">
-                     <children>
-                        <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device1">
-                           <font>
-                              <Font name="Copperplate Gothic Bold" size="18.0" />
-                           </font>
-                        </TextArea>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="ON" />
-                     </children>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="30.0" prefHeight="37.0" prefWidth="600.0" spacing="10.0">
-                     <children>
-                        <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device2">
-                           <font>
-                              <Font name="Copperplate Gothic Bold" size="18.0" />
-                           </font>
-                        </TextArea>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="OFF" />
-                     </children>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="30.0" prefHeight="37.0" prefWidth="600.0" spacing="10.0">
-                     <children>
-                        <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device3">
-                           <font>
-                              <Font name="Copperplate Gothic Bold" size="18.0" />
-                           </font>
-                        </TextArea>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="ON" />
-                     </children>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets left="100.0" />
-               </padding>
-            </VBox>
-         </center>
-      </BorderPane>
+   <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <top>
+         <Text fx:id="roomName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Some Room&gt;" BorderPane.alignment="CENTER">
+            <font>
+               <Font name="Copperplate Gothic Bold" size="24.0" />
+            </font>
+         </Text>
+      </top>
+      <bottom>
+         <HBox prefHeight="50.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+            <children>
+               <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
+               <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
+            </children>
+            <padding>
+               <Insets left="300.0" />
+            </padding>
+            <BorderPane.margin>
+               <Insets />
+            </BorderPane.margin>
+         </HBox>
+      </bottom>
+      <center>
+         <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+               <HBox prefHeight="37.0" prefWidth="600.0" spacing="10.0">
+                  <children>
+                     <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device1">
+                        <font>
+                           <Font name="Copperplate Gothic Bold" size="18.0" />
+                        </font>
+                     </TextArea>
+                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="ON" />
+                  </children>
+                  <padding>
+                     <Insets left="5.0" />
+                  </padding>
+                  <VBox.margin>
+                     <Insets top="20.0" />
+                  </VBox.margin>
+               </HBox>
+               <HBox layoutX="10.0" layoutY="30.0" prefHeight="37.0" prefWidth="600.0" spacing="10.0">
+                  <children>
+                     <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device2">
+                        <font>
+                           <Font name="Copperplate Gothic Bold" size="18.0" />
+                        </font>
+                     </TextArea>
+                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="OFF" />
+                  </children>
+                  <padding>
+                     <Insets left="5.0" />
+                  </padding>
+               </HBox>
+               <HBox layoutX="10.0" layoutY="30.0" prefHeight="37.0" prefWidth="600.0" spacing="10.0">
+                  <children>
+                     <TextArea maxHeight="30.0" minHeight="15.0" prefHeight="30.0" prefWidth="521.0" text="Device3">
+                        <font>
+                           <Font name="Copperplate Gothic Bold" size="18.0" />
+                        </font>
+                     </TextArea>
+                     <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="ON" />
+                  </children>
+                  <padding>
+                     <Insets left="5.0" />
+                  </padding>
+               </HBox>
+            </children>
+            <padding>
+               <Insets left="100.0" />
+            </padding>
+         </VBox>
+      </center>
+   </BorderPane>
 </AnchorPane>
