@@ -22,9 +22,13 @@ public class DeviceGroup {
     @Column
     private String name;
 
-    @Column
-    @OneToMany(mappedBy = "deviceID", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deviceGroup", cascade = CascadeType.ALL) // Assuming Device entity has a reference to DeviceGroup named "deviceGroup"
     private List<Device> deviceList;
+
+    // User reference with the userName field linking to User's username
+    @ManyToOne
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    private User user;
 
     /**
      * Parameterless constructor
@@ -35,8 +39,9 @@ public class DeviceGroup {
      * Parameterized constructor
      * @param name Device group name
      */
-    public DeviceGroup(String name) {
+    public DeviceGroup(String name, User user) {
         this.name = name;
+        this.user = user;
     }
 
     public int getDeviceGroupId() {

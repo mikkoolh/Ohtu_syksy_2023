@@ -2,6 +2,7 @@ package com.automaatio.controller.mainpage.menu;
 
 import com.automaatio.model.database.DeviceGroup;
 
+import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RoomsController implements Initializable {
@@ -26,11 +28,17 @@ public class RoomsController implements Initializable {
     private TextField newRoomTextField;
     @FXML
     private VBox roomsVBox;
+
+    @FXML
+    private VBox roomsVBox2;
     private Pane mainPane;
+
+    private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
+        showRooms();
     }
 
     @FXML
@@ -51,7 +59,7 @@ public class RoomsController implements Initializable {
 
     @FXML
     private void onAddGroupClick(ActionEvent event) {
-        DeviceGroup newRoom = new DeviceGroup(newRoomTextField.getText());
+        DeviceGroup newRoom = new DeviceGroup(newRoomTextField.getText(), cache.getUser());
 
         newRoomTextField.setText("");                                   //clear the textfield
         roomsVBox.getChildren().add(makeVBoxForNewRoom(newRoom));               //add the new room to VBox
@@ -63,9 +71,12 @@ public class RoomsController implements Initializable {
             throw new RuntimeException(e);
         }
         System.out.println("Added group/room: " + newRoom.getName());
+
+        deviceGroupDAO.addDeviceGroup(newRoom);
+        System.out.println(newRoom);
     }
 
-    private HBox makeVBoxForNewRoom(DeviceGroup room){
+    private HBox makeVBoxForNewRoom(DeviceGroup room) {
         HBox box = new HBox();
         box.setSpacing(20);
 
@@ -87,5 +98,13 @@ public class RoomsController implements Initializable {
         box.getChildren().add(title);
         box.getChildren().add(showRoom);
         return box;
+    }
+
+    public void showRooms() {
+        roomsVBox2.getChildren().clear();
+        List<DeviceGroup> rooms = deviceGroupDAO.getRoomsByUser(cache.getUser());
+        for (DeviceGroup room : rooms) {
+            roomsVBox2.getChildren().add(makeVBoxForNewRoom(room));
+        }
     }
 }

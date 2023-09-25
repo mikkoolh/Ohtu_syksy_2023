@@ -18,6 +18,9 @@
                         <Insets />
                     </VBox.margin>
                 </HBox>
+                <ScrollPane fx:id="roomsScrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                    <VBox fx:id="roomsVBox2" />
+                </ScrollPane>
             </children>
         </VBox>
     </children>

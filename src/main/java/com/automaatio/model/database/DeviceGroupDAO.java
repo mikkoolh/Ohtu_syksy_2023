@@ -66,4 +66,17 @@ public class DeviceGroupDAO {
 
         System.out.println("Poistettu " + deletedCount + " ryhmää.");
     }
+
+    public List<DeviceGroup> getRoomsByUser(User user) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        TypedQuery<DeviceGroup> query = em.createQuery(
+                "SELECT dg FROM DeviceGroup dg WHERE dg.user = :userObj", DeviceGroup.class);
+        query.setParameter("userObj", user);
+        List<DeviceGroup> deviceGroups = query.getResultList();
+        em.getTransaction().commit();
+        return deviceGroups;
+    }
+
+
 }
