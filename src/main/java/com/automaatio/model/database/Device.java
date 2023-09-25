@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 /**
  * Author: Nikita Nossenko
  * Author: Mikko Hänninen
+ * Author: Elmo Erla
  * 
  * This class represents a Device entity that is stored in the database.
  */
@@ -56,8 +57,17 @@ public class Device {
     @JoinColumn(name = "device_group_id")
     private DeviceGroup deviceGroup;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roomID", referencedColumnName = "roomID", insertable = false, updatable = false)
+    private Room room;
 
+    public Room getRoom() {
+        return room;
+    }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     /**
      * Default constructor for creating a new Device instance.
