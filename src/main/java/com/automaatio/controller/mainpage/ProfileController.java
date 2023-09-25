@@ -47,6 +47,7 @@ public class ProfileController {
     private String loggedInUsername = user.getUsername();
     private String loggedInName = user.getFirstName();
 
+
     @FXML
     private void onBackClick(ActionEvent event) throws IOException {
         System.out.println("return to main page");
@@ -113,7 +114,7 @@ public class ProfileController {
         etusivuText.setText("Käyttäjänimi " + loggedInUsername);
         fnameField.setText(loggedInName);
         lnameField.setText(user.getLastName());
-        bdayField.setText("Tätä pitää viel muuttaa");
+        bdayField.setText(String.valueOf(user.getAge()));
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
     }

@@ -52,7 +52,7 @@
                       <Font name="System Bold" size="20.0" />
                   </font>
               </Text>
-              <Text fx:id="birthday" strokeType="OUTSIDE" strokeWidth="0.0" text="Birthday" GridPane.rowIndex="4">
+              <Text fx:id="birthday" strokeType="OUTSIDE" strokeWidth="0.0" text="Age" GridPane.rowIndex="4">
                   <font>
                       <Font name="System Bold" size="20.0" />
                   </font>
