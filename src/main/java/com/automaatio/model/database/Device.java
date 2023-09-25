@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 /**
  * Author: Nikita Nossenko
  * Author: Mikko Hänninen
+ * Author: Elmo Erla
  * 
  * This class represents a Device entity that is stored in the database.
  */
@@ -49,13 +50,24 @@ public class Device {
     @Column(name = "modelCode")
     private String modelCode;
 
+    @Column(name = "userName")
+    private String userName;
 
     @ManyToOne
     @JoinColumn(name = "device_group_id")
     private DeviceGroup deviceGroup;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roomID", referencedColumnName = "roomID", insertable = false, updatable = false)
+    private Room room;
 
+    public Room getRoom() {
+        return room;
+    }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     /**
      * Default constructor for creating a new Device instance.
@@ -70,13 +82,14 @@ public class Device {
      * @param modelCode   The model code of the device.
      * @param deviceGroup
      */
-    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup) {
+    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup, String userName) {
         this.onOff = false;
         this.automation = false;
         this.usageData = usageData;
         this.name = name;
         this.modelCode = modelCode;
         this.deviceGroup = deviceGroup;
+        this.userName = userName;
     }
 
     public int getDeviceID() {
@@ -102,6 +115,10 @@ public class Device {
     public long getUsageData() {
         return usageData;
     }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getUserName() { return userName; }
 
     public void setUsageData(long usageData) {
         this.usageData = usageData;

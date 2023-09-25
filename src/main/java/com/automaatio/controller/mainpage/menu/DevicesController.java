@@ -39,7 +39,7 @@ public class DevicesController implements Initializable {
             return;
         }
 
-        Device device = new Device(0, deviceName, "01", null);
+        Device device = new Device(0, deviceName, "01", null, cache.getUser().getUsername());
 
         dao.addDevice(device);
         System.out.println(device);
@@ -56,8 +56,7 @@ public class DevicesController implements Initializable {
      */
     public void showDevices() {
         devicesVBox.getChildren().clear();
-
-        List<Device> devices = dao.getAll();
+        List<Device> devices = dao.getDevicesByUserName(cache.getUser().getUsername());
         for (Device device : devices) {
             devicesVBox.getChildren().add(createDeviceRow(device));
         }
