@@ -71,6 +71,23 @@ public class DeviceDAO {
         }
     }
 
+    public List<Device> getDevicesByUserName(String userName) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            TypedQuery<Device> query = em.createQuery("SELECT d FROM Device d WHERE d.userName = :userName", Device.class);
+            query.setParameter("userName", userName);
+            List<Device> devices = query.getResultList();
+            em.getTransaction().commit();
+            return devices;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
     public void deleteAll() {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();

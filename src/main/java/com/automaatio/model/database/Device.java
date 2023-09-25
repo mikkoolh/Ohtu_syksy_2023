@@ -49,6 +49,8 @@ public class Device {
     @Column(name = "modelCode")
     private String modelCode;
 
+    @Column(name = "userName")
+    private String userName;
 
     @ManyToOne
     @JoinColumn(name = "device_group_id")
@@ -70,13 +72,14 @@ public class Device {
      * @param modelCode   The model code of the device.
      * @param deviceGroup
      */
-    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup) {
+    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup, String userName) {
         this.onOff = false;
         this.automation = false;
         this.usageData = usageData;
         this.name = name;
         this.modelCode = modelCode;
         this.deviceGroup = deviceGroup;
+        this.userName = userName;
     }
 
     public int getDeviceID() {
@@ -102,6 +105,10 @@ public class Device {
     public long getUsageData() {
         return usageData;
     }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getUserName() { return userName; }
 
     public void setUsageData(long usageData) {
         this.usageData = usageData;
