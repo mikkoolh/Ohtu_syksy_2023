@@ -4,11 +4,16 @@ import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -21,12 +26,18 @@ import java.io.IOException;
 
 public class ProfileController {
 
+    private Timeline notificationTimeline;
+
     @FXML
     private TextField fnameField, lnameField, bdayField, emailField, phoneField;
     @FXML
     Text etusivuText, usernameTXT, nameTXT;
     @FXML
-    private PasswordField passField;
+    private PasswordField oldpassField, newpassField;
+    @FXML
+    Button changeBtn;
+    @FXML
+    private Text profileErrorText;
 
     private UserDAO userDAO = new UserDAO();
 
@@ -52,6 +63,47 @@ public class ProfileController {
         nav.openLoginPage(event);
     }
 
+    @FXML
+    private void onChangePasswordClick() {
+        String oldPass = oldpassField.getText();
+        String newPass = newpassField.getText();
+
+        if (BCrypt.checkpw(oldPass, user.getPassword())) {
+            String newHashedPass = BCrypt.hashpw(newPass, BCrypt.gensalt());
+            user.setPassword(newHashedPass);
+            userDAO.updatePassword(loggedInUsername, oldPass, newPass);
+
+            oldpassField.clear();
+            newpassField.clear();
+
+            profileErrorText.setText("Salasana vaihdettu");
+            System.out.println("Salasana vaihdettu");
+
+            if (notificationTimeline != null) {
+                notificationTimeline.stop();
+            }
+            notificationTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(3), event -> {
+                        profileErrorText.setText("");
+                    })
+            );
+            notificationTimeline.play();
+        } else {
+            System.out.println("Salasana väärin");
+            profileErrorText.setText("Salasana väärin!");
+
+            if (notificationTimeline != null) {
+                notificationTimeline.stop();
+            }
+            notificationTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(3), event -> {
+                        profileErrorText.setText(""); // Clear the message
+                    })
+            );
+            notificationTimeline.play();
+        }
+    }
+
     /**
      * Initialize the user profile fields with default values.
      * This method is automatically called when the FXML file is loaded.
@@ -64,7 +116,6 @@ public class ProfileController {
         bdayField.setText("Tätä pitää viel muuttaa");
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
-        passField.setText(user.getPassword());
     }
 
 }

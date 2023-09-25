@@ -64,4 +64,5 @@ public class CacheSingleton {
     public void setMenuPane(Pane menuPane) {
         this.menuPane = menuPane;
     }
+
 }

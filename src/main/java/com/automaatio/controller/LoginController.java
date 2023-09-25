@@ -1,8 +1,5 @@
 package com.automaatio.controller;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -10,6 +7,7 @@ import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,8 +15,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller for the login form
@@ -54,6 +54,7 @@ public class LoginController {
         loginButton.setDisable(true);
         usernameField.setPromptText("Enter username");
         passwordField.setPromptText("Enter password");
+
 
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateUI();
@@ -95,6 +96,8 @@ public class LoginController {
             } else {
                 // User exists, check password
                 System.out.println("user exists");
+                System.out.println("user: " + username);
+                System.out.println("password: " + password);
 
                 if (BCrypt.checkpw(password, user.getPassword())) {
                     System.out.println("password correct");
@@ -114,6 +117,7 @@ public class LoginController {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             // Database connection error
             loginErrorText.setText("Error. Please try again shortly");
         }

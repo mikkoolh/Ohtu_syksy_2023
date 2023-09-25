@@ -3,6 +3,8 @@ package com.automaatio.model.database;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.List;
 
 /**
@@ -37,6 +39,33 @@ public class UserDAO {
             User user = em.find(User.class, username);
             em.getTransaction().commit();
             return user;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updatePassword(String username, String oldPassword, String newPassword) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            User user = em.find(User.class, username);
+
+            if (user != null) {
+                if (BCrypt.checkpw(oldPassword, user.getPassword())) {
+                    String newHashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+                    user.setPassword(newHashedPassword);
+                    em.merge(user);
+                    em.getTransaction().commit();
+                } else {
+                    System.out.println("Väärä salasana");
+                }
+            } else {
+                System.out.println("Käyttäjää ei löytynyt");
+            }
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
