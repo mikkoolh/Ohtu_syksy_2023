@@ -143,7 +143,7 @@ public class CreateAccountController {
         System.out.println(user);
         saveUser(user);
         createAccountErrorText.setText("");
-        nav.openMainPage(event);
+        nav.openLoginPage(event);
     }
 
     /*
