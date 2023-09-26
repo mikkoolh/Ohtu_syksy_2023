@@ -38,7 +38,10 @@ public class RoutinesController implements Initializable {
     public void showRoutines() {
         routinesVBox.getChildren().clear();
         DeviceDAO deviceDAO = new DeviceDAO();
-        List<Device> devices = deviceDAO.getAutoDevices();
+        //List<Device> devices = deviceDAO.getAutoDevices();
+
+        // Testejä varten
+        List<Device> devices = deviceDAO.getAll();
 
         for (Device d : devices) {
             routinesVBox.getChildren().add(createRoutineRow(d));
@@ -53,7 +56,7 @@ public class RoutinesController implements Initializable {
         Button editButton = new Button("Edit");
         editButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
 
-        editButton.setOnAction(event -> onEditClick());
+        editButton.setOnAction(event -> onEditClick(d));
 
         // Handle edit button action here
 
@@ -99,8 +102,9 @@ public class RoutinesController implements Initializable {
         return routineRow;
     }
 
-    private void onEditClick() {
+    private void onEditClick(Device d) {
         System.out.println("show routine\n");
+        cache.setDevice(d);
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/routine.fxml"));
             Parent newView = loader.load();
