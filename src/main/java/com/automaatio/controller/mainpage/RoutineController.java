@@ -1,0 +1,23 @@
+package com.automaatio.controller.mainpage;
+
+import com.automaatio.utils.CacheSingleton;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class RoutineController implements Initializable {
+
+    @FXML
+    private TextArea routineNameField;
+
+    public RoutineController() {}
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        CacheSingleton cache = CacheSingleton.getInstance();
+        routineNameField.setText("Testirutiini");
+    }
+}
