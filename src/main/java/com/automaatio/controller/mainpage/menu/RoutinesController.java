@@ -38,7 +38,7 @@ public class RoutinesController implements Initializable {
     public void showRoutines() {
         routinesVBox.getChildren().clear();
         DeviceDAO deviceDAO = new DeviceDAO();
-        List<Device> devices = deviceDAO.getAll();
+        List<Device> devices = deviceDAO.getAutoDevices();
 
         for (Device d : devices) {
             routinesVBox.getChildren().add(createRoutineRow(d));
