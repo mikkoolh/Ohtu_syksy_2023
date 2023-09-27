@@ -16,6 +16,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * @author Elmo Erla
+ *
+ */
 public class DeviceController implements Initializable {
 
     DeviceDAO dao = new DeviceDAO();
@@ -40,17 +44,27 @@ public class DeviceController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        CacheSingleton cache = CacheSingleton.getInstance();
         deviceNameField.setText(device.getName());
         changeNameButton.setOnAction(e -> changeDeviceName());
 
         modelCode.setText(device.getModelCode());
+        usageData.setText(Long.toString(device.getUsageData()));
+
+        DeviceGroup currentDeviceGroup = device.getDeviceGroup();
+        if (currentDeviceGroup != null) {
+            deviceGroup.setPromptText(currentDeviceGroup.getName());
+        }
 
         populateDeviceGroupComboBox();
 
         deviceGroup.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 deviceGroup.setPromptText(newValue.getName());
+
+                int deviceId = device.getDeviceID();
+                int newDeviceGroupId = newValue.getDeviceGroupId();
+
+                dao.updateDeviceGroup(deviceId, newDeviceGroupId);
             }
         });
     }

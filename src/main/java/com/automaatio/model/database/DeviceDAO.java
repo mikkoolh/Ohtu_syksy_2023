@@ -146,4 +146,31 @@ public class DeviceDAO {
         }
         em.getTransaction().commit();
     }
+
+    /**
+     * Updates the deviceGroupId of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newDeviceGroupId The new deviceGroupId for the device.
+     */
+    public void updateDeviceGroup(int deviceId, int newDeviceGroupId) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+        DeviceGroup newDeviceGroup = em.find(DeviceGroup.class, newDeviceGroupId);
+
+        if (device != null && newDeviceGroup != null) {
+            device.setDeviceGroup(newDeviceGroup);
+            em.merge(device);
+        } else {
+            if (device == null) {
+                System.out.println("Device with ID " + deviceId + " was not found.");
+            }
+            if (newDeviceGroup == null) {
+                System.out.println("DeviceGroup with ID " + newDeviceGroupId + " was not found.");
+            }
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
 }
