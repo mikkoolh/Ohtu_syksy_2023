@@ -25,7 +25,6 @@ public class DevicesController implements Initializable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     DeviceDAO dao = new DeviceDAO();
 
-
     private Pane mainPane;
 
     @FXML
