@@ -8,6 +8,7 @@ import jakarta.persistence.TypedQuery;
 
 /**
  * Author Nikita Nossenko
+ * Author Elmo Erla
  *
  * DAO for Device
  */
@@ -126,6 +127,23 @@ public class DeviceDAO {
         } finally {
             em.close();
         }
+    }
 
+    /**
+     * Updates the name of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newName The new name for the device.
+     */
+    public void updateDeviceName(int deviceId, String newName) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+
+        if (device != null) {
+            device.setName(newName);
+            em.merge(device);
+        }
+        em.getTransaction().commit();
     }
 }

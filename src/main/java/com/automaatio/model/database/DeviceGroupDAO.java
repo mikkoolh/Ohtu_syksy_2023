@@ -77,6 +77,4 @@ public class DeviceGroupDAO {
         em.getTransaction().commit();
         return deviceGroups;
     }
-
-
 }
