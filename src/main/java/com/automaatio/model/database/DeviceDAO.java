@@ -1,10 +1,10 @@
 package com.automaatio.model.database;
 
-import java.util.List;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 /**
  * Author Nikita Nossenko
@@ -66,6 +66,22 @@ public class DeviceDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e; // Rethrow the exception for the caller to handle
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Device> getAutoDevices() {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            TypedQuery<Device> query = em.createQuery("SELECT d FROM Device d WHERE d.automation = true", Device.class);
+            List<Device> devices = query.getResultList();
+            em.getTransaction().commit();
+            return devices;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
         } finally {
             em.close();
         }
