@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class DeviceController implements Initializable {
 
     DeviceDAO dao = new DeviceDAO();
-    DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO(); // Create instance of DeviceGroupDAO
+    DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
 
     private final CacheSingleton cache = CacheSingleton.getInstance();
 
@@ -34,7 +34,7 @@ public class DeviceController implements Initializable {
     @FXML
     private TextField modelCode;
     @FXML
-    private ComboBox<DeviceGroup> deviceGroup; // Specify the type for ComboBox
+    private ComboBox<DeviceGroup> deviceGroup;
     @FXML
     private TextField usageData;
 
