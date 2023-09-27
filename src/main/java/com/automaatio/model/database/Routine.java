@@ -20,16 +20,16 @@ public class Routine {
     private int routineID;
 
     @Column(name = "username")
-    private String user;
+    private User user;
 
     @Column(name = "device_id")
-    private int deviceID;
+    private Device deviceID;
 
     @Column(name = "feature_id")
-    private int featureID;
+    private Feature featureID;
 
     @Column(name = "weekday_id")
-    private int weekdayID;
+    private Weekday weekdayID;
 
     @Column(name = "start_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime startTime;
@@ -42,7 +42,7 @@ public class Routine {
 
     public Routine() {}
 
-    public Routine(String user, int deviceID, int featureID, int weekdayID, LocalDateTime startTime, LocalDateTime endTime) {
+    public Routine(User user, Device deviceID, Feature featureID, Weekday weekdayID, LocalDateTime startTime, LocalDateTime endTime) {
         this.user = user;
         this.deviceID = deviceID;
         this.featureID = featureID;
@@ -52,19 +52,19 @@ public class Routine {
         this.automated = false; // False by default
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public int getFeatureID() {
+    public Feature getFeatureID() {
         return featureID;
     }
 
-    public int getDeviceID() {
+    public Device getDeviceID() {
         return deviceID;
     }
 
-    public int getWeekdayID() {
+    public Weekday getWeekdayID() {
         return weekdayID;
     }
 
