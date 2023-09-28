@@ -69,6 +69,11 @@ public class ProfileController {
         String oldPass = oldpassField.getText();
         String newPass = newpassField.getText();
 
+        if (newPass.isEmpty() || newPass.length() < 8) {
+            profileErrorText.setText("Salasana ei kelpaa!");
+            return;
+        }
+
         if (BCrypt.checkpw(oldPass, user.getPassword())) {
             String newHashedPass = BCrypt.hashpw(newPass, BCrypt.gensalt());
             user.setPassword(newHashedPass);

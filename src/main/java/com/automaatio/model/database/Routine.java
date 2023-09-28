@@ -18,16 +18,20 @@ public class Routine {
     @Column(name = "routine_id")
     private int routineID;
 
-    @Column(name = "username")
+    @ManyToOne
+    @JoinColumn(name = "username")
     private User user;
 
-    @Column(name = "device_id")
+    @ManyToOne
+    @JoinColumn(name = "device_id")
     private Device deviceID;
 
-    @Column(name = "feature_id")
+    @ManyToOne
+    @JoinColumn(name = "feature_id")
     private Feature featureID;
 
-    @Column(name = "event_time_id")
+    @ManyToOne
+    @JoinColumn(name = "event_time_id")
     private EventTime eventTime;
 
     @Column(name = "automated")
