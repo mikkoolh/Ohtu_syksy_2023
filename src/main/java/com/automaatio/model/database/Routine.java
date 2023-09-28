@@ -1,7 +1,6 @@
 package com.automaatio.model.database;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * @author Matleena Kankaanpää
@@ -28,27 +27,19 @@ public class Routine {
     @Column(name = "feature_id")
     private Feature featureID;
 
-    @Column(name = "weekday_id")
-    private Weekday weekdayID;
-
-    @Column(name = "start_time", columnDefinition = "TIMESTAMP")
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time", columnDefinition = "TIMESTAMP")
-    private LocalDateTime endTime;
+    @Column(name = "event_time_id")
+    private EventTime eventTime;
 
     @Column(name = "automated")
     private boolean automated;
 
     public Routine() {}
 
-    public Routine(User user, Device deviceID, Feature featureID, Weekday weekdayID, LocalDateTime startTime, LocalDateTime endTime) {
+    public Routine(User user, Device deviceID, Feature featureID, EventTime eventTime) {
         this.user = user;
         this.deviceID = deviceID;
         this.featureID = featureID;
-        this.weekdayID = weekdayID;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.eventTime = eventTime;
         this.automated = false; // False by default
     }
 
@@ -64,17 +55,7 @@ public class Routine {
         return deviceID;
     }
 
-    public Weekday getWeekdayID() {
-        return weekdayID;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
+    public EventTime getEventTime() { return eventTime; }
 
     public boolean getAutomated() {
         return automated;
