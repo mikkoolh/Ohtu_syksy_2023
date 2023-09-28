@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Author Nikita Nossenko
+ * Author Elmo Erla
  *
  * DAO for Device
  */
@@ -142,6 +143,50 @@ public class DeviceDAO {
         } finally {
             em.close();
         }
+    }
 
+    /**
+     * Updates the name of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newName The new name for the device.
+     */
+    public void updateDeviceName(int deviceId, String newName) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+
+        if (device != null) {
+            device.setName(newName);
+            em.merge(device);
+        }
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Updates the deviceGroupId of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newDeviceGroupId The new deviceGroupId for the device.
+     */
+    public void updateDeviceGroup(int deviceId, int newDeviceGroupId) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+        DeviceGroup newDeviceGroup = em.find(DeviceGroup.class, newDeviceGroupId);
+
+        if (device != null && newDeviceGroup != null) {
+            device.setDeviceGroup(newDeviceGroup);
+            em.merge(device);
+        } else {
+            if (device == null) {
+                System.out.println("Device with ID " + deviceId + " was not found.");
+            }
+            if (newDeviceGroup == null) {
+                System.out.println("DeviceGroup with ID " + newDeviceGroupId + " was not found.");
+            }
+        }
+        em.getTransaction().commit();
+        em.close();
     }
 }

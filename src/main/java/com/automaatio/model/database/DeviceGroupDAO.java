@@ -1,6 +1,8 @@
 package com.automaatio.model.database;
 
 import java.util.List;
+
+import com.automaatio.utils.CacheSingleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -8,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 /**
  * DAO for Device Group
  * @author Matleena Kankaanpää
+ * @author Elmo Erla
  * 10.9.2023
  */
 
@@ -78,5 +81,42 @@ public class DeviceGroupDAO {
         return deviceGroups;
     }
 
+    public List<Device> getDevicesByRoom(DeviceGroup deviceGroup) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        TypedQuery<Device> query = em.createQuery(
+                "SELECT d FROM Device d WHERE d.deviceGroup = :deviceGroupObj", Device.class);
+        query.setParameter("deviceGroupObj", deviceGroup);
+        List<Device> devices = query.getResultList();
+        em.getTransaction().commit();
+        return devices;
+    }
 
+    /**
+     * Removes a device from a specific device group
+     * @param deviceGroup The device group from which the device should be removed
+     * @param device The device to be removed
+     */
+    public void removeDeviceFromGroup(DeviceGroup deviceGroup, Device device) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        device.setDeviceGroup(null);
+        em.merge(device);
+        em.getTransaction().commit();
+    }
+
+    public List<Device> getDevicesNotInGroup(int groupId, String user) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        TypedQuery<Device> query = em.createQuery(
+                "SELECT d FROM Device d WHERE (d.deviceGroup.id != :groupId OR d.deviceGroup IS NULL) AND d.userName = :user", Device.class);
+        query.setParameter("groupId", groupId);
+        query.setParameter("user", user);
+
+        List<Device> devicesNotInGroup = query.getResultList();
+
+        em.getTransaction().commit();
+        return devicesNotInGroup;
+    }
 }

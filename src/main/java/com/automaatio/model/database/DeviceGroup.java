@@ -71,4 +71,7 @@ public class DeviceGroup {
     public List<Device> getDeviceList() {
         return deviceList;
     }
+
+    @Override
+    public String toString() { return this.name; }
 }
