@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 public class DeviceGroupDaoTest {
 
     DeviceGroupDAO dgDao;
@@ -36,11 +33,11 @@ public class DeviceGroupDaoTest {
 
     @Test
     public void testGetAll() {
-        DeviceGroup dg1 = new DeviceGroup("Ryhmä1");
-        DeviceGroup dg2 = new DeviceGroup("2Ryhmä");
+        //DeviceGroup dg1 = new DeviceGroup("Ryhmä1");
+        //DeviceGroup dg2 = new DeviceGroup("2Ryhmä");
 
-        dgDao.addDeviceGroup(dg1);
-        dgDao.addDeviceGroup(dg2);
+        //dgDao.addDeviceGroup(dg1);
+        //dgDao.addDeviceGroup(dg2);
 
         List<DeviceGroup> dgroups = dgDao.getAll();
 

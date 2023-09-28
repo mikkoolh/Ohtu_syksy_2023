@@ -50,4 +50,26 @@ public class RoutineDAO {
             em.close();
         }
     }
+
+    /**
+     * Fetches routines by device ID
+     * @param deviceId The ID of the device
+     * @return A list of Routine objects for the specified device
+     */
+    public List<Routine> getRoutinesByDeviceId(int deviceId) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            TypedQuery<Routine> query = em.createQuery("SELECT r FROM Routine r WHERE r.deviceID.id = :deviceId", Routine.class)
+                    .setParameter("deviceId", deviceId);
+            List<Routine> routines = query.getResultList();
+            em.getTransaction().commit();
+            return routines;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

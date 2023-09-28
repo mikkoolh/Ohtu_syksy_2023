@@ -12,7 +12,7 @@
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/> <!-- Updated driver class -->
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/> <!-- Updated dialect -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/> <!-- Updated dialect -->
         </properties>
     </persistence-unit>
 </persistence>

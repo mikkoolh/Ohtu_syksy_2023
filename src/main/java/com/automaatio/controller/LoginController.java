@@ -72,6 +72,7 @@ public class LoginController {
                 System.out.println(user.getUsername());
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("not connected to db");
         }
         //

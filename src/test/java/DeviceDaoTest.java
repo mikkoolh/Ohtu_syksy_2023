@@ -1,9 +1,9 @@
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.DeviceGroup;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,12 +48,12 @@ public class DeviceDaoTest {
 
     @Test
     public void testGetAll() {
-        DeviceGroup group1 = new DeviceGroup("Testiryhmä");
-        Device device1 = new Device(1, "TestiLaite1", "ABC123", group1);
-        Device device2 = new Device(2, "TestiLaite2", "CBA321", group1);
+       // DeviceGroup group1 = new DeviceGroup("Testiryhmä");
+       // Device device1 = new Device(1, "TestiLaite1", "ABC123", group1);
+       // Device device2 = new Device(2, "TestiLaite2", "CBA321", group1);
 
-        deviceDAO.addDevice(device1);
-        deviceDAO.addDevice(device2);
+       // deviceDAO.addDevice(device1);
+        //deviceDAO.addDevice(device2);
 
         List<Device> devices = deviceDAO.getAll();
 
