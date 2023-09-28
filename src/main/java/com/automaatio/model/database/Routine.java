@@ -47,6 +47,10 @@ public class Routine {
         this.automated = false; // False by default
     }
 
+    public int getRoutineID() {
+        return routineID;
+    }
+
     public User getUser() {
         return user;
     }
@@ -63,5 +67,9 @@ public class Routine {
 
     public boolean getAutomated() {
         return automated;
+    }
+
+    public void setAutomated(boolean automated) {
+        this.automated = automated;
     }
 }

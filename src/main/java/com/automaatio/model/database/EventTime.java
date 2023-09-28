@@ -34,6 +34,14 @@ public class EventTime {
     @Column(name = "history_events")
     private List<HistoryEvents> historyEvents;
 
+    public EventTime() {}
+
+    public EventTime(LocalDateTime startTime, LocalDateTime endTime, Weekday weekday) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.weekday = weekday;
+    }
+
     public Long getEventTimeId() {
         return eventTimeId;
     }

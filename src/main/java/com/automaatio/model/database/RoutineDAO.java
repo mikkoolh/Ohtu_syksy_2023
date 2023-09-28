@@ -72,4 +72,25 @@ public class RoutineDAO {
             em.close();
         }
     }
+
+    /**
+     * @param id ID of the routine
+     * @param automated Boolean indicating whether the routine is automatized or not
+     */
+    public void toggleOnOff(int id, boolean automated) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            Routine routine = em.find(Routine.class, id);
+            routine.setAutomated(!automated);
+            System.out.println("updated routine");
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }
