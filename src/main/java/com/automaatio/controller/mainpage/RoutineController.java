@@ -2,21 +2,27 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RoutineController implements Initializable {
@@ -39,6 +45,8 @@ public class RoutineController implements Initializable {
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
+    private Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         routines = fetchRoutines();
@@ -58,24 +66,20 @@ public class RoutineController implements Initializable {
 
     private HBox createRoutineRow(Routine routine) {
         Label nameLabel = new Label("Routine " + routine.getRoutineID());
-
-        // Aloitus- ja lopetusajat HBoxissa
         Label startTime = new Label(getFormattedTime(routine.getEventTime().getStartTime()));
         Label endTime = new Label(getFormattedTime(routine.getEventTime().getEndTime()));
-        HBox timeContainer = new HBox();
-        timeContainer.getChildren().addAll(endTime, new Label(" - "), startTime);
-
         Label weekday = new Label(routine.getEventTime().getWeekday().getName());
-
         Button editButton = new Button("Edit");
-
         ToggleSwitch toggle = getToggleSwich(routine);
 
-        HBox routineRow = new HBox(10);
-        routineRow.getChildren().addAll(nameLabel, weekday, timeContainer, editButton, toggle);
+        HBox timeContainer = new HBox(new Label(" - "), startTime, new Label(" - "), endTime, new Label(" - "), weekday);
+        timeContainer.setAlignment(Pos.CENTER);
+
+        HBox routineRow = new HBox(10, nameLabel, timeContainer, editButton, toggle);
+        HBox.setHgrow(routineRow, Priority.ALWAYS);
 
         routineRow.setStyle("-fx-border-color: black;");
-
+        routineRow.setPadding(new Insets(5));
         return routineRow;
     }
 
@@ -103,11 +107,30 @@ public class RoutineController implements Initializable {
                 // Pitää lisätä deviceen joku tarkistus et se sit kans menee päälle sillon
             }
         });
+
+        toggleSwitches.put(routine, toggle);
+
         return toggle;
     }
 
+    @FXML
     public void automateAll(ActionEvent actionEvent) {
-        System.out.println("switch all on/off");
+        boolean allAutomated = allAutomated();
+
+        for (Routine routine : routines) {
+            routine.setAutomated(!allAutomated);
+            routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
+        }
+
+
+        updateUI();
+
+        for (Routine routine : routines) {
+            ToggleSwitch toggle = toggleSwitches.get(routine);
+            if (toggle != null) {
+                toggle.setSelected(!allAutomated);
+            }
+        }
     }
 
     // Returns true only if all routines are automated
