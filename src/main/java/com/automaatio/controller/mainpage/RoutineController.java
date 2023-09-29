@@ -20,10 +20,8 @@ import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RoutineController implements Initializable {
 
@@ -49,7 +47,7 @@ public class RoutineController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        routines = fetchRoutines();
+        routines = sortByTime(fetchRoutines()); // Sort fetched routines by time
         routineNameField.setText(cache.getDevice().getName());
         loadRoutines();
         updateUI();
@@ -152,5 +150,11 @@ public class RoutineController implements Initializable {
         } else {
             automateAllBtn.setText("Automate all ✨");
         }
+    }
+
+    private List<Routine> sortByTime(List<Routine> routines) {
+        return routines.stream()
+                .sorted(Comparator.comparing(routine -> routine.getEventTime().getStartTime()))
+                .toList();
     }
 }
