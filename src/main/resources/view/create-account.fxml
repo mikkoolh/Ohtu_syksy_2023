@@ -14,54 +14,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.CreateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.CreateAccountController">
     <children>
-        <VBox alignment="TOP_CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create account" wrappingWidth="600.091796875">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create account" wrappingWidth="130.97616577148438">
                     <font>
                         <Font size="20.0" />
-                    </font></Text>
-                <GridPane fx:id="formGrid" maxWidth="500.0" prefWidth="500.0">
+                    </font>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin></Text>
+                <GridPane fx:id="formGrid" maxWidth="400">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Label text="First name" GridPane.rowIndex="2" />
                         <Label text="Last name" GridPane.rowIndex="4" />
                         <Label text="Email" GridPane.rowIndex="6" />
-                        <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Phone number" GridPane.rowIndex="8" />
+                        <TextField fx:id="firstNameField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="lastNameField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="emailField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Telephone" GridPane.rowIndex="8" />
                         <Label minHeight="30.0" text="Username" />
                         <Label text="Password" GridPane.rowIndex="10" />
-                        <TextField fx:id="phoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <TextField fx:id="usernameField" maxHeight="30.0" minHeight="30.0" GridPane.columnIndex="1" />
-                        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <TextField fx:id="phoneNumberField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="usernameField" maxHeight="30.0" maxWidth="250" minHeight="30.0" minWidth="250" GridPane.columnIndex="1" />
+                        <PasswordField fx:id="passwordField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <Text fx:id="usernameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text fx:id="firstNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Text fx:id="lastNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Text fx:id="emailError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Text fx:id="phoneError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <Button fx:id="togglePassword" maxHeight="30.0" onAction="#togglePassword" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                        <Button fx:id="togglePassword" maxHeight="30.0" mnemonicParsing="false" onAction="#togglePassword" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                     </children>
                 </GridPane>
                 <Text fx:id="createAccountErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -71,7 +74,7 @@
                         <Button fx:id="saveButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Create account" />
                     </buttons>
                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" />
+                        <Insets top="20.0" />
                     </VBox.margin>
                 </ButtonBar>
             </children>
