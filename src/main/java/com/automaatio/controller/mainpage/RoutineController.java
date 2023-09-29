@@ -2,6 +2,7 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,22 +33,28 @@ public class RoutineController implements Initializable {
     @FXML
     private VBox routineVBox;
 
+    @FXML
+    private Button automateAllBtn;
+
+    private List<Routine> routines;
+    private final int ID = cache.getDevice().getDeviceID();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        routines = fetchRoutines();
         routineNameField.setText(cache.getDevice().getName());
         loadRoutines();
+        updateUI();
     }
 
     private void loadRoutines() {
-        int id = cache.getDevice().getDeviceID();
-        List<Routine> routines = routineDAO.getRoutinesByDeviceId(id);
-
         for (Routine routine : routines) {
             String routineName = routine.getUser().getEmail();
             HBox routineRow = createRoutineRow(routine);
             routineVBox.getChildren().add(routineRow);
         }
     }
+
 
     private HBox createRoutineRow(Routine routine) {
         Label nameLabel = new Label("Routine " + routine.getRoutineID());
@@ -72,28 +79,55 @@ public class RoutineController implements Initializable {
         return routineRow;
     }
 
+    // Refetches routines from the database
+    private List<Routine> fetchRoutines() {
+        return routineDAO.getRoutinesByDeviceId(ID);
+    }
+
     private String getFormattedTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return time.format(formatter);
     }
 
-    /**
-     * Creates a toggle switch with an event handler to change
-     * the state of the current routine
-     * @param routine The selected routine
-     * @return A new toggle switch
-     */
+    // Creates a toggle switch with an event handler to change the state of the current routine
     private ToggleSwitch getToggleSwich(Routine routine) {
         ToggleSwitch toggle = new ToggleSwitch();
         toggle.setSelected(routine.getAutomated());
+        toggle.setText("Automate");
 
         toggle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println(routine.getUser().getUsername() + " :D");
                 routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
+                updateUI();
+                // Pitää lisätä deviceen joku tarkistus et se sit kans menee päälle sillon
             }
         });
         return toggle;
+    }
+
+    public void automateAll(ActionEvent actionEvent) {
+        System.out.println("switch all on/off");
+    }
+
+    // Returns true only if all routines are automated
+    private boolean allAutomated() {
+        for (Routine routine : fetchRoutines()) {
+            if (!routine.getAutomated()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void updateUI() {
+        System.out.println("update ui");
+
+        if (allAutomated()) {
+            automateAllBtn.setText("Deselect all");
+
+        } else {
+            automateAllBtn.setText("Automate all ✨");
+        }
     }
 }
