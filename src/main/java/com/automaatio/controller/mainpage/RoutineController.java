@@ -50,7 +50,7 @@ public class RoutineController implements Initializable {
     }
 
     private HBox createRoutineRow(Routine routine) {
-        Label nameLabel = new Label("Routine name");
+        Label nameLabel = new Label("Routine " + routine.getRoutineID());
 
         // Aloitus- ja lopetusajat HBoxissa
         Label startTime = new Label(getFormattedTime(routine.getEventTime().getStartTime()));
