@@ -93,4 +93,21 @@ public class RoutineDAO {
             em.close();
         }
     }
+
+    public void setAutomated(int id, boolean setTo) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            Routine routine = em.find(Routine.class, id);
+            routine.setAutomated(setTo);
+            System.out.println("updated routine");
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }
