@@ -4,7 +4,6 @@ package com.automaatio.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +15,7 @@ import javafx.scene.layout.Pane;
 /**
  * Controller for the app dashboard
  * @author Mikko Hänninen 19.9.2023
+ *
  */
 
 public class MainPageController implements Initializable {
