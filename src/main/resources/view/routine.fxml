@@ -6,13 +6,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoutineController">
     <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <center>
-            <VBox fx:id="routineVBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
                 <children>
                     <HBox prefHeight="37.0" prefWidth="600.0" spacing="10.0">
                         <children>
@@ -30,7 +32,20 @@
                             <Insets top="20.0" />
                         </VBox.margin>
                     </HBox>
-               <Button fx:id="automateAllBtn" onAction="#automateAll" mnemonicParsing="false" />
+                    <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <Button onAction="#addRoutine" text="+ Add new" />
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button fx:id="automateAllBtn" mnemonicParsing="false" onAction="#automateAll">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin></Button>
+                        </children>
+                    </HBox>
+               <VBox fx:id="routineVBox" maxWidth="-Infinity" prefHeight="480.0" prefWidth="600.0">
+                  <children>
+                     <Text fx:id="noRoutinesText" strokeType="OUTSIDE" strokeWidth="0.0" text="You don't have any routines for this device yet" />
+                  </children></VBox>
                 </children>
                 <padding>
                     <Insets left="100.0" />

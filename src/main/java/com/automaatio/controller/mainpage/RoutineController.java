@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -40,10 +41,14 @@ public class RoutineController implements Initializable {
     @FXML
     private Button automateAllBtn;
 
+    @FXML
+    private Text noRoutinesText;
+
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
     private Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
+    private Map<Button, Routine> deleteButtons = new HashMap<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,10 +59,22 @@ public class RoutineController implements Initializable {
     }
 
     private void loadRoutines() {
-        for (Routine routine : routines) {
-            String routineName = routine.getUser().getEmail();
-            HBox routineRow = createRoutineRow(routine);
-            routineVBox.getChildren().add(routineRow);
+        routineVBox.getChildren().clear();
+
+        List<Routine> r = sortByTime(fetchRoutines());
+
+        if (r.isEmpty()) {
+            routineVBox.setAlignment(Pos.CENTER);
+            routineVBox.getChildren().add(noRoutinesText);
+        } else {
+            routineVBox.setAlignment(Pos.TOP_LEFT);
+            routineVBox.getChildren().remove(noRoutinesText);
+
+            for (Routine routine : r) {
+                String routineName = routine.getUser().getEmail();
+                HBox routineRow = createRoutineRow(routine);
+                routineVBox.getChildren().add(routineRow);
+            }
         }
     }
 
@@ -73,7 +90,11 @@ public class RoutineController implements Initializable {
         HBox timeContainer = new HBox(new Label(" - "), startTime, new Label(" - "), endTime, new Label(" - "), weekday);
         timeContainer.setAlignment(Pos.CENTER);
 
-        HBox routineRow = new HBox(10, nameLabel, timeContainer, editButton, toggle);
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(deleteRoutine);
+        deleteButtons.put(deleteButton, routine);
+
+        HBox routineRow = new HBox(10, nameLabel, timeContainer, editButton, toggle, deleteButton);
         HBox.setHgrow(routineRow, Priority.ALWAYS);
 
         routineRow.setStyle("-fx-border-color: black;");
@@ -157,4 +178,23 @@ public class RoutineController implements Initializable {
                 .sorted(Comparator.comparing(routine -> routine.getEventTime().getStartTime()))
                 .toList();
     }
+
+    public void addRoutine(ActionEvent actionEvent) {
+        System.out.println("add routine");
+    }
+
+    private final EventHandler<ActionEvent> deleteRoutine = new EventHandler<>() {
+        public void handle(ActionEvent event) {
+            Routine routineToDelete = deleteButtons.get((Button) event.getTarget());
+
+            try {
+                routineDAO.deleteRoutine(routineToDelete.getRoutineID());
+            } catch(Exception e) {
+                e.printStackTrace();
+                // joku virheilmoitus
+            }
+            routines.remove(routineToDelete);
+            loadRoutines();
+        }
+    };
 }

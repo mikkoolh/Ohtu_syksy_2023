@@ -52,9 +52,6 @@ public class LoginController {
     @FXML
     private void initialize() {
         loginButton.setDisable(true);
-        usernameField.setPromptText("Enter username");
-        passwordField.setPromptText("Enter password");
-
 
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateUI();

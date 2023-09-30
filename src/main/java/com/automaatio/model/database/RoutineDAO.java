@@ -110,4 +110,28 @@
                 em.close();
             }
         }
+
+        /**
+         * Deletes a routine from the database
+         * @param id ID of the routine to delete
+         */
+        public void deleteRoutine(int id) {
+            EntityManager em = MysqlDBJpaConn.getInstance();
+            em.getTransaction().begin();
+            try {
+                Routine routine = em.find(Routine.class, id);
+                if (routine != null) {
+                    em.remove(routine);
+                    System.out.println("routine " + id + " deleted");
+                } else {
+                    throw new IllegalArgumentException("routine with id  " + id + " was not found");
+                }
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                em.getTransaction().rollback();
+                throw e;
+            } finally {
+                em.close();
+            }
+        }
     }
