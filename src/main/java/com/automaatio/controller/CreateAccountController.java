@@ -100,14 +100,17 @@ public class CreateAccountController {
     }
 
     /*
-    Käyttäjätunnuksen validointi ja tarkistus ettei
-    samaa käyttäjätunnusta löydy jo tietokannasta
+    Check that the username doesn't already exist in the
+    database and is in a valid format
      */
     private boolean validateUsername(String username) {
 
         try {
             if (username.isEmpty()) {
                 usernameError.setText("Required field");
+                return false;
+            } else if (!validator.includesNoSpaces(username)) {
+                usernameError.setText("Username cannot contain spaces");
                 return false;
             } else if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
                 usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
@@ -132,7 +135,6 @@ public class CreateAccountController {
         return true;
     }
 
-    // samat? min length voi poistaa?
     private boolean validateFirstName(String firstName) {
         if (firstName.isEmpty()) {
             firstNameError.setText("Required field");
@@ -191,7 +193,7 @@ public class CreateAccountController {
         } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
             passwordError.setText("Password must be " + validator.getPASSWORD_MAX_LENGTH() + " characters or less");
             return false;
-        } else if (!password.trim().replaceAll("\\s", "").equals(password)) {
+        } else if (!validator.includesNoSpaces(password)) {
             passwordError.setText("Password cannot contain spaces");
             return false;
         }
