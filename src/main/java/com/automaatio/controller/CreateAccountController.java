@@ -1,7 +1,6 @@
 package com.automaatio.controller;
 
 import java.io.IOException;
-import java.util.List;
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
@@ -29,60 +28,19 @@ public class CreateAccountController {
     private final FormInputValidator validator;
     private final UserDAO userDAO;
     private final int ICON_SIZE;
-
+    private String firstName, lastName, email, phoneNumber, username, password;
     private final Image show, hide;
     @FXML
     private final ImageView sauron;
-
     @FXML
-    private TextField firstNameField;
-
+    private TextField firstNameField, lastNameField, emailField, phoneNumberField, usernameField, passwordField;
     @FXML
-    private TextField lastNameField;
-
+    private Text createAccountErrorText, usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError;
     @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField phoneNumberField;
-
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private TextField passwordField;
-
-    @FXML
-    private Text createAccountErrorText;
-
-    @FXML
-    private Text usernameError;
-
-    @FXML
-    private Text firstNameError;
-
-    @FXML
-    private Text lastNameError;
-
-    @FXML
-    private Text emailError;
-
-    @FXML
-    private Text phoneError;
-
-    @FXML
-    private Text passwordError;
-
-    @FXML
-    private Button saveButton;
-
+    private Button saveButton, togglePassword;
     @FXML
     private GridPane formGrid;
-
     private boolean hidePassword;
-
-    @FXML
-    private Button togglePassword;
 
     /*
      To keep track of what's typed in the password field
@@ -94,17 +52,17 @@ public class CreateAccountController {
      * Constructor
      */
     public CreateAccountController() {
-        this.nav = new NavigationUtil();
-        this.validator = new FormInputValidator();
-        this.userDAO = new UserDAO();
-        this.hidePassword = true;
-        this.currentPassword = "";
-        this.ICON_SIZE = 22; // Eye icon dimensions
-        this.sauron = new ImageView();
+        nav = new NavigationUtil();
+        validator = new FormInputValidator();
+        userDAO = new UserDAO();
+        hidePassword = true;
+        currentPassword = "";
+        ICON_SIZE = 22; // Eye icon dimensions
+        sauron = new ImageView();
 
         // Voi vaihtaa tai tehdä kokonaan erilaisen buttonin
-        this.show = new Image("images/eye-open-svgrepo-com.png");
-        this.hide = new Image("images/eye-hidden-svgrepo-com.png");
+        show = new Image("images/eye-open-svgrepo-com.png");
+        hide = new Image("images/eye-hidden-svgrepo-com.png");
     }
 
     /**
@@ -124,12 +82,7 @@ public class CreateAccountController {
      */
     @FXML
     protected void onSave(ActionEvent event) throws IOException {
-        String firstName = firstNameField.getText().trim();
-        String lastName = lastNameField.getText().trim();
-        String email = emailField.getText().trim();
-        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
-        String username = usernameField.getText().trim();
-        String password = currentPassword;
+        getFieldValues();
 
         System.out.println(username);
         System.out.println(firstName);
@@ -265,14 +218,8 @@ public class CreateAccountController {
     private void initialize() {
         saveButton.setDisable(true);
         Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
-        currentPassword = passwordField.getText();
 
-        String firstName = firstNameField.getText().trim();
-        String lastName = lastNameField.getText().trim();
-        String email = emailField.getText().trim();
-        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
-        String username = usernameField.getText().trim();
-        String password = currentPassword;
+        getFieldValues();
 
         // Set the input guidelines on screen
         validateUsername(username);
@@ -328,13 +275,7 @@ public class CreateAccountController {
     whether all fields are ok
      */
     private void toggleButton() {
-        // :p
-        String firstName = firstNameField.getText().trim();
-        String lastName = lastNameField.getText().trim();
-        String email = emailField.getText().trim();
-        String phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
-        String username = usernameField.getText().trim();
-        String password = currentPassword;
+        getFieldValues();
 
         boolean inputOk = validateUsername(username)
                 && validateFirstName(firstName)
@@ -382,6 +323,15 @@ public class CreateAccountController {
             sauron.setImage(show);
         }
 
-        this.hidePassword = !hidePassword;
+        hidePassword = !hidePassword;
+    }
+
+    private void getFieldValues(){
+        firstName = firstNameField.getText().trim();
+        lastName = lastNameField.getText().trim();
+        email = emailField.getText().trim();
+        phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
+        username = usernameField.getText().trim();
+        password = currentPassword;
     }
 }
