@@ -2,7 +2,7 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
-import javafx.application.Platform;
+import com.automaatio.utils.RoutineUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -22,7 +23,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RoutineController implements Initializable {
 
@@ -42,26 +42,29 @@ public class RoutineController implements Initializable {
     private Button automateAllBtn;
 
     @FXML
-    private Text noRoutinesText;
+    private Text noRoutinesText, routineErrorText;
+
+    @FXML
+    private ScrollPane routineScrollPane;
 
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
     private Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
     private Map<Button, Routine> deleteButtons = new HashMap<>();
+    private RoutineUtils util = new RoutineUtils();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        routines = sortByTime(fetchRoutines()); // Sort fetched routines by time
+        routines = util.sortByWeekday(util.sortByTime(fetchRoutines())); // Sort fetched routines by time
         routineNameField.setText(cache.getDevice().getName());
-        loadRoutines();
+        loadRoutines(routines);
         updateUI();
+        routineScrollPane.setStyle("-fx-background-color:transparent;");
     }
 
-    private void loadRoutines() {
+    private void loadRoutines(List<Routine> r) {
         routineVBox.getChildren().clear();
-
-        List<Routine> r = sortByTime(fetchRoutines());
 
         if (r.isEmpty()) {
             routineVBox.setAlignment(Pos.CENTER);
@@ -87,7 +90,7 @@ public class RoutineController implements Initializable {
         Button editButton = new Button("Edit");
         ToggleSwitch toggle = getToggleSwich(routine);
 
-        HBox timeContainer = new HBox(new Label(" - "), startTime, new Label(" - "), endTime, new Label(" - "), weekday);
+        HBox timeContainer = new HBox(new Label(" - "), endTime, new Label(" - "), startTime, new Label(" - "), weekday);
         timeContainer.setAlignment(Pos.CENTER);
 
         Button deleteButton = new Button("Delete");
@@ -134,7 +137,7 @@ public class RoutineController implements Initializable {
 
     @FXML
     public void automateAll(ActionEvent actionEvent) {
-        boolean allAutomated = allAutomated();
+        boolean allAutomated = util.allAutomated(fetchRoutines());
 
         for (Routine routine : routines) {
             routine.setAutomated(!allAutomated);
@@ -152,20 +155,10 @@ public class RoutineController implements Initializable {
         }
     }
 
-    // Returns true only if all routines are automated
-    private boolean allAutomated() {
-        for (Routine routine : fetchRoutines()) {
-            if (!routine.getAutomated()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void updateUI() {
         System.out.println("update ui");
 
-        if (allAutomated()) {
+        if (util.allAutomated(fetchRoutines())) {
             automateAllBtn.setText("Deselect all");
 
         } else {
@@ -173,13 +166,8 @@ public class RoutineController implements Initializable {
         }
     }
 
-    private List<Routine> sortByTime(List<Routine> routines) {
-        return routines.stream()
-                .sorted(Comparator.comparing(routine -> routine.getEventTime().getStartTime()))
-                .toList();
-    }
-
-    public void addRoutine(ActionEvent actionEvent) {
+    @FXML
+    private void addRoutine(ActionEvent actionEvent) {
         System.out.println("add routine");
     }
 
@@ -189,12 +177,12 @@ public class RoutineController implements Initializable {
 
             try {
                 routineDAO.deleteRoutine(routineToDelete.getRoutineID());
+                routineErrorText.setText("");
             } catch(Exception e) {
                 e.printStackTrace();
-                // joku virheilmoitus
+                routineErrorText.setText("An error occurred");
             }
-            routines.remove(routineToDelete);
-            loadRoutines();
+            loadRoutines(fetchRoutines());
         }
     };
 }

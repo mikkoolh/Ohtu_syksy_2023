@@ -33,11 +33,6 @@ public class Weekday {
         this.name = name;
     }
 
-    /*
-    @OneToMany(mappedBy = "weekdays")
-    private List<EventTime> eventTimes;
-     */
-
     public int getWeekdayId() {
         return weekdayId;
     }
@@ -53,17 +48,4 @@ public class Weekday {
     public void setName(String name) {
         this.name = name;
     }
-
-    /*
-    hajotti testit atm
-
-    public List<EventTime> getEventTimes() {
-        return eventTimes;
-    }
-
-    public void setEventTimes(List<EventTime> eventTimes) {
-        this.eventTimes = eventTimes;
-    }
-
-     */
 }
