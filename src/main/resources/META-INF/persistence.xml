@@ -6,13 +6,13 @@
     <persistence-unit name="DevPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://mysql.metropolia.fi/nikitano"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nikitano"/>
             <property name="jakarta.persistence.jdbc.user" value="nikitano"/>
-            <property name="jakarta.persistence.jdbc.password" value="OTP2023"/>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/> <!-- Updated driver class -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+            <property name="jakarta.persistence.jdbc.password" value="automaatio"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/> <!-- Updated dialect -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
         </properties>
     </persistence-unit>
 </persistence>
