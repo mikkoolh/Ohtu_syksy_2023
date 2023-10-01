@@ -1,7 +1,8 @@
 package com.automaatio.utils;
 
 import com.automaatio.model.database.Routine;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 
@@ -48,5 +49,15 @@ public class RoutineUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * Time formatter
+     * @param time A LocalDateTime object
+     * @return A string in HH:mm format
+     */
+    public String getFormattedTime(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return time.format(formatter);
     }
 }

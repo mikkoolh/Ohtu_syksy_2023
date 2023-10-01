@@ -96,8 +96,8 @@ public class RoutineController implements Initializable {
 
     private HBox createRoutineRow(Routine routine) {
         Label nameLabel = new Label("Routine " + routine.getRoutineID());
-        Label startTime = new Label(getFormattedTime(routine.getEventTime().getStartTime()));
-        Label endTime = new Label(getFormattedTime(routine.getEventTime().getEndTime()));
+        Label startTime = new Label(util.getFormattedTime(routine.getEventTime().getStartTime()));
+        Label endTime = new Label(util.getFormattedTime(routine.getEventTime().getEndTime()));
         Label weekday = new Label(routine.getEventTime().getWeekday().getName());
         Button editButton = new Button("Edit");
         ToggleSwitch toggle = getToggleSwich(routine);
@@ -134,11 +134,6 @@ public class RoutineController implements Initializable {
     // Refetches routines from the database
     private List<Routine> fetchRoutines() {
         return routineDAO.getRoutinesByDeviceId(ID);
-    }
-
-    private String getFormattedTime(LocalDateTime time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        return time.format(formatter);
     }
 
     // Creates a toggle switch with an event handler to change the state of the current routine
@@ -192,18 +187,31 @@ public class RoutineController implements Initializable {
         }
     }
 
+    // Shows a confirmation popup when the "Delete routine" button is clicked
     private final EventHandler<ActionEvent> deleteRoutine = new EventHandler<>() {
         public void handle(ActionEvent event) {
             Routine routineToDelete = deleteButtons.get((Button) event.getTarget());
 
-            try {
-                routineDAO.deleteRoutine(routineToDelete.getRoutineID());
-                routineErrorText.setText("");
-            } catch(Exception e) {
-                e.printStackTrace();
-                routineErrorText.setText("An error occurred");
+            // Define the popup
+            Alert alert = new Alert(Alert.AlertType.NONE, null, ButtonType.OK,
+                    ButtonType.CANCEL);
+            EventTime time = routineToDelete.getEventTime();
+            alert.setContentText("Delete routine on " + time.getWeekday().getName() + "s at "
+            + util.getFormattedTime(time.getStartTime()) + "-" +
+                    util.getFormattedTime(time.getStartTime()) + "?");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Delete");
+
+            // Respond to user input
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                try {
+                    routineDAO.deleteRoutine(routineToDelete.getRoutineID());
+                    routineErrorText.setText("");
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    routineErrorText.setText("An error occurred");
+                }
+                loadRoutines(fetchRoutines());
             }
-            loadRoutines(fetchRoutines());
         }
     };
 
