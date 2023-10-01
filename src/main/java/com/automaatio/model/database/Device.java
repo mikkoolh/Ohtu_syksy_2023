@@ -92,6 +92,15 @@ public class Device {
         this.userName = userName;
     }
 
+    public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup) {
+        this.onOff = false;
+        this.automation = false;
+        this.usageData = usageData;
+        this.modelCode = modelCode;
+        this.deviceGroup = deviceGroup;
+        this.userName = userName;
+    }
+
     public int getDeviceID() {
         return deviceID;
     }

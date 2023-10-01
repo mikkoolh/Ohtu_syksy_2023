@@ -39,6 +39,10 @@ public class DeviceGroup {
      * Parameterized constructor
      * @param name Device group name
      */
+
+    public DeviceGroup(String name) {
+        this.name = name;
+    }
     public DeviceGroup(String name, User user) {
         this.name = name;
         this.user = user;
