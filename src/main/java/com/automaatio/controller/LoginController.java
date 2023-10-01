@@ -108,6 +108,7 @@ public class LoginController {
                     String usernamecache = loggedInUser.getUsername();
                     System.out.println(username);
                     System.out.println("cacheusername: " + usernamecache);
+                    System.out.println("maxprice in login:" +loggedInUser.getMaxPrice());
 
                     loginErrorText.setText("");
                     nav.openMainPage(event);

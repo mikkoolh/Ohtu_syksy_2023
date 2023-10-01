@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.automaatio.controller.mainpage.MainMenuController"
-            prefHeight="600.0" prefWidth="400.0">
-    <Accordion maxWidth="400.0" prefHeight="699.0" prefWidth="463.0" expandedPane="$rooms">
+
+<AnchorPane centerShape="false" maxWidth="400" prefHeight="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.MainMenuController">
+    <Accordion centerShape="false" maxWidth="400" prefHeight="720.0" expandedPane="$rooms" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <panes>
             <TitledPane fx:id="rooms" animated="false" prefHeight="540.0" text="Rooms">
                 <fx:include source="menu/rooms.fxml" />
@@ -22,13 +20,13 @@
                     <Font name="Copperplate Gothic Bold" size="24.0" />
                 </font>
             </TitledPane>
-            <TitledPane animated="false" prefHeight="540.0" prefWidth="400.0" text="Routines">
+            <TitledPane animated="false" prefHeight="540.0" text="Routines">
                 <fx:include source="menu/routines.fxml" />
                 <font>
                     <Font name="Copperplate Gothic Bold" size="24.0" />
                 </font>
             </TitledPane>
-            <TitledPane animated="false" layoutX="10.0" layoutY="98.0" prefHeight="540.0" prefWidth="400.0" text="Profile">
+            <TitledPane animated="false" layoutX="10.0" layoutY="98.0" prefHeight="540.0" text="Profile">
                 <fx:include source="menu/profile.fxml" />
                 <font>
                     <Font name="Copperplate Gothic Bold" size="24.0" />

@@ -104,4 +104,39 @@ public class UserDAO {
 
         System.out.println("Poistettu " + deletedCount + " käyttäjää.");
     }
+
+    public void updateMaxPrice(double price, String username){
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            User user = em.find(User.class, username);
+            user.setMaxPrice(price);
+            em.merge(user);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Käyttäjää ei löytynyt");
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public double getMaxPrice(String username){
+        double maxPrice = 0;
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        try (em) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, username);
+            if (user != null) {
+                maxPrice = user.getMaxPrice();
+                em.getTransaction().commit();
+            } else {
+                maxPrice = 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println("Ongelma tietojen hakemisessa.");
+        }
+        return maxPrice;
+    }
 }

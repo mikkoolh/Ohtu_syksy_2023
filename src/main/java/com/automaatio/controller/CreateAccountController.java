@@ -92,7 +92,7 @@ public class CreateAccountController {
         System.out.println(password);
 
         // Käyttäjän luonti
-        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1);
+        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1, 1000000);
         System.out.println(user);
         saveUser(user);
         createAccountErrorText.setText("");
@@ -137,8 +137,8 @@ public class CreateAccountController {
         if (firstName.isEmpty()) {
             firstNameError.setText("Required field");
             return false;
-        } else if (firstName.length() > validator.getFIRSTNAME_MAX_LENGTH()) {
-            firstNameError.setText("First name must be " + validator.getFIRSTNAME_MAX_LENGTH() + " characters or less");
+        } else if (firstName.length() > validator.getNAME_MAX_LENGTH()) {
+            firstNameError.setText("First name must be " + validator.getNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
         firstNameError.setText("");
@@ -149,8 +149,8 @@ public class CreateAccountController {
         if (lastName.isEmpty()) {
             lastNameError.setText("Required field");
             return false;
-        } else if (lastName.length() > validator.getLASTNAME_MAX_LENGTH()) {
-            lastNameError.setText("Last name must be " + validator.getLASTNAME_MAX_LENGTH() + " characters or less");
+        } else if (lastName.length() > validator.getNAME_MAX_LENGTH()) {
+            lastNameError.setText("Last name must be " + validator.getNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
         lastNameError.setText("");

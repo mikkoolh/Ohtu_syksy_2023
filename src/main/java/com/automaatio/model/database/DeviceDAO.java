@@ -37,7 +37,7 @@ public class DeviceDAO {
      * @param id ID of the device
      * @return Device object
      */
-    public Device getDeviceType(int id) {
+    public Device getDevice(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
@@ -184,6 +184,24 @@ public class DeviceDAO {
             }
             if (newDeviceGroup == null) {
                 System.out.println("DeviceGroup with ID " + newDeviceGroupId + " was not found.");
+            }
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void updateDeviceOnOff(int deviceId){
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+
+        if (device != null) {
+            device.switchOnOff();
+            em.merge(device);
+        } else {
+            if (device == null) {
+                System.out.println("Device with ID " + deviceId + " was not found.");
             }
         }
         em.getTransaction().commit();

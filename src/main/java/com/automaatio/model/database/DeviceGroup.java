@@ -48,10 +48,6 @@ public class DeviceGroup {
         return this.deviceGroupId;
     }
 
-    public void setDeviceGroupId(int deviceGroupId) {
-        this.deviceGroupId = deviceGroupId;
-    }
-
     public String getName() {
         return this.name;
     }

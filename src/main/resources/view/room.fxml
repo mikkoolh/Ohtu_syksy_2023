@@ -1,60 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ScrollPane?>
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoomController">
-   <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <top>
-         <Text fx:id="roomName" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Some Room&gt;" BorderPane.alignment="CENTER">
-            <font>
-               <Font name="Copperplate Gothic Bold" size="24.0" />
-            </font>
-         </Text>
-      </top>
-      <bottom>
-         <VBox spacing="10.0"> <!-- Uusi VBox -->
-            <HBox prefHeight="50.0" prefWidth="200.0" spacing="50.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
-               </children>
-               <padding>
-                  <Insets left="300.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER">
-               <ComboBox fx:id="deviceComboBox" maxWidth="700.0" prefWidth="300.0" prefHeight="25.0"/>
-            </HBox>
-         </VBox>
-      </bottom>
-      <center>
-         <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-               <HBox prefHeight="37.0" prefWidth="600.0" spacing="10.0">
-                  <padding>
-                     <Insets left="5.0" />
-                  </padding>
-                  <VBox.margin>
-                     <Insets top="20.0" />
-                  </VBox.margin>
-               </HBox>
-            </children>
-            <padding>
-               <Insets left="100.0" />
-            </padding>
-         </VBox>
-         <ScrollPane fx:id="devicesScrollPane" fitToWidth="true" maxWidth="700.0" VBox.vgrow="ALWAYS">
-            <VBox fx:id="devicesVBox" />
-         </ScrollPane>
-      </center>
-   </BorderPane>
+<AnchorPane prefHeight="720" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoomController">
+   <Button layoutX="250.0" layoutY="559.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
+   <ComboBox fx:id="deviceComboBox" layoutX="308.0" layoutY="643.0" maxWidth="880.0" prefHeight="25.0" prefWidth="300.0" />
+   <Text fx:id="roomName" layoutX="372.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Some Room&gt;">
+      <font>
+         <Font name="Copperplate Gothic Bold" size="24.0" />
+      </font>
+   </Text>
+   <ScrollPane fx:id="devicesScrollPane" fitToHeight="true" fitToWidth="true" layoutX="108.0" layoutY="91.0" prefWidth="700.0">
+      <VBox fx:id="devicesVBox" alignment="CENTER" />
+   </ScrollPane>
+   <Button layoutX="550.0" layoutY="559.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
 </AnchorPane>

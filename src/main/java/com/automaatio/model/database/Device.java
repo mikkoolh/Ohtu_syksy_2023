@@ -57,18 +57,6 @@ public class Device {
     @JoinColumn(name = "device_group_id")
     private DeviceGroup deviceGroup;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roomID", referencedColumnName = "roomID", insertable = false, updatable = false)
-    private Room room;
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
     /**
      * Default constructor for creating a new Device instance.
      */
@@ -83,8 +71,8 @@ public class Device {
      * @param deviceGroup
      */
     public Device(long usageData, String name, String modelCode, DeviceGroup deviceGroup, String userName) {
-        this.onOff = false;
-        this.automation = false;
+        onOff = false;
+        automation = false;
         this.usageData = usageData;
         this.name = name;
         this.modelCode = modelCode;
@@ -100,9 +88,11 @@ public class Device {
         return onOff;
     }
 
-    public void setOnOff(boolean onOff) {
-        this.onOff = onOff;
+    public void switchOnOff() {
+        onOff = !onOff;
     }
+
+
 
     public boolean isAutomation() {
         return automation;

@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
+import com.automaatio.controller.mainpage.CreateDeviceRow;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class DevicesController implements Initializable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
+    private CreateDeviceRow deviceRow = new CreateDeviceRow();
     DeviceDAO dao = new DeviceDAO();
 
     private Pane mainPane;
@@ -57,62 +59,8 @@ public class DevicesController implements Initializable {
         devicesVBox.getChildren().clear();
         List<Device> devices = dao.getDevicesByUserName(cache.getUser().getUsername());
         for (Device device : devices) {
-            devicesVBox.getChildren().add(createDeviceRow(device));
+            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, true));
         }
-    }
-
-    private VBox createDeviceRow(Device device) {
-        Label deviceLabel = new Label(device.getName());
-        deviceLabel.setTextFill(Color.web("#070707"));
-        deviceLabel.setFont(new Font(30));
-
-        Button editButton = new Button("Edit");
-        editButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
-
-        editButton.setOnAction(event -> editDevice(device));
-
-        VBox deviceRow = new VBox(10);
-        deviceRow.setStyle("-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: #353535;");
-
-
-        Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
-        deleteButton.setOnAction(event -> {
-            dao.deleteDevice(device.getDeviceID());
-            devicesVBox.getChildren().remove(deviceRow);
-        });
-
-        ToggleButton toggleButton = new ToggleButton();
-        toggleButton.setText("Off");
-        toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
-        toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            if (isSelected) {
-                toggleButton.setText("On");
-                toggleButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
-            } else {
-                toggleButton.setText("Off");
-                toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
-            }
-        });
-
-        Pane spacer = new Pane();
-
-        HBox buttonsRow = new HBox(20);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        buttonsRow.getChildren().addAll(editButton, deleteButton, spacer, toggleButton);
-        buttonsRow.setAlignment(Pos.TOP_LEFT);
-
-        deviceRow.setStyle("-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: #353535;");
-        deviceRow.getChildren().addAll(deviceLabel, buttonsRow);
-
-        return deviceRow;
     }
 
     private void editDevice(Device device) {
@@ -128,9 +76,15 @@ public class DevicesController implements Initializable {
         }
     }
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
         showDevices();
+    }
+
+    public void updateOnOff(Device device){
+
     }
 }

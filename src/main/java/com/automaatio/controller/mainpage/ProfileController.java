@@ -29,13 +29,13 @@ public class ProfileController {
     private Timeline notificationTimeline;
 
     @FXML
-    private TextField fnameField, lnameField, bdayField, emailField, phoneField;
+    private TextField fnameField, lnameField, bdayField, emailField, phoneField, priceLimit;
     @FXML
-    Text etusivuText, usernameTXT, nameTXT;
+    Text etusivuText;
     @FXML
     private PasswordField oldpassField, newpassField;
     @FXML
-    Button changeBtn;
+    Button changeBtn, saveMaxValue;
     @FXML
     private Text profileErrorText;
 
@@ -110,6 +110,18 @@ public class ProfileController {
         }
     }
 
+    @FXML
+    public void onMaxValueSave(){
+        double price = Double.parseDouble(priceLimit.getText());
+        try {
+            userDAO.updateMaxPrice(price, user.getUsername());
+            user.setMaxPrice(price);
+        } catch (Exception e) {
+            System.out.println("Ongelma hinnan päivittämisessä.");
+        }
+
+    }
+
     /**
      * Initialize the user profile fields with default values.
      * This method is automatically called when the FXML file is loaded.
@@ -122,6 +134,7 @@ public class ProfileController {
         bdayField.setText(String.valueOf(user.getAge()));
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
+        priceLimit.setText(Double.toString(user.getMaxPrice()));
     }
 
 }

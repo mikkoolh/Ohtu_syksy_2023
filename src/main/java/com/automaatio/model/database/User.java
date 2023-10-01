@@ -41,6 +41,9 @@ public class User {
     @Column(name = "userType")
     private int userType;
 
+    @Column(name = "max_price")
+    private double maxPrice;
+
     /**
      * Save a new user
      *
@@ -55,7 +58,7 @@ public class User {
      */
 //   * @param userType
 
-    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
+    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,6 +66,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.age = age;
+        this.maxPrice = maxPrice;
+        System.out.println("käyty saveUser");
     }
 
     /**
@@ -81,7 +86,7 @@ public class User {
      * @param age
      * @param userType
      */
-    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
+    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -90,6 +95,7 @@ public class User {
         this.password = password;
         this.age = age;
         this.userType = userType;
+        this.maxPrice = maxPrice;
     }
 
     public String getUsername() {
@@ -154,6 +160,14 @@ public class User {
 
     public void setUserType(int userType) {
         this.userType = userType;
+    }
+
+    public void setMaxPrice(double price){
+        maxPrice = price;
+    }
+
+    public double getMaxPrice(){
+        return maxPrice;
     }
 
 

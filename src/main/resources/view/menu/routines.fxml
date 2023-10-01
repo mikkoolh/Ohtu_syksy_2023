@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.menu.RoutinesController">
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.menu.RoutinesController">
     <children>
         <VBox fx:id="routinesVBox" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox prefHeight="30.0" prefWidth="359.0" spacing="10.0">
+                <HBox prefHeight="30.0"  spacing="10.0">
                     <children>
-                        <TextField fx:id="newRoutineTextField" prefHeight="34.0" prefWidth="310.0" promptText="Routine" />
+                        <TextField fx:id="newRoutineTextField" prefHeight="34.0" prefWidth="250.0" promptText="Routine" />
                         <Button fx:id="addBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="78.0" text="Add" />
                     </children>
                     <VBox.margin>

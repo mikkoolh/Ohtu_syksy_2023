@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
+import com.automaatio.model.ElectricityPriceConnector;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -23,7 +25,9 @@ public class ProfileController implements Initializable {
     private String name = cache.getUser().getFirstName();
 
     @FXML
-    Text usernameTXT, nameTXT;
+    Text usernameTXT, nameTXT, electricityPrice;
+
+    private ElectricityPriceConnector elConnect;
 
     public ProfileController() {
         mainPane = cache.getMainPane();
@@ -33,6 +37,14 @@ public class ProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         usernameTXT.setText(username);
         nameTXT.setText("Tervetuloa " + name + "!");
+
+       try{
+           elConnect = new ElectricityPriceConnector();
+           electricityPrice.setText("Sähkön hinta nyt: " + elConnect.getElPrice());
+       } catch (Exception e) {
+           System.out.println("Ongelma sähkönhinnan lataamisessa: " + e);
+       }
+
     }
 
     public void openProfile() {
