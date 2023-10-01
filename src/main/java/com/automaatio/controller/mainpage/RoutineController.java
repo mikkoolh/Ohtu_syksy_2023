@@ -9,11 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -23,6 +22,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 
 public class RoutineController implements Initializable {
 
@@ -36,23 +36,31 @@ public class RoutineController implements Initializable {
     RoutineDAO routineDAO = new RoutineDAO();
 
     @FXML
-    private VBox routineVBox;
+    private VBox routineVBox, weekdaysVBox;
 
     @FXML
-    private Button automateAllBtn;
+    private Button automateAllButton, addRoutineButton;
 
     @FXML
-    private Text noRoutinesText, routineErrorText;
+    private Text noRoutinesText, routineErrorText, formTitle;
 
     @FXML
     private ScrollPane routineScrollPane;
 
+    @FXML
+    private VBox addRoutineForm;
+
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
-    private Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
-    private Map<Button, Routine> deleteButtons = new HashMap<>();
-    private RoutineUtils util = new RoutineUtils();
+    private final Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
+    private final Map<Button, Routine> deleteButtons = new HashMap<>();
+    private final RoutineUtils util = new RoutineUtils();
+
+    private WeekdayDAO weekdayDAO = new WeekdayDAO();
+
+    private Map<Weekday, CheckBox> weekdayCheckBoxes = new HashMap<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,6 +69,8 @@ public class RoutineController implements Initializable {
         loadRoutines(routines);
         updateUI();
         routineScrollPane.setStyle("-fx-background-color:transparent;");
+        initializeForm();
+        hideForm();
     }
 
     private void loadRoutines(List<Routine> r) {
@@ -69,9 +79,11 @@ public class RoutineController implements Initializable {
         if (r.isEmpty()) {
             routineVBox.setAlignment(Pos.CENTER);
             routineVBox.getChildren().add(noRoutinesText);
+            automateAllButton.setVisible(false);
         } else {
             routineVBox.setAlignment(Pos.TOP_LEFT);
             routineVBox.getChildren().remove(noRoutinesText);
+            automateAllButton.setVisible(true);
 
             for (Routine routine : r) {
                 String routineName = routine.getUser().getEmail();
@@ -96,6 +108,20 @@ public class RoutineController implements Initializable {
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(deleteRoutine);
         deleteButtons.put(deleteButton, routine);
+        deleteButton.setVisible(false);
+
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deleteButton.setVisible(!deleteButton.isVisible());
+
+                if (deleteButton.isVisible()) {
+                    editButton.setText("Save");
+                } else {
+                    editButton.setText("Edit");
+                }
+            }
+        });
 
         HBox routineRow = new HBox(10, nameLabel, timeContainer, editButton, toggle, deleteButton);
         HBox.setHgrow(routineRow, Priority.ALWAYS);
@@ -159,16 +185,11 @@ public class RoutineController implements Initializable {
         System.out.println("update ui");
 
         if (util.allAutomated(fetchRoutines())) {
-            automateAllBtn.setText("Deselect all");
+            automateAllButton.setText("Deselect all");
 
         } else {
-            automateAllBtn.setText("Automate all ✨");
+            automateAllButton.setText("Automate all ✨");
         }
-    }
-
-    @FXML
-    private void addRoutine(ActionEvent actionEvent) {
-        System.out.println("add routine");
     }
 
     private final EventHandler<ActionEvent> deleteRoutine = new EventHandler<>() {
@@ -185,4 +206,48 @@ public class RoutineController implements Initializable {
             loadRoutines(fetchRoutines());
         }
     };
+
+    @FXML
+    private void hideForm() {
+        addRoutineForm.setVisible(false);
+        addRoutineForm.setManaged(false);
+        addRoutineButton.setVisible(true);
+    }
+
+    @FXML
+    private void showForm() {
+        addRoutineForm.setVisible(true);
+        addRoutineForm.setManaged(true);
+        addRoutineButton.setVisible(false);
+
+        // Reset checkboxes
+        for (CheckBox checkBox : weekdayCheckBoxes.values()) {
+            checkBox.setSelected(false);
+        }
+    }
+
+    @FXML
+    private void saveRoutine() {
+        // save routine
+
+        for(Map.Entry<Weekday, CheckBox> entry : weekdayCheckBoxes.entrySet()){
+            if (entry.getValue().isSelected()) {
+                System.out.println("new routine" + entry.getKey().getName());
+            }
+        }
+
+        hideForm();
+    }
+
+
+    public void initializeForm() {
+        addRoutineForm.setPadding(new Insets(10));
+        addRoutineForm.setStyle("-fx-border-color: black; -fx-border-radius: 10;");
+        formTitle.setText("Add custom routine for " + cache.getDevice().getName());
+
+        for (Weekday weekday : weekdayDAO.getAll()) {
+            weekdayCheckBoxes.put(weekday, new CheckBox(weekday.getName()));
+        }
+        weekdaysVBox.getChildren().addAll(weekdayCheckBoxes.values());
+    }
 }
