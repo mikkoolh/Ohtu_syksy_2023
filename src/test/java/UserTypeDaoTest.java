@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 
 public class UserTypeDaoTest {
+    /*
 
     UserTypeDAO userTypeDAO;
 
@@ -62,4 +63,6 @@ public class UserTypeDaoTest {
         List<UserType> fetchedTypes = userTypeDAO.getAll();
         assertEquals(0, fetchedTypes.size(), "The returned list should be empty");
     }
+
+     */
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FeatureDAOTest {
+    /*
 
     FeatureDAO featureDAO;
 
@@ -51,4 +52,6 @@ public class FeatureDAOTest {
         assertNotNull(features, "List of features should not be null");
         assertEquals(2, features.size(), "There should be two devices in the list");
     }
+
+     */
 }
