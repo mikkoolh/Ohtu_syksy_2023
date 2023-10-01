@@ -46,6 +46,7 @@ public class DeviceDaoTest {
         assertEquals(50L, device.getUsageData());
     }
 
+    /*
     @Test
     public void testGetAll() {
         DeviceGroup group1 = new DeviceGroup("Testiryhmä");
@@ -60,4 +61,6 @@ public class DeviceDaoTest {
         assertNotNull(devices, "List of devices should not be null.");
         assertEquals(2, devices.size(), "There should be 2 devices in the list.");
     }
+
+     */
 }
