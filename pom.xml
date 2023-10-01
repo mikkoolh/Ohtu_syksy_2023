@@ -77,6 +77,12 @@
             <artifactId>controlsfx</artifactId>
             <version>11.1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.dlsc.gemsfx/gemsfx -->
+        <dependency>
+            <groupId>com.dlsc.gemsfx</groupId>
+            <artifactId>gemsfx</artifactId>
+            <version>1.82.0</version>
+        </dependency>
 
 
     </dependencies>

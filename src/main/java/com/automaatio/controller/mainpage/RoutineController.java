@@ -3,6 +3,7 @@ package com.automaatio.controller.mainpage;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.RoutineUtils;
+import com.dlsc.gemsfx.TimePicker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +20,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import com.automaatio.components.TimeSelector;
+import org.sonatype.guice.bean.reflect.LoadedClass;
 
 
 public class RoutineController implements Initializable {
@@ -34,6 +38,7 @@ public class RoutineController implements Initializable {
     CacheSingleton cache = CacheSingleton.getInstance();
 
     RoutineDAO routineDAO = new RoutineDAO();
+    EventTimeDAO eventTimeDAO = new EventTimeDAO();
 
     @FXML
     private VBox routineVBox, weekdaysVBox;
@@ -50,6 +55,10 @@ public class RoutineController implements Initializable {
     @FXML
     private VBox addRoutineForm;
 
+    @FXML
+    private GridPane formGrid;
+
+
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
@@ -60,6 +69,7 @@ public class RoutineController implements Initializable {
     private WeekdayDAO weekdayDAO = new WeekdayDAO();
 
     private Map<Weekday, CheckBox> weekdayCheckBoxes = new HashMap<>();
+    private TimePicker startTimePicker, endTimePicker;
 
 
     @Override
@@ -235,27 +245,60 @@ public class RoutineController implements Initializable {
     }
 
     @FXML
-    private void saveRoutine() {
-        // save routine
+    private void handleSaveRoutine() {
 
+        /*
+         Get start and end times from time pickers
+         (Ottaa muut tiedot nykyhetkestä atm, ei pitäis haitata jos
+         tarvitaan vaan kellonajat?)
+         */
+        LocalDateTime startTime = startTimePicker.getTime().atDate(LocalDate.now());
+        LocalDateTime endTime = endTimePicker.getTime().atDate(LocalDate.now());
+
+        // Iterate through weekday checkboxes
         for(Map.Entry<Weekday, CheckBox> entry : weekdayCheckBoxes.entrySet()){
             if (entry.getValue().isSelected()) {
-                System.out.println("new routine" + entry.getKey().getName());
+                /*
+                 If a weekday is selected, create a new routine for that day
+                 Get the corresponding weekday from the database
+                 */
+                Weekday selectedWeekday = weekdayDAO.getWeekday(entry.getKey().getWeekdayId());
+
+                User user = cache.getUser();
+                Device device = cache.getDevice();
+
+                try {
+                    // Create event time
+                    EventTime eventTime = eventTimeDAO.addEventTime(new EventTime(startTime, endTime, selectedWeekday));
+                    Routine routine = new Routine(user, device, null, eventTime); // Feature is null for now
+
+                    // Save the routine to the database
+                    routineDAO.addRoutine(routine);
+                    System.out.println("saved routine");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    routineErrorText.setText("An error occurred");
+                }
             }
         }
-
         hideForm();
     }
-
 
     public void initializeForm() {
         addRoutineForm.setPadding(new Insets(10));
         addRoutineForm.setStyle("-fx-border-color: black; -fx-border-radius: 10;");
         formTitle.setText("Add custom routine for " + cache.getDevice().getName());
 
+        // Weekday checkboxes
         for (Weekday weekday : weekdayDAO.getAll()) {
             weekdayCheckBoxes.put(weekday, new CheckBox(weekday.getName()));
         }
         weekdaysVBox.getChildren().addAll(weekdayCheckBoxes.values());
+
+        // Time pickers
+        startTimePicker = (new TimeSelector()).getTimePicker();
+        endTimePicker = (new TimeSelector()).getTimePicker();
+        formGrid.add(startTimePicker, 1, 0);
+        formGrid.add(endTimePicker, 1, 1);
     }
 }

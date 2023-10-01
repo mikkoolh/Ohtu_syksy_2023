@@ -15,11 +15,13 @@ public class EventTimeDAO {
      * Adds a new event
      * @param eventTime A new event
      */
-    public void addEventTime(EventTime eventTime) {
+    public EventTime addEventTime(EventTime eventTime) {
+        EventTime savedEventTime = null;
+
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
-            em.merge(eventTime);
+            savedEventTime = em.merge(eventTime);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -29,6 +31,7 @@ public class EventTimeDAO {
         } finally {
             em.close();
         }
+        return savedEventTime;
     }
 
     /**
