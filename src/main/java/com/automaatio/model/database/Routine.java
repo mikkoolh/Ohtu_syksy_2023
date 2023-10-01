@@ -39,12 +39,12 @@ public class Routine {
 
     public Routine() {}
 
-    public Routine(User user, Device deviceID, Feature featureID, EventTime eventTime) {
+    public Routine(User user, Device deviceID, Feature featureID, EventTime eventTime, boolean automated) {
         this.user = user;
         this.deviceID = deviceID;
         this.featureID = featureID;
         this.eventTime = eventTime;
-        this.automated = false; // False by default
+        this.automated = automated;
     }
 
     public int getRoutineID() {

@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -22,11 +21,17 @@ import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import com.automaatio.components.TimeSelector;
-import org.sonatype.guice.bean.reflect.LoadedClass;
 
+/**
+ * Controller for the routines listing
+ *
+ * @author Nikita Nossenko
+ * @author Matleena Kankaanpää
+ *
+ * 1.10.2023
+ */
 
 public class RoutineController implements Initializable {
 
@@ -174,8 +179,7 @@ public class RoutineController implements Initializable {
             routine.setAutomated(!allAutomated);
             routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
         }
-
-
+        
         updateUI();
 
         for (Routine routine : routines) {
@@ -258,30 +262,33 @@ public class RoutineController implements Initializable {
         // Iterate through weekday checkboxes
         for(Map.Entry<Weekday, CheckBox> entry : weekdayCheckBoxes.entrySet()){
             if (entry.getValue().isSelected()) {
-                /*
-                 If a weekday is selected, create a new routine for that day
-                 Get the corresponding weekday from the database
-                 */
-                Weekday selectedWeekday = weekdayDAO.getWeekday(entry.getKey().getWeekdayId());
-
-                User user = cache.getUser();
-                Device device = cache.getDevice();
+                 // If a weekday is selected, create a new routine for that day
 
                 try {
+                    // Get the corresponding weekday from the database
+                    Weekday selectedWeekday = weekdayDAO.getWeekday(entry.getKey().getWeekdayId());
                     // Create event time
                     EventTime eventTime = eventTimeDAO.addEventTime(new EventTime(startTime, endTime, selectedWeekday));
-                    Routine routine = new Routine(user, device, null, eventTime); // Feature is null for now
 
-                    // Save the routine to the database
+                    User user = cache.getUser();
+                    Device device = cache.getDevice();
+
+                    /*
+                     Save the routine to the database
+                     Feature is null for now, routines added by users
+                     are automatically on (tää kävis järkeen?)
+                     */
+                    Routine routine = new Routine(user, device, null, eventTime, true);
                     routineDAO.addRoutine(routine);
                     System.out.println("saved routine");
+                    loadRoutines(fetchRoutines());
+                    hideForm();
                 } catch (Exception e) {
                     e.printStackTrace();
                     routineErrorText.setText("An error occurred");
                 }
             }
         }
-        hideForm();
     }
 
     public void initializeForm() {
