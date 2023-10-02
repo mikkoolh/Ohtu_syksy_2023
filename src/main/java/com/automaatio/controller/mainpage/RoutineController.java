@@ -155,6 +155,6 @@ public class RoutineController implements Initializable {
     private List<Routine> sortByTime(List<Routine> routines) {
         return routines.stream()
                 .sorted(Comparator.comparing(routine -> routine.getEventTime().getStartTime()))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

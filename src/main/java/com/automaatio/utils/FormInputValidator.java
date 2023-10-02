@@ -36,12 +36,18 @@ public class FormInputValidator {
      */
 
     public Boolean isLengthCorrect(String value, String type){
-        return switch (type) {
-            case "username" -> (value.length() >= USERNAME_MIN_LENGTH && value.length() <= USERNAME_MAX_LENGTH);
-            case "name" -> (value.length() >= NAME_MIN_LENGTH && value.length() <= NAME_MAX_LENGTH);
-            case "password" -> (value.length() >= PASSWORD_MIN_LENGTH && value.length() <= PASSWORD_MAX_LENGTH);
-            default -> false;
-        };
+
+        if (type.equals("username")){
+            return value.length() >= USERNAME_MIN_LENGTH && value.length() <= USERNAME_MAX_LENGTH;
+
+        } else if (type.equals("name")) {
+            return value.length() >= NAME_MIN_LENGTH && value.length() <= NAME_MAX_LENGTH;
+        } else if (type.equals("password")){
+            return value.length() >= PASSWORD_MIN_LENGTH && value.length() <= PASSWORD_MAX_LENGTH;
+
+        }else {
+            return false;
+        }
     }
 
     /**
