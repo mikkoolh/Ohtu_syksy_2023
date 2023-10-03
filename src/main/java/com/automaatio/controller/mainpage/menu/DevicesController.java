@@ -59,7 +59,7 @@ public class DevicesController implements Initializable {
         devicesVBox.getChildren().clear();
         List<Device> devices = dao.getDevicesByUserName(cache.getUser().getUsername());
         for (Device device : devices) {
-            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, true));
+            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox));
         }
     }
 
@@ -82,9 +82,5 @@ public class DevicesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
         showDevices();
-    }
-
-    public void updateOnOff(Device device){
-
     }
 }

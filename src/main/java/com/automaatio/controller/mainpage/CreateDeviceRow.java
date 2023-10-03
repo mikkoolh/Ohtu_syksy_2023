@@ -5,82 +5,96 @@ import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.awt.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class CreateDeviceRow {
     private CacheSingleton cache = CacheSingleton.getInstance();
-    private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     private DeviceDAO deviceDAO = new DeviceDAO();
     private Pane mainPane = cache.getMainPane();
+    private Button deleteBtn, editBtn;
+    private ToggleButton onOff;
+    private Label label;
 
-        public VBox create(Device device, VBox devicesVBox, boolean edit) {
+    private final int btnWidth = 50, vBoxSpacing = 10, hBoxSpacing = 20;
+    private final String editTxt = "Edit", deleteTxt = "Delete", onTxt = "On", offTxt = "Off";
 
-        Label deviceLabel = new Label(device.getName());
-        deviceLabel.setTextFill(Color.web("#070707"));
-        deviceLabel.setFont(new Font(30));
+        public VBox create(Device device, VBox devicesVBox) {
 
-        Button editButton = new Button("Edit");
-        editButton.getStyleClass().add("editBtn");
-        editButton.setOnAction(event -> editDevice(device));
+        label = createLabel(device);
+        editBtn = createEditBtn(device);
 
+        VBox newDeviceVBox = new VBox(vBoxSpacing);
 
-        VBox deviceRow = new VBox(10);
+        deleteBtn = createDeleteBtn(devicesVBox, newDeviceVBox, device);
+        onOff = createToggleBtn(device);
 
-        Button deleteButton = new Button("Delete");
-        deleteButton.getStyleClass().add("deleteBtn");
-        deleteButton.setOnAction(event -> {
-            deviceGroupDAO.removeDeviceFromGroup(cache.getRoom(), device);
-            devicesVBox.getChildren().remove(deviceRow);
-        });
+        Pane spacer = new Pane();
+        HBox buttonsRow = new HBox(hBoxSpacing);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
+        buttonsRow.getChildren().addAll(editBtn, deleteBtn, spacer, onOff);
+        buttonsRow.setAlignment(Pos.TOP_LEFT);
+
+        newDeviceVBox.getStyleClass().add("deviceRowVBox");
+        newDeviceVBox.getChildren().addAll(label, buttonsRow);
+
+        return newDeviceVBox;
+    }
+
+    private ToggleButton createToggleBtn(Device device) {
         ToggleButton toggleButton = new ToggleButton();
-        toggleButton.setPrefWidth(50);
+        toggleButton.setPrefWidth(btnWidth);
         setOnOff(deviceDAO.getDevice(device.getDeviceID()).isOnOff(), device, toggleButton);
         toggleButton.getStyleClass().add("toggleBtn");
 
         toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             setOnOff(isSelected,device, toggleButton);
         });
-
-        Pane spacer = new Pane();
-        HBox buttonsRow = new HBox(20);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        if(edit){
-            buttonsRow.getChildren().addAll(editButton, deleteButton, spacer, toggleButton);
-        } else {
-            buttonsRow.getChildren().addAll(deleteButton, spacer, toggleButton);
-        }
-        buttonsRow.setAlignment(Pos.TOP_LEFT);
-
-        deviceRow.getStyleClass().add("deviceRowVBox");
-        deviceRow.getChildren().addAll(deviceLabel, buttonsRow);
-
-        return deviceRow;
+        return toggleButton;
     }
 
-    private void setOnOff(boolean isSelected, Device device, ToggleButton toggleButton){
+    private Button createDeleteBtn(VBox devicesVBox, VBox newDeviceVBox, Device device) {
+        Button delete = new Button("Delete");
+        delete.getStyleClass().add("deleteBtn");
+        delete.setOnAction(event -> {
+            deviceDAO.deleteDevice(device.getDeviceID());
+            devicesVBox.getChildren().remove(newDeviceVBox);
+        });
+        return delete;
+    }
+
+    private Label createLabel(Device device) {
+        Label deviceLabel = new Label(device.getName());
+        deviceLabel.getStyleClass().add("deviceLabel");
+        return deviceLabel;
+    }
+
+    private Button createEditBtn(Device device){
+        Button edit = new Button(editTxt);
+        edit.getStyleClass().add("editBtn");
+        edit.setOnAction(event -> editDevice(device));
+        return edit;
+    }
+
+    private void setOnOff(boolean isSelected, Device device, ToggleButton onOff){
         if (isSelected) {
             switchOnOff(device);
-            toggleButton.setText("On");
-            toggleButton.getStyleClass().add("toggleBtnOn");
+            onOff.setText("On");
+            onOff.getStyleClass().remove("toggleBtnOff");
+            onOff.getStyleClass().add("toggleBtnOn");
         } else {
             switchOnOff(device);
-            toggleButton.setText("Off");
-            toggleButton.getStyleClass().add("toggleBtnOff");
+            onOff.setText("Off");
+            onOff.getStyleClass().remove("toggleBtnOn");
+            onOff.getStyleClass().add("toggleBtnOff");
         }
     }
 

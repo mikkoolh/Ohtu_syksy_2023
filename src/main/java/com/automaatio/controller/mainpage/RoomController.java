@@ -99,7 +99,7 @@ public class RoomController implements Initializable {
         devicesVBox.getChildren().clear();
         List<Device> devices = deviceGroupDAO.getDevicesByRoom(cache.getRoom());
         for (Device device : devices) {
-            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, false));
+            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox));
         }
     }
 

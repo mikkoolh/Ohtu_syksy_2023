@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
  */
 public class DeviceController implements Initializable {
 
-    DeviceDAO dao = new DeviceDAO();
+    DeviceDAO deviceDAO = new DeviceDAO();
     DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
 
     private final CacheSingleton cache = CacheSingleton.getInstance();
@@ -64,7 +65,7 @@ public class DeviceController implements Initializable {
                 int deviceId = device.getDeviceID();
                 int newDeviceGroupId = newValue.getDeviceGroupId();
 
-                dao.updateDeviceGroup(deviceId, newDeviceGroupId);
+                deviceDAO.updateDeviceGroup(deviceId, newDeviceGroupId);
             }
         });
     }
@@ -87,9 +88,10 @@ public class DeviceController implements Initializable {
         });
     }
 
+    @FXML
     private void changeDeviceName() {
         String newName = deviceNameField.getText();
         device.setName(newName);
-        dao.updateDeviceName(device.getDeviceID(), newName);
+        deviceDAO.updateDeviceName(device.getDeviceID(), newName);
     }
 }

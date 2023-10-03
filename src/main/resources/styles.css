@@ -12,7 +12,7 @@
     -fx-text-fill: white;
 }
 
-.toggleBtnOff .deleteBtn{
+.toggleBtnOff, .deleteBtn{
     -fx-background-color: #353535;
     -fx-text-fill: #ff0000;
 }
@@ -21,4 +21,9 @@
     -fx-background-color: #fff2b3;
     -fx-text-fill: #000000;
     -fx-effect: dropshadow(three-pass-box, rgb(0,0,0), 10, 0, 0, 0);
+}
+
+.deviceLabel {
+    -fx-text-fill: #070707;
+    -fx-font-size: 30px;
 }
