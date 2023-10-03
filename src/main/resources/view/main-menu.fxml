@@ -6,21 +6,21 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane centerShape="false" maxWidth="400" prefHeight="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.MainMenuController">
-    <Accordion centerShape="false" maxWidth="400" prefHeight="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Accordion centerShape="false" maxWidth="400" prefHeight="720.0" expandedPane="$rooms" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <panes>
-            <TitledPane fx:id="rooms" animated="false" onMouseClicked="#onRoomsClick" prefHeight="540.0" text="Rooms">
+            <TitledPane fx:id="rooms" animated="false" prefHeight="540.0" text="Rooms">
                 <fx:include source="menu/rooms.fxml" />
                 <font>
                     <Font name="Copperplate Gothic Bold" size="24.0" />
                 </font>
             </TitledPane>
-            <TitledPane animated="false" onMouseClicked="#onDevicesClick" prefHeight="540.0" text="Devices">
+            <TitledPane animated="false" prefHeight="540.0" text="Devices">
                 <fx:include source="menu/devices.fxml" />
                 <font>
                     <Font name="Copperplate Gothic Bold" size="24.0" />
                 </font>
             </TitledPane>
-            <TitledPane animated="false" onMouseClicked="#onRoutinesClick" prefHeight="540.0" text="Routines">
+            <TitledPane animated="false" prefHeight="540.0" text="Routines">
                 <fx:include source="menu/routines.fxml" />
                 <font>
                     <Font name="Copperplate Gothic Bold" size="24.0" />

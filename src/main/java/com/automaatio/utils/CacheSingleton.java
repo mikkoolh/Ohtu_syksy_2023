@@ -1,6 +1,5 @@
 package com.automaatio.utils;
 
-import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.User;
@@ -14,7 +13,7 @@ public class CacheSingleton {
     private Device device;
 
     private Pane mainPane, menuPane;
-    private Updateable lastMainController, lastMenuController;
+
 
     private CacheSingleton() {
     }
@@ -65,25 +64,5 @@ public class CacheSingleton {
 
     public void setMenuPane(Pane menuPane) {
         this.menuPane = menuPane;
-    }
-
-     public void updateMain() {
-         System.out.println("mainControllet päivitetty.");
-         lastMainController.update();
-
-    }
-    public void setLastMainController(Updateable controller){
-        System.out.println("mainController lisätty: "+ controller);
-        lastMainController = controller;
-    }
-
-    public void setLastMenuController(Updateable controller){
-        System.out.println("menuController lisätty: "+ controller);
-        lastMenuController = controller;
-    }
-
-    public void updateMenu() {
-        System.out.println("menuControllet päivitetty.");
-        lastMenuController.update();
     }
 }

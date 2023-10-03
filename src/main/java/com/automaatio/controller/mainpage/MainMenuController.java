@@ -22,24 +22,4 @@ public class MainMenuController implements Initializable {
         mainPane = cache.getMainPane();
         menuPane = cache.getMenuPane();
     }
-
-    @FXML
-    private void onRoomsClick(){
-        cache.setLastMenuController(new RoomsController());
-    }
-
-    @FXML
-    private void onProfileClick(){
-        cache.setLastMenuController(new ProfileController());
-    }
-
-    @FXML
-    private void onRoutinesClick(){
-        cache.setLastMenuController(new RoutinesController());
-    }
-
-    @FXML
-    private void onDevicesClick(){
-        cache.setLastMenuController(new DevicesController());
-    }
 }

@@ -2,7 +2,6 @@ package com.automaatio.controller.mainpage.menu;
 
 import com.automaatio.controller.mainpage.CreateDeviceRow;
 import com.automaatio.controller.mainpage.RoutinesClick;
-import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -16,7 +15,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RoutinesController implements Initializable, Updateable {
+public class RoutinesController implements Initializable, Menu {
 
     private final CacheSingleton cache = CacheSingleton.getInstance();
 
@@ -30,7 +29,7 @@ public class RoutinesController implements Initializable, Updateable {
     @FXML
     private TextField routineNameField;
 
-    public void showRoutines() {
+    public void show() {
         routinesVBox.getChildren().clear();
         DeviceDAO deviceDAO = new DeviceDAO();
         List<Device> devices = deviceDAO.getAutoDevices();
@@ -47,11 +46,6 @@ public class RoutinesController implements Initializable, Updateable {
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
         deviceRow = new CreateDeviceRow();
-        showRoutines();
-    }
-
-    @Override
-    public void update() {
-        showRoutines();
+        show();
     }
 }

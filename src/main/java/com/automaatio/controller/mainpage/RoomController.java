@@ -96,8 +96,4 @@ public class RoomController implements Initializable {
             devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, new DevicesClick()));
         }
     }
-
-    public void updateOnOff(Device device){
-
-    }
 }

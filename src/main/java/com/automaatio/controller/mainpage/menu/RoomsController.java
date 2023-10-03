@@ -1,11 +1,9 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.database.DeviceGroup;
 
 import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +21,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RoomsController implements Initializable, Updateable {
+public class RoomsController implements Initializable, Menu {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     @FXML
     private TextField newRoomTextField;
@@ -39,16 +37,23 @@ public class RoomsController implements Initializable, Updateable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
-        showRooms();
+        show();
     }
 
-    @FXML
-    private void onShowRoomClick(ActionEvent event, DeviceGroup room) throws IOException {
-        System.out.print("show room\n");
-        cache.setRoom(room);                                //set the room in singleton
+    public void show() {
+        roomsVBox2.getChildren().clear();
+        List<DeviceGroup> rooms = deviceGroupDAO.getRoomsByUser(cache.getUser());
+        for (DeviceGroup room : rooms) {
+            roomsVBox2.getChildren().add(makeVBoxForNewRoom(room));
+        }
+    }
 
-        //Load the new room FXML-file, clear the mainView and set the newView
-        try{
+
+    //Load the new room FXML-file, clear the mainView and set the newView
+    @FXML
+    private void onShowRoomClick(DeviceGroup room) throws IOException {
+        cache.setRoom(room);                                //set the room in singleton
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/room.fxml"));
             Parent newView = loader.load();
             mainPane.getChildren().clear();
@@ -59,15 +64,15 @@ public class RoomsController implements Initializable, Updateable {
     }
 
     @FXML
-    private void onAddGroupClick(ActionEvent event) {
+    private void onAddGroupClick() {
         DeviceGroup newRoom = new DeviceGroup(newRoomTextField.getText(), cache.getUser());
 
         newRoomTextField.setText("");                                   //clear the textfield
-        roomsVBox.getChildren().add(makeVBoxForNewRoom(newRoom));               //add the new room to VBox
+        roomsVBox.getChildren().add(makeVBoxForNewRoom(newRoom));       //add the new room to VBox
 
         // Show the room page
         try {
-            onShowRoomClick(event, newRoom);
+            onShowRoomClick(newRoom);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -87,7 +92,7 @@ public class RoomsController implements Initializable, Updateable {
         showRoom.setOnAction(event -> {
             DeviceGroup savedRoom = (DeviceGroup) showRoom.getProperties().get("room");
             try {
-                onShowRoomClick(event, savedRoom);
+                onShowRoomClick(savedRoom);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -99,18 +104,5 @@ public class RoomsController implements Initializable, Updateable {
         box.getChildren().add(title);
         box.getChildren().add(showRoom);
         return box;
-    }
-
-    public void showRooms() {
-        roomsVBox2.getChildren().clear();
-        List<DeviceGroup> rooms = deviceGroupDAO.getRoomsByUser(cache.getUser());
-        for (DeviceGroup room : rooms) {
-            roomsVBox2.getChildren().add(makeVBoxForNewRoom(room));
-        }
-    }
-
-    @Override
-    public void update() {
-        showRooms();
     }
 }

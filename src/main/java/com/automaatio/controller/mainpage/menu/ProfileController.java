@@ -1,6 +1,5 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.ElectricityPriceConnector;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
@@ -9,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -17,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable, Updateable {
+public class ProfileController implements Initializable, Menu{
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private Pane mainPane;
 
@@ -36,15 +34,20 @@ public class ProfileController implements Initializable, Updateable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        show();
+    }
+
+    @Override
+    public void show() {
         usernameTXT.setText(username);
         nameTXT.setText("Tervetuloa " + name + "!");
 
-       try{
-           elConnect = new ElectricityPriceConnector();
-           electricityPrice.setText("Sähkön hinta nyt: " + elConnect.getElPrice());
-       } catch (Exception e) {
-           System.out.println("Ongelma sähkönhinnan lataamisessa: " + e);
-       }
+        try{
+            elConnect = new ElectricityPriceConnector();
+            electricityPrice.setText("Sähkön hinta nyt: " + elConnect.getElPrice());
+        } catch (Exception e) {
+            System.out.println("Ongelma sähkönhinnan lataamisessa: " + e);
+        }
 
     }
 
@@ -55,7 +58,6 @@ public class ProfileController implements Initializable, Updateable {
             Parent newView = loader.load();
             mainPane.getChildren().clear();
             mainPane.getChildren().add(newView);
-            cache.setLastMenuController(this);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,9 +72,6 @@ public class ProfileController implements Initializable, Updateable {
         nav.openLoginPage(event);
     }
 
-    public void update(){
-
-    }
 
 
 }
