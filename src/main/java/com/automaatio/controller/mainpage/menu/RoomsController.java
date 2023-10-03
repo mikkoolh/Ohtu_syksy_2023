@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
+import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.database.DeviceGroup;
 
 import com.automaatio.model.database.DeviceGroupDAO;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RoomsController implements Initializable {
+public class RoomsController implements Initializable, Updateable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     @FXML
     private TextField newRoomTextField;
@@ -106,5 +107,10 @@ public class RoomsController implements Initializable {
         for (DeviceGroup room : rooms) {
             roomsVBox2.getChildren().add(makeVBoxForNewRoom(room));
         }
+    }
+
+    @Override
+    public void update() {
+        showRooms();
     }
 }

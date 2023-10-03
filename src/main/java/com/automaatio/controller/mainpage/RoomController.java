@@ -7,14 +7,8 @@ import com.automaatio.utils.CacheSingleton;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
@@ -99,7 +93,7 @@ public class RoomController implements Initializable {
         devicesVBox.getChildren().clear();
         List<Device> devices = deviceGroupDAO.getDevicesByRoom(cache.getRoom());
         for (Device device : devices) {
-            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox));
+            devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, new DevicesClick()));
         }
     }
 

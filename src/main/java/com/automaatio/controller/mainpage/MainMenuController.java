@@ -1,7 +1,12 @@
 package com.automaatio.controller.mainpage;
 
 
+import com.automaatio.controller.mainpage.menu.DevicesController;
+import com.automaatio.controller.mainpage.menu.ProfileController;
+import com.automaatio.controller.mainpage.menu.RoomsController;
+import com.automaatio.controller.mainpage.menu.RoutinesController;
 import com.automaatio.utils.CacheSingleton;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import java.net.URL;
@@ -16,5 +21,25 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mainPane = cache.getMainPane();
         menuPane = cache.getMenuPane();
+    }
+
+    @FXML
+    private void onRoomsClick(){
+        cache.setLastMenuController(new RoomsController());
+    }
+
+    @FXML
+    private void onProfileClick(){
+        cache.setLastMenuController(new ProfileController());
+    }
+
+    @FXML
+    private void onRoutinesClick(){
+        cache.setLastMenuController(new RoutinesController());
+    }
+
+    @FXML
+    private void onDevicesClick(){
+        cache.setLastMenuController(new DevicesController());
     }
 }

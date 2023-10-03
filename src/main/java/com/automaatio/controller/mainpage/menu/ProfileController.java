@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
+import com.automaatio.controller.mainpage.Updateable;
 import com.automaatio.model.ElectricityPriceConnector;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable {
+public class ProfileController implements Initializable, Updateable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private Pane mainPane;
 
@@ -54,6 +55,8 @@ public class ProfileController implements Initializable {
             Parent newView = loader.load();
             mainPane.getChildren().clear();
             mainPane.getChildren().add(newView);
+            cache.setLastMenuController(this);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,6 +68,10 @@ public class ProfileController implements Initializable {
         // Siirry login-sivulle
         NavigationUtil nav = new NavigationUtil();
         nav.openLoginPage(event);
+    }
+
+    public void update(){
+
     }
 
 

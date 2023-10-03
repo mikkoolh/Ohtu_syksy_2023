@@ -2,17 +2,12 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 
 public class CreateDeviceRow {
@@ -26,10 +21,10 @@ public class CreateDeviceRow {
     private final int btnWidth = 50, vBoxSpacing = 10, hBoxSpacing = 20;
     private final String editTxt = "Edit", deleteTxt = "Delete", onTxt = "On", offTxt = "Off";
 
-        public VBox create(Device device, VBox devicesVBox) {
+        public VBox create(Device device, VBox devicesVBox, ClickActions editAction) {
 
         label = createLabel(device);
-        editBtn = createEditBtn(device);
+        editBtn = createEditBtn(device, editAction);
 
         VBox newDeviceVBox = new VBox(vBoxSpacing);
 
@@ -77,11 +72,11 @@ public class CreateDeviceRow {
         return deviceLabel;
     }
 
-    private Button createEditBtn(Device device){
-        Button edit = new Button(editTxt);
-        edit.getStyleClass().add("editBtn");
-        edit.setOnAction(event -> editDevice(device));
-        return edit;
+    private Button createEditBtn(Device device, ClickActions edit){
+        Button editBtn = new Button(editTxt);
+        editBtn.getStyleClass().add("editBtn");
+        editBtn.setOnAction(event -> edit.onEditClick(device));
+        return editBtn;
     }
 
     private void setOnOff(boolean isSelected, Device device, ToggleButton onOff){
@@ -100,19 +95,6 @@ public class CreateDeviceRow {
 
     public void switchOnOff(Device device) {
         deviceDAO.updateDeviceOnOff(device.getDeviceID());
-    }
-
-    private void editDevice(Device device) {
-        System.out.println("show device\n");
-        cache.setDevice(device);
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/device.fxml"));
-            Parent newView = loader.load();
-            mainPane.getChildren().clear();
-            mainPane.getChildren().add(newView);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 
