@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage;
 
+import com.automaatio.controller.mainpage.clickActions.DevicesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.model.database.DeviceGroupDAO;
@@ -31,7 +32,7 @@ public class RoomController implements Initializable {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     private DeviceDAO deviceDAO = new DeviceDAO();
-    private CreateDeviceRow deviceRow = new CreateDeviceRow();
+    private CreateVBoxColumn deviceRow = new CreateVBoxColumn();
 
     public RoomController() {}
     @Override

@@ -1,4 +1,4 @@
-package com.automaatio.controller.mainpage;
+package com.automaatio.controller.mainpage.clickActions;
 
 import com.automaatio.model.database.Device;
 

@@ -1,7 +1,7 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.CreateDeviceRow;
-import com.automaatio.controller.mainpage.DevicesClick;
+import com.automaatio.controller.mainpage.CreateVBoxColumn;
+import com.automaatio.controller.mainpage.clickActions.DevicesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class DevicesController implements Initializable, Menu {
     private final CacheSingleton cache = CacheSingleton.getInstance();
-    private final CreateDeviceRow deviceRow = new CreateDeviceRow();
+    private final CreateVBoxColumn deviceRow = new CreateVBoxColumn();
     DeviceDAO deviceDAO = new DeviceDAO();
 
     @FXML

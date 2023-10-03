@@ -1,7 +1,7 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.CreateDeviceRow;
-import com.automaatio.controller.mainpage.RoutinesClick;
+import com.automaatio.controller.mainpage.CreateVBoxColumn;
+import com.automaatio.controller.mainpage.clickActions.RoutinesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import javafx.fxml.FXML;
@@ -15,12 +15,9 @@ import java.util.ResourceBundle;
 
 public class RoutinesController implements Initializable, Menu {
 
-    private CreateDeviceRow deviceRow;
-
-
+    private CreateVBoxColumn deviceRow;
     @FXML
     private VBox routinesVBox;
-
     @FXML
     private TextField routineNameField;
 
@@ -39,7 +36,7 @@ public class RoutinesController implements Initializable, Menu {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deviceRow = new CreateDeviceRow();
+        deviceRow = new CreateVBoxColumn();
         show();
     }
 }

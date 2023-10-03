@@ -2,7 +2,6 @@ package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,20 +28,14 @@ public class RoutineController implements Initializable {
     private TextArea routineNameField;
 
     public RoutineController() {}
-
     CacheSingleton cache = CacheSingleton.getInstance();
-
     RoutineDAO routineDAO = new RoutineDAO();
-
     @FXML
     private VBox routineVBox;
-
     @FXML
     private Button automateAllBtn;
-
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
-
     private Map<Routine, ToggleSwitch> toggleSwitches = new HashMap<>();
 
     @Override
@@ -112,7 +105,7 @@ public class RoutineController implements Initializable {
     }
 
     @FXML
-    public void automateAll(ActionEvent actionEvent) {
+    public void automateAll() {
         boolean allAutomated = allAutomated();
 
         for (Routine routine : routines) {

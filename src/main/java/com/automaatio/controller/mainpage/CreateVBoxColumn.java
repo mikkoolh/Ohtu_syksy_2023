@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage;
 
+import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -10,7 +11,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
 
 
-public class CreateDeviceRow {
+public class CreateVBoxColumn {
     private CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceDAO deviceDAO = new DeviceDAO();
     private Pane mainPane = cache.getMainPane();
