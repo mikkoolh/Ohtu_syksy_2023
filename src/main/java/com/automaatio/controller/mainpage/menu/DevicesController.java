@@ -8,7 +8,6 @@ import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class DevicesController implements Initializable, Menu {
     private final CacheSingleton cache = CacheSingleton.getInstance();
-    private CreateDeviceRow deviceRow = new CreateDeviceRow();
+    private final CreateDeviceRow deviceRow = new CreateDeviceRow();
     DeviceDAO deviceDAO = new DeviceDAO();
 
     @FXML

@@ -4,11 +4,9 @@ import com.automaatio.controller.mainpage.CreateDeviceRow;
 import com.automaatio.controller.mainpage.RoutinesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -17,9 +15,6 @@ import java.util.ResourceBundle;
 
 public class RoutinesController implements Initializable, Menu {
 
-    private final CacheSingleton cache = CacheSingleton.getInstance();
-
-    private Pane mainPane;
     private CreateDeviceRow deviceRow;
 
 
@@ -44,7 +39,6 @@ public class RoutinesController implements Initializable, Menu {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = cache.getMainPane();
         deviceRow = new CreateDeviceRow();
         show();
     }
