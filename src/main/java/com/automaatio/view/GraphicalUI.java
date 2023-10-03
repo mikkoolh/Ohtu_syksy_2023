@@ -12,7 +12,7 @@ public class GraphicalUI extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicalUI.class.getResource("/view/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("HomeAutomation v.0.01");
+        stage.setTitle("HomeAutomation v.0.5");
         stage.setScene(scene);
         stage.show();
     }

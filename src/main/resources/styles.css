@@ -1,0 +1,24 @@
+/* Menu -> CreateDeviceRow */
+.deviceRowVBox {
+    -fx-border-width: 2;
+    -fx-padding: 5;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #353535;
+}
+
+.editBtn {
+    -fx-background-color: #344347;
+    -fx-text-fill: white;
+}
+
+.toggleBtnOff .deleteBtn{
+    -fx-background-color: #353535;
+    -fx-text-fill: #ff0000;
+}
+
+.toggleBtnOn{
+    -fx-background-color: #fff2b3;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(three-pass-box, rgb(0,0,0), 10, 0, 0, 0);
+}

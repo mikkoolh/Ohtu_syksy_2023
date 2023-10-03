@@ -25,25 +25,22 @@ public class CreateDeviceRow {
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     private DeviceDAO deviceDAO = new DeviceDAO();
     private Pane mainPane = cache.getMainPane();
-    public VBox create(Device device, VBox devicesVBox, boolean edit) {
+
+        public VBox create(Device device, VBox devicesVBox, boolean edit) {
+
         Label deviceLabel = new Label(device.getName());
         deviceLabel.setTextFill(Color.web("#070707"));
         deviceLabel.setFont(new Font(30));
 
         Button editButton = new Button("Edit");
-        editButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
+        editButton.getStyleClass().add("editBtn");
         editButton.setOnAction(event -> editDevice(device));
 
 
         VBox deviceRow = new VBox(10);
-        deviceRow.setStyle("-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: #353535;");
-
 
         Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: #344347; -fx-text-fill: white;");
+        deleteButton.getStyleClass().add("deleteBtn");
         deleteButton.setOnAction(event -> {
             deviceGroupDAO.removeDeviceFromGroup(cache.getRoom(), device);
             devicesVBox.getChildren().remove(deviceRow);
@@ -52,14 +49,13 @@ public class CreateDeviceRow {
         ToggleButton toggleButton = new ToggleButton();
         toggleButton.setPrefWidth(50);
         setOnOff(deviceDAO.getDevice(device.getDeviceID()).isOnOff(), device, toggleButton);
-        toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
+        toggleButton.getStyleClass().add("toggleBtn");
 
         toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             setOnOff(isSelected,device, toggleButton);
         });
 
         Pane spacer = new Pane();
-
         HBox buttonsRow = new HBox(20);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -70,10 +66,7 @@ public class CreateDeviceRow {
         }
         buttonsRow.setAlignment(Pos.TOP_LEFT);
 
-        deviceRow.setStyle("-fx-border-width: 2;" + "-fx-padding: 5;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: #353535;");
+        deviceRow.getStyleClass().add("deviceRowVBox");
         deviceRow.getChildren().addAll(deviceLabel, buttonsRow);
 
         return deviceRow;
@@ -83,17 +76,16 @@ public class CreateDeviceRow {
         if (isSelected) {
             switchOnOff(device);
             toggleButton.setText("On");
-            toggleButton.setStyle("-fx-background-color: #fff2b3; -fx-text-fill: #000000; -fx-effect: dropshadow(three-pass-box, rgb(0,0,0), 10, 0, 0, 0);");
+            toggleButton.getStyleClass().add("toggleBtnOn");
         } else {
             switchOnOff(device);
             toggleButton.setText("Off");
-            toggleButton.setStyle("-fx-background-color: #353535; -fx-text-fill: white;");
+            toggleButton.getStyleClass().add("toggleBtnOff");
         }
     }
 
     public void switchOnOff(Device device) {
         deviceDAO.updateDeviceOnOff(device.getDeviceID());
-
     }
 
     private void editDevice(Device device) {
