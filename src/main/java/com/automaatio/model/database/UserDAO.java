@@ -127,7 +127,7 @@ public class UserDAO implements IDAO {
         }
     }
 
-    public double getMaxPrice(String username){
+    public double getMaxPrice(String username) {
         double maxPrice = 0;
         EntityManager em = MysqlDBJpaConn.getInstance();
         try (em) {

@@ -33,9 +33,9 @@ public class DeviceDaoTest {
         device.setModelCode("OOO222");
         device.setUsageData(50L);
 
-        deviceDAO.addDevice(device);
+        deviceDAO.addObject(device);
 
-        Device fetchedDevice = deviceDAO.getDevice(device.getDeviceID());
+        Device fetchedDevice = deviceDAO.getObject(device.getDeviceID());
 
         assertNotNull(fetchedDevice, "Device should not be null");
         assertEquals(device.getName(), fetchedDevice.getName(), "Name should match");

@@ -1,7 +1,6 @@
 package com.automaatio.controller;
 
-import com.automaatio.model.database.User;
-import com.automaatio.model.database.UserDAO;
+import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
