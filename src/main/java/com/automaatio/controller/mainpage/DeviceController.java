@@ -94,4 +94,12 @@ public class DeviceController implements Initializable, IController {
         device.setName(newName);
         deviceDAO.updateDevice(device.getDeviceID(), newName);
     }
+
+    @FXML
+    private void changeModelCode() {
+        String newModelCode = modelCode.getText();
+        device.setModelCode(newModelCode);
+        deviceDAO.updateModelCode(device.getDeviceID(), newModelCode);
+    }
 }
+

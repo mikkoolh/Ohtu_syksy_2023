@@ -47,7 +47,7 @@ public class DevicesController implements Initializable, Menu {
             return;
         }
 
-        Device device = new Device(0, deviceName, "01", null, cache.getUser().getUsername());
+        Device device = new Device(0, deviceName, null, null, cache.getUser().getUsername());
 
         deviceDAO.addObject(device);
         System.out.println(device);

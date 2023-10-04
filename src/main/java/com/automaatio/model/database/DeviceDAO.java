@@ -170,6 +170,23 @@ public class DeviceDAO implements IDAO {
     }
 
     /**
+     * Updates the model code of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newModelCode The new model code for the device
+     */
+    public void updateModelCode(int deviceId, String newModelCode) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        Device device = em.find(Device.class, deviceId);
+        if (device != null) {
+            device.setModelCode(newModelCode);
+            em.merge(device);
+        }
+        em.getTransaction().commit();
+    }
+
+    /**
      * Updates the deviceGroupId of a device.
      * @param deviceId The ID of the device to update.
      * @param newDeviceGroupId The new deviceGroupId for the device.
