@@ -14,16 +14,16 @@ import jakarta.persistence.TypedQuery;
  * 10.9.2023
  */
 
-public class DeviceGroupDAO {
+public class DeviceGroupDAO implements IDAO {
 
     /**
      * Adds a new device group
      * @param deviceGroup A new device group
      */
-    public void addDeviceGroup(DeviceGroup deviceGroup) {
+    public void addObject(Object deviceGroup) {
         try (EntityManager em = MysqlDBJpaConn.getInstance()) {
             em.getTransaction().begin();
-            em.persist(deviceGroup);
+            em.persist((DeviceGroup) deviceGroup);
             em.getTransaction().commit();
         }
     }
@@ -33,13 +33,18 @@ public class DeviceGroupDAO {
      * @param id ID of the device group
      * @return Device Group object
      */
-    public DeviceGroup getDeviceGroup(int id) {
+    public DeviceGroup getObject(int id) {
         try (EntityManager em = MysqlDBJpaConn.getInstance()) {
             em.getTransaction().begin();
             DeviceGroup deviceGroup = em.find(DeviceGroup.class, id);
             em.getTransaction().commit();
             return deviceGroup;
         }
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**

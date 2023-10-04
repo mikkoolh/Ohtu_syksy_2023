@@ -11,18 +11,18 @@ import jakarta.persistence.TypedQuery;
  * 8.9.2023
  */
 
-public class DeviceTypeDAO {
+public class DeviceTypeDAO implements IDAO {
 
     /**
      * Adds a new device type
      * @param deviceType A new device type
      */
-    public void addDeviceType(DeviceType deviceType) {
+    public void addObject(Object deviceType) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
 
         try {
-            em.persist(deviceType);
+            em.persist((DeviceType) deviceType);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -37,12 +37,17 @@ public class DeviceTypeDAO {
      * @param id ID of the device type
      * @return Device type
      */
-    public DeviceType getDeviceType(int id) {
+    public DeviceType getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         DeviceType deviceType = em.find(DeviceType.class, id);
         em.getTransaction().commit();
         return deviceType;
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**

@@ -92,6 +92,6 @@ public class DeviceController implements Initializable {
     private void changeDeviceName() {
         String newName = deviceNameField.getText();
         device.setName(newName);
-        deviceDAO.updateDeviceName(device.getDeviceID(), newName);
+        deviceDAO.updateDevice(device.getDeviceID(), newName);
     }
 }

@@ -12,16 +12,16 @@ import jakarta.persistence.TypedQuery;
  * DAO for UserType.
  */
 
-public class UserTypeDAO {
+public class UserTypeDAO implements IDAO {
 
     /**
      * Adds a new User Type
      * @param userType A new User Type
      */
-    public void addUserType(UserType userType) {
+    public void addObject(Object userType) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(userType);
+        em.persist((UserType) userType);
         em.getTransaction().commit();
     }
 
@@ -30,12 +30,17 @@ public class UserTypeDAO {
      * @param id ID of UserType
      * @return UserType object
      */
-    public UserType getUserType(int id) {
+    public UserType getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         UserType userType = em.find(UserType.class, id);
         em.getTransaction().commit();
         return userType;
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**

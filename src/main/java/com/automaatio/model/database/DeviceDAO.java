@@ -12,17 +12,18 @@ import java.util.List;
  *
  * DAO for Device
  */
-public class DeviceDAO {
+public class DeviceDAO implements IDAO {
 
     /**
      * Adds a new device
      * @param device A new device
      */
-    public void addDevice(Device device) {
+    @Override
+    public void addObject(Object device) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
-            em.persist(device);
+            em.persist((Device) device);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -37,7 +38,7 @@ public class DeviceDAO {
      * @param id ID of the device
      * @return Device object
      */
-    public Device getDevice(int id) {
+    public Device getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
@@ -50,6 +51,11 @@ public class DeviceDAO {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**
@@ -150,7 +156,7 @@ public class DeviceDAO {
      * @param deviceId The ID of the device to update.
      * @param newName The new name for the device.
      */
-    public void updateDeviceName(int deviceId, String newName) {
+    public void updateDevice(int deviceId, String newName) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
 

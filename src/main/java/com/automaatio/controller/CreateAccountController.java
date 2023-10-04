@@ -115,7 +115,7 @@ public class CreateAccountController {
             } else if (username.length() > validator.getUSERNAME_MAX_LENGTH()) {
                 usernameError.setText("Username must be " + validator.getUSERNAME_MAX_LENGTH() + " characters or less");
                 return false;
-            } else if (userDAO.getUser(username) != null) {
+            } else if (userDAO.getObject(username) != null) {
                 usernameError.setText("Username already taken");
                 return false;
             }
@@ -205,7 +205,7 @@ public class CreateAccountController {
      */
     private void saveUser(User user) {
         try {
-            userDAO.addUser(user);
+            userDAO.addObject(user);
             System.out.println("created user");
             // Save user in cache
         } catch (Exception e) {

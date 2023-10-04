@@ -11,17 +11,17 @@ import java.util.List;
  * @author Matleena Kankaanpää, Elmo Erla
  * 9.9.2023
  */
-public class ManufacturerDAO {
+public class ManufacturerDAO implements IDAO {
 
     /**
      * Adds a new manufacturer
      * @param manufacturer A new manufacturer
      */
-    public void addManufacturer(Manufacturer manufacturer) {
+    public void addObject(Object manufacturer) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
-            em.merge(manufacturer);
+            em.merge((Manufacturer) manufacturer);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -38,7 +38,7 @@ public class ManufacturerDAO {
      * @param id ID of the manufacturer
      * @return Manufacturer object
      */
-    public Manufacturer getManufacturer(int id) {
+    public Manufacturer getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
@@ -54,6 +54,12 @@ public class ManufacturerDAO {
             em.close();
         }
     }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
+    }
+
     /**
      * Retrieves a list of all manufacturers from the database.
      *

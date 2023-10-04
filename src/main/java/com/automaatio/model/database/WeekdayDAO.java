@@ -12,16 +12,16 @@ import java.util.List;
  *
  * DAO for Weekday.class
  */
-public class WeekdayDAO {
+public class WeekdayDAO implements IDAO {
 
     /**
      * Adds a new weekday
      * @param weekday A new weekday
      */
-    public void addWeekday(Weekday weekday) {
+    public void addObject(Object weekday) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(weekday);
+        em.persist((Weekday) weekday);
         em.getTransaction().commit();
     }
 
@@ -30,12 +30,17 @@ public class WeekdayDAO {
      * @param id ID of the weekday
      * @return Weekday object
      */
-    public Weekday getWeekday(int id) {
+    public Weekday getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         Weekday weekday = em.find(Weekday.class, id);
         em.getTransaction().commit();
         return weekday;
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**

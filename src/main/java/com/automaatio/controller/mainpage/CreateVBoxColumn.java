@@ -48,7 +48,7 @@ public class CreateVBoxColumn {
     private ToggleButton createToggleBtn(Device device) {
         ToggleButton toggleButton = new ToggleButton();
         toggleButton.setPrefWidth(btnWidth);
-        setOnOff(deviceDAO.getDevice(device.getDeviceID()).isOnOff(), device, toggleButton);
+        setOnOff(deviceDAO.getObject(device.getDeviceID()).isOnOff(), device, toggleButton);
         toggleButton.getStyleClass().add("toggleBtn");
 
         toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {

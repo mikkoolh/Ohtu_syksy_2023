@@ -14,17 +14,22 @@ import java.util.List;
  * 15.9.2023
  */
 
-public class UserDAO {
+public class UserDAO implements IDAO {
 
     /**
      * Adds a new user
      * @param user A new user
      */
-    public void addUser(User user) {
+    public void addObject(Object user) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(user);
+        em.persist((User) user);
         em.getTransaction().commit();
+    }
+
+    @Override
+    public Object getObject(int id) {
+        return null;
     }
 
     /**
@@ -32,7 +37,7 @@ public class UserDAO {
      * @param username Username
      * @return User object
      */
-    public User getUser(String username) {
+    public User getObject(String username) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {

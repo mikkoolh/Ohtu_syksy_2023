@@ -87,7 +87,7 @@ public class LoginController {
         String password = passwordField.getText();
 
         try {
-            User user = userDAO.getUser(username);
+            User user = userDAO.getObject(username);
 
             if (user == null) {
                 // User not found
@@ -103,7 +103,7 @@ public class LoginController {
                     System.out.println("password correct");
 
                     // Save user in cache
-                    cache.setUser(userDAO.getUser(username));
+                    cache.setUser(userDAO.getObject(username));
                     User loggedInUser = cache.getUser();
                     String usernamecache = loggedInUser.getUsername();
                     System.out.println(username);

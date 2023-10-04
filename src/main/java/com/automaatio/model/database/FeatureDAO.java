@@ -9,17 +9,17 @@ import jakarta.persistence.*;
  * 8.9.2023
  */
 
-public class FeatureDAO {
+public class FeatureDAO implements IDAO {
 
     /**
      * Adds a new feature
      * @param feature A new feature
      */
-    public void addFeature(Feature feature) {
+    public void addObject(Object feature) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
-            em.merge(feature);
+            em.merge((Feature) feature);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -36,7 +36,7 @@ public class FeatureDAO {
      * @param id ID of the feature
      * @return Feature object
      */
-    public Feature getFeature(int id) {
+    public Feature getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
@@ -51,6 +51,11 @@ public class FeatureDAO {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public Object getObject(String s) {
+        return null;
     }
 
     /**

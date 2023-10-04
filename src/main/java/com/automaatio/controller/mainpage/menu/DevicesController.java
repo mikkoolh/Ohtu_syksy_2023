@@ -49,7 +49,7 @@ public class DevicesController implements Initializable, Menu {
 
         Device device = new Device(0, deviceName, "01", null, cache.getUser().getUsername());
 
-        deviceDAO.addDevice(device);
+        deviceDAO.addObject(device);
         System.out.println(device);
         deviceNameField.clear();
         System.out.println(device.getName() + ", id: " + device.getDeviceID());

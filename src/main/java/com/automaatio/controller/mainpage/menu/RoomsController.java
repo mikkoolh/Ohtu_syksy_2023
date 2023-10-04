@@ -78,7 +78,7 @@ public class RoomsController implements Initializable, Menu {
         }
         System.out.println("Added group/room: " + newRoom.getName());
 
-        deviceGroupDAO.addDeviceGroup(newRoom);
+        deviceGroupDAO.addObject(newRoom);
         System.out.println(newRoom);
     }
 

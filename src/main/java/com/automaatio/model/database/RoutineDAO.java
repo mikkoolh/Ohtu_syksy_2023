@@ -11,17 +11,17 @@
      * DAO for Routine class
      */
 
-    public class RoutineDAO {
+    public class RoutineDAO implements IDAO {
 
         /**
          * Adds a new routine
          * @param routine A new routine
          */
-        public void addRoutine(Routine routine) {
+        public void addObject(Object routine) {
             EntityManager em = MysqlDBJpaConn.getInstance();
             em.getTransaction().begin();
             try {
-                em.persist(routine);
+                em.persist((Routine) routine);
                 em.getTransaction().commit();
             } catch (Exception e) {
                 em.getTransaction().rollback();
@@ -29,6 +29,16 @@
             } finally {
                 em.close();
             }
+        }
+
+        @Override
+        public Object getObject(int id) {
+            return null;
+        }
+
+        @Override
+        public Object getObject(String s) {
+            return null;
         }
 
         /**
