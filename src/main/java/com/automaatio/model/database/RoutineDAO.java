@@ -1,6 +1,7 @@
     package com.automaatio.model.database;
 
     import jakarta.persistence.EntityManager;
+    import jakarta.persistence.Query;
     import jakarta.persistence.TypedQuery;
     import java.util.List;
 
@@ -127,6 +128,30 @@
                     throw new IllegalArgumentException("routine with id  " + id + " was not found");
                 }
                 em.getTransaction().commit();
+            } catch (Exception e) {
+                em.getTransaction().rollback();
+                throw e;
+            } finally {
+                em.close();
+            }
+        }
+
+        /**
+         * Delete all routines for a device by a certain user
+         * @param device
+         * @param user
+         */
+        public void deleteByDeviceAndUser(Device device, User user) {
+            EntityManager em = MysqlDBJpaConn.getInstance();
+            em.getTransaction().begin();
+
+            try {
+                Query query = em.createQuery("DELETE FROM Routine WHERE deviceID = :device AND user = :username");
+                query.setParameter("device", device);
+                query.setParameter("username", user);
+                int deletedCount = query.executeUpdate();
+                em.getTransaction().commit();
+                System.out.println("Poistettu " + deletedCount + " rutiinia.");
             } catch (Exception e) {
                 em.getTransaction().rollback();
                 throw e;

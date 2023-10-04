@@ -25,20 +25,14 @@ public class Weekday {
 
     /**
      * Parametrized constructor
-     * @param id Weekdays id
      * @param name name of the day
      */
-    public Weekday(int id, String name) {
-        this.weekdayId = id;
+    public Weekday(String name) {
         this.name = name;
     }
 
     public int getWeekdayId() {
         return weekdayId;
-    }
-
-    public void setWeekdayId(int weekdayId) {
-        this.weekdayId = weekdayId;
     }
 
     public String getName() {

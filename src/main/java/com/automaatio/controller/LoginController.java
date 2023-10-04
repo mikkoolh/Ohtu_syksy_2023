@@ -116,7 +116,7 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
             // Database connection error
-            loginErrorText.setText("Error. Please try again shortly");
+            loginErrorText.setText("Error. Please try again shortly.");
         }
     }
 
