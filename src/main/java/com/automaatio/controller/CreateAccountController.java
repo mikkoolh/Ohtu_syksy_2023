@@ -92,7 +92,7 @@ public class CreateAccountController {
         System.out.println(password);
 
         // Käyttäjän luonti
-        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1, 1000000);
+        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1, 0);
         System.out.println(user);
         saveUser(user);
         createAccountErrorText.setText("");
@@ -100,14 +100,17 @@ public class CreateAccountController {
     }
 
     /*
-    Käyttäjätunnuksen validointi ja tarkistus ettei
-    samaa käyttäjätunnusta löydy jo tietokannasta
+    Check that the username doesn't already exist in the
+    database and is in a valid format
      */
     private boolean validateUsername(String username) {
 
         try {
             if (username.isEmpty()) {
                 usernameError.setText("Required field");
+                return false;
+            } else if (!validator.includesNoSpaces(username)) {
+                usernameError.setText("Username cannot contain spaces");
                 return false;
             } else if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
                 usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
@@ -122,7 +125,7 @@ public class CreateAccountController {
         } catch (Exception e) {
             // Can't connect to the database to check if the username is available
             System.out.println("not connected to db");
-            createAccountErrorText.setText("Error. Please try again shortly");
+            createAccountErrorText.setText("Error. Please try again shortly.");
             return false;
         }
 
@@ -132,13 +135,12 @@ public class CreateAccountController {
         return true;
     }
 
-    // samat? min length voi poistaa?
     private boolean validateFirstName(String firstName) {
         if (firstName.isEmpty()) {
             firstNameError.setText("Required field");
             return false;
-        } else if (firstName.length() > validator.getNAME_MAX_LENGTH()) {
-            firstNameError.setText("First name must be " + validator.getNAME_MAX_LENGTH() + " characters or less");
+        } else if (firstName.length() > validator.getFIRSTNAME_MAX_LENGTH()) {
+            firstNameError.setText("First name must be " + validator.getFIRSTNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
         firstNameError.setText("");
@@ -149,8 +151,8 @@ public class CreateAccountController {
         if (lastName.isEmpty()) {
             lastNameError.setText("Required field");
             return false;
-        } else if (lastName.length() > validator.getNAME_MAX_LENGTH()) {
-            lastNameError.setText("Last name must be " + validator.getNAME_MAX_LENGTH() + " characters or less");
+        } else if (lastName.length() > validator.getLASTNAME_MAX_LENGTH()) {
+            lastNameError.setText("Last name must be " + validator.getLASTNAME_MAX_LENGTH() + " characters or less");
             return false;
         }
         lastNameError.setText("");
@@ -191,7 +193,7 @@ public class CreateAccountController {
         } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
             passwordError.setText("Password must be " + validator.getPASSWORD_MAX_LENGTH() + " characters or less");
             return false;
-        } else if (!password.trim().replaceAll("\\s", "").equals(password)) {
+        } else if (!validator.includesNoSpaces(password)) {
             passwordError.setText("Password cannot contain spaces");
             return false;
         }

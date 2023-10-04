@@ -1,10 +1,8 @@
 package com.automaatio.model;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URL;
-import java.text.DecimalFormat;
 
 public class ElectricityPriceConnector {
 
@@ -32,6 +30,4 @@ public class ElectricityPriceConnector {
     public String getElPrice(){
         return String.format("%.4f", getElPriceNow()) + "snt/kWh";
     }
-
-
 }

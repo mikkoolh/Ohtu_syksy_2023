@@ -7,47 +7,68 @@ package com.automaatio.utils;
  */
 
 public class FormInputValidator {
-    private final Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, NAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH, NAME_MAX_LENGTH, PHONE_MIN_LENGTH, PHONE_MAX_LENGTH;
+    private final Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, FIRSTNAME_MIN_LENGTH, LASTNAME_MIN_LENGTH,
+            USERNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH, FIRSTNAME_MAX_LENGTH, LASTNAME_MAX_LENGTH, PHONE_MIN_LENGTH, PHONE_MAX_LENGTH;
 
     /**
      * Constructor
      */
     public FormInputValidator() {
-        // SAA VAIHTAA!!!
-        USERNAME_MIN_LENGTH = 5;
-        USERNAME_MAX_LENGTH = 20;
-
-        PASSWORD_MIN_LENGTH = 8;
-        PASSWORD_MAX_LENGTH = 20;
-
-        NAME_MIN_LENGTH = 1;
-        NAME_MAX_LENGTH = 20;
-
-        PHONE_MIN_LENGTH = 7;
-        PHONE_MAX_LENGTH = 15;
+        this.USERNAME_MIN_LENGTH = 5;
+        this.USERNAME_MAX_LENGTH = 20;
+        this.PASSWORD_MIN_LENGTH = 8;
+        this.PASSWORD_MAX_LENGTH = 20;
+        this.FIRSTNAME_MIN_LENGTH = 1;
+        this.FIRSTNAME_MAX_LENGTH = 20;
+        this.LASTNAME_MIN_LENGTH = 1;
+        this.LASTNAME_MAX_LENGTH = 20;
+        this.PHONE_MIN_LENGTH = 7;
+        this.PHONE_MAX_LENGTH = 15;
     }
 
+    /**
+     * Checks if the length of the username provided is within range
+     * @param username Username input
+     * @return Boolean True if the username length is within range
+     */
+    public Boolean usernameLengthCorrect(String username) {
+        return (username.length() >= USERNAME_MIN_LENGTH && username.length() <= USERNAME_MAX_LENGTH);
+    }
 
     /**
-     * Checks if the given values are the right length.
-     * @param value
-     * @param type
-     * @return
+     * Checks that the provided string doesn't include spaces
+     * @param s The provided string
+     * @return True if the string doesn't include spaces
      */
+    public Boolean includesNoSpaces(String s) {
+        return (s.trim().replaceAll("\\s", "").equals(s));
+    }
 
-    public Boolean isLengthCorrect(String value, String type){
+    /**
+     * Checks if the length of the password provided is within range
+     * @param password Password input
+     * @return Boolean True if the password length is within range
+     */
+    public Boolean passwordLengthCorrect(String password) {
+        return (password.length() >= PASSWORD_MIN_LENGTH && password.length() <= PASSWORD_MAX_LENGTH);
+    }
 
-        if (type.equals("username")){
-            return value.length() >= USERNAME_MIN_LENGTH && value.length() <= USERNAME_MAX_LENGTH;
+    /**
+     * Checks if the length of the first name provided is within range
+     * @param firstName First name input
+     * @return Boolean True if the first name length is within range
+     */
+    public Boolean firstNameLengthCorrect(String firstName) {
+        return (firstName.length() >= FIRSTNAME_MIN_LENGTH && firstName.length() <= FIRSTNAME_MAX_LENGTH);
+    }
 
-        } else if (type.equals("name")) {
-            return value.length() >= NAME_MIN_LENGTH && value.length() <= NAME_MAX_LENGTH;
-        } else if (type.equals("password")){
-            return value.length() >= PASSWORD_MIN_LENGTH && value.length() <= PASSWORD_MAX_LENGTH;
-
-        }else {
-            return false;
-        }
+    /**
+     * Checks if the length of the last name provided is within range
+     * @param lastName Last name input
+     * @return Boolean True if the last name length is within range
+     */
+    public Boolean lastNameLengthCorrect(String lastName) {
+        return (lastName.length() >= LASTNAME_MIN_LENGTH && lastName.length() <= LASTNAME_MAX_LENGTH);
     }
 
     /**
@@ -66,7 +87,6 @@ public class FormInputValidator {
      * @return Boolean True if the phone number format is valid
      */
     public Boolean phoneFormatCorrect(String phone) {
-        //return phone.matches("^+?[0-9]{7,14}$");
         return phone.matches("^+?[0-9-]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$");
     }
 
@@ -79,10 +99,6 @@ public class FormInputValidator {
         return PASSWORD_MIN_LENGTH;
     }
 
-    public Integer getNAME_MIN_LENGTH() {
-        return NAME_MIN_LENGTH;
-    }
-
     public Integer getUSERNAME_MAX_LENGTH() {
         return USERNAME_MAX_LENGTH;
     }
@@ -91,15 +107,11 @@ public class FormInputValidator {
         return PASSWORD_MAX_LENGTH;
     }
 
-    public Integer getNAME_MAX_LENGTH() {
-        return NAME_MAX_LENGTH;
+    public Integer getFIRSTNAME_MAX_LENGTH() {
+        return FIRSTNAME_MAX_LENGTH;
     }
 
-    public Integer getPHONE_MIN_LENGTH() {
-        return PHONE_MIN_LENGTH;
-    }
-
-    public Integer getPHONE_MAX_LENGTH() {
-        return PHONE_MAX_LENGTH;
+    public Integer getLASTNAME_MAX_LENGTH() {
+        return LASTNAME_MAX_LENGTH;
     }
 }

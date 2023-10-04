@@ -25,25 +25,14 @@ public class Weekday {
 
     /**
      * Parametrized constructor
-     * @param id Weekdays id
      * @param name name of the day
      */
-    public Weekday(int id, String name) {
-        this.weekdayId = id;
+    public Weekday(String name) {
         this.name = name;
     }
 
-    /*
-    @OneToMany(mappedBy = "weekdays")
-    private List<EventTime> eventTimes;
-     */
-
     public int getWeekdayId() {
         return weekdayId;
-    }
-
-    public void setWeekdayId(int weekdayId) {
-        this.weekdayId = weekdayId;
     }
 
     public String getName() {
@@ -53,17 +42,4 @@ public class Weekday {
     public void setName(String name) {
         this.name = name;
     }
-
-    /*
-    hajotti testit atm
-
-    public List<EventTime> getEventTimes() {
-        return eventTimes;
-    }
-
-    public void setEventTimes(List<EventTime> eventTimes) {
-        this.eventTimes = eventTimes;
-    }
-
-     */
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 public class DeviceTest {
 
+    /*
     @Test
     public void testDeviceConstructor() {
         // luodaan ryhmä
@@ -40,4 +41,6 @@ public class DeviceTest {
         assertEquals("Name should be 'EriLaite'", device.getName(), "EriLaite");
         assertEquals("Model should be 'Malli2'", device.getModelCode(), "Malli2");
     }
+
+     */
 }

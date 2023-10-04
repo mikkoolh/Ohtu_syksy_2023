@@ -9,17 +9,19 @@ import jakarta.persistence.*;
  * 28.9.2023
  */
 
-public class EventTimeDAO implements IDAO {
+public class EventTimeDAO {
 
     /**
      * Adds a new event
      * @param eventTime A new event
      */
-    public void addObject(Object eventTime) {
+    public EventTime addEventTime(EventTime eventTime) {
+        EventTime savedEventTime = null;
+
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
-            em.merge((EventTime) eventTime);
+            savedEventTime = em.merge(eventTime);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -29,6 +31,7 @@ public class EventTimeDAO implements IDAO {
         } finally {
             em.close();
         }
+        return savedEventTime;
     }
 
     /**
@@ -36,7 +39,7 @@ public class EventTimeDAO implements IDAO {
      * @param id ID of the event
      * @return EventTime object
      */
-    public EventTime getObject(int id) {
+    public EventTime getEventTime(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
@@ -51,11 +54,6 @@ public class EventTimeDAO implements IDAO {
         } finally {
             em.close();
         }
-    }
-
-    @Override
-    public Object getObject(String s) {
-        return null;
     }
 
     /**
