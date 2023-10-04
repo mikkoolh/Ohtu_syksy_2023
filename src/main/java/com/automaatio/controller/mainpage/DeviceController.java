@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * @author Elmo Erla
  *
  */
-public class DeviceController implements Initializable {
+public class DeviceController implements Initializable, IController {
 
     DeviceDAO deviceDAO = new DeviceDAO();
     DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();

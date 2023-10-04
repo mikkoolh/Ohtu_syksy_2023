@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * @author Elmo Erla
  */
-public class RoomController implements Initializable {
+public class RoomController implements Initializable, IController {
     @FXML
     private Text roomName;
     @FXML

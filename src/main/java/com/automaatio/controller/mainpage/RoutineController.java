@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RoutineController implements Initializable {
+public class RoutineController implements Initializable, IController {
 
     @FXML
     private TextArea routineNameField;
