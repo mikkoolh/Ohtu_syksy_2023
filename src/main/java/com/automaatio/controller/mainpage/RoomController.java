@@ -32,7 +32,7 @@ public class RoomController implements Initializable, IController {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     private DeviceDAO deviceDAO = new DeviceDAO();
-    private CreateVBoxColumn deviceRow = new CreateVBoxColumn();
+    private CreateVBoxColumnForRoom deviceRow = new CreateVBoxColumnForRoom();
 
     public RoomController() {}
     @Override
