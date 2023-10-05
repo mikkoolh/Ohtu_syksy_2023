@@ -35,7 +35,7 @@ public class RoomsController implements Initializable, Menu {
         roomsVBox.getChildren().clear();
         List<DeviceGroup> deviceGroups = deviceGroupDAO.getRoomsByUser(cache.getUser());
         for (DeviceGroup deviceGroup : deviceGroups) {
-            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup, roomsVBox));
+            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup));
         }
     }
 

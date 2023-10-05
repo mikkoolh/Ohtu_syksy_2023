@@ -1,7 +1,6 @@
 package com.automaatio.controller.mainpage;
 
 import com.automaatio.model.database.DeviceGroup;
-import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -15,18 +14,16 @@ import javafx.scene.control.Label;
 
 public class CreateRoomsVBoxColumn {
     private CacheSingleton cache = CacheSingleton.getInstance();
-    private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
 
     private Button openButton;
 
     private Label label;
 
-    private final int btnWidth = 50, vBoxSpacing = 10, hBoxSpacing = 20;
+    private final int vBoxSpacing = 10, hBoxSpacing = 20;
 
     private final String openText = "Open";
 
-    public VBox create(DeviceGroup deviceGroup, VBox deviceGroupVBox) {
-
+    public VBox create(DeviceGroup deviceGroup) {
         label = createLabel(deviceGroup);
         openButton = createOpenButton(deviceGroup);
         VBox newDeviceGroupVBox = new VBox(vBoxSpacing);
