@@ -28,6 +28,8 @@ public class RoomController implements Initializable, IController {
     private ComboBox<Device> deviceComboBox;
     @FXML
     private VBox devicesVBox;
+    @FXML
+    private Button deleteRoom;
 
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
@@ -95,6 +97,22 @@ public class RoomController implements Initializable, IController {
         List<Device> devices = deviceGroupDAO.getDevicesByRoom(cache.getRoom());
         for (Device device : devices) {
             devicesVBox.getChildren().add(deviceRow.create(device, devicesVBox, new DevicesClick()));
+        }
+    }
+
+    @FXML
+    public void deleteRoom() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Room");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete this room?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            List<Device> devicesInRoom = deviceGroupDAO.getDevicesByRoom(cache.getRoom());
+            for (Device device : devicesInRoom) {
+                device.setDeviceGroup(null);
+            }
+            deviceGroupDAO.deleteGroup(cache.getRoom().getDeviceGroupId());
         }
     }
 }

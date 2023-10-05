@@ -124,4 +124,34 @@ public class DeviceGroupDAO implements IDAO {
         em.getTransaction().commit();
         return devicesNotInGroup;
     }
+
+    /**
+     * Deletes a specific device group
+     * @param deviceGroupId ID of the device group to be deleted
+     */
+    public void deleteGroup(int deviceGroupId) {
+        try (EntityManager em = MysqlDBJpaConn.getInstance()) {
+            em.getTransaction().begin();
+            deleteGroupWithoutTransaction(em, deviceGroupId);
+            em.getTransaction().commit();
+        }
+    }
+
+    public List<Device> getDevicesByRoomWithoutTransaction(EntityManager em, DeviceGroup deviceGroup) {
+        TypedQuery<Device> query = em.createQuery(
+                "SELECT d FROM Device d WHERE d.deviceGroup = :deviceGroupObj", Device.class);
+        query.setParameter("deviceGroupObj", deviceGroup);
+        return query.getResultList();
+    }
+
+    public void deleteGroupWithoutTransaction(EntityManager em, int deviceGroupId) {
+        DeviceGroup deviceGroup = em.find(DeviceGroup.class, deviceGroupId);
+        if (deviceGroup != null) {
+            for (Device device : getDevicesByRoomWithoutTransaction(em, deviceGroup)) {
+                device.setDeviceGroup(null);
+                em.merge(device);
+            }
+            em.remove(deviceGroup);
+        }
+    }
 }
