@@ -20,7 +20,7 @@ public class DevicesClick implements ClickActions {
             }
         }
     @Override
-    public void onDeleteClick(Device device){
+    public void onDeleteClick(Device device) {
 
-    }
+        }
     }

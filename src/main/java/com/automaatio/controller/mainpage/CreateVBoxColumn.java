@@ -12,9 +12,7 @@ import javafx.scene.layout.*;
 
 
 public class CreateVBoxColumn {
-    private CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceDAO deviceDAO = new DeviceDAO();
-    private Pane mainPane = cache.getMainPane();
     private Button deleteBtn, editBtn;
     private ToggleButton onOff;
     private Label label;

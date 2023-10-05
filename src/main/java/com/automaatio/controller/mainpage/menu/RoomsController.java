@@ -1,5 +1,7 @@
 package com.automaatio.controller.mainpage.menu;
 
+import com.automaatio.controller.mainpage.CreateRoomsVBoxColumn;
+import com.automaatio.controller.mainpage.CreateVBoxColumn;
 import com.automaatio.model.database.DeviceGroup;
 
 import com.automaatio.model.database.DeviceGroupDAO;
@@ -25,11 +27,10 @@ public class RoomsController implements Initializable, Menu {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     @FXML
     private TextField newRoomTextField;
-    @FXML
-    private VBox roomsVBox;
+    private final CreateRoomsVBoxColumn deviceGroupRow = new CreateRoomsVBoxColumn();
 
     @FXML
-    private VBox roomsVBox2;
+    private VBox roomsVBox;
     private Pane mainPane;
 
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
@@ -41,10 +42,10 @@ public class RoomsController implements Initializable, Menu {
     }
 
     public void show() {
-        roomsVBox2.getChildren().clear();
-        List<DeviceGroup> rooms = deviceGroupDAO.getRoomsByUser(cache.getUser());
-        for (DeviceGroup room : rooms) {
-            roomsVBox2.getChildren().add(makeVBoxForNewRoom(room));
+        roomsVBox.getChildren().clear();
+        List<DeviceGroup> deviceGroups = deviceGroupDAO.getRoomsByUser(cache.getUser());
+        for (DeviceGroup deviceGroup : deviceGroups) {
+            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup, roomsVBox));
         }
     }
 
