@@ -1,4 +1,8 @@
 /* Menu -> CreateDeviceRow */
+* {
+    -fx-box-sizing: border-box;
+}
+
 .deviceRowVBox {
     -fx-border-width: 2;
     -fx-padding: 5;
@@ -26,4 +30,15 @@
 .deviceLabel {
     -fx-text-fill: #070707;
     -fx-font-size: 30px;
+}
+
+.inputErrorState {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3;
+}
+
+.tooltip {
+    -fx-fill: #5E5E5E;
+    -fx-font-size: 11px;
 }

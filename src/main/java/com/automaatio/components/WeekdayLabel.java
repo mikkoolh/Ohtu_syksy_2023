@@ -8,7 +8,7 @@ public class WeekdayLabel {
     private final Label label;
     public WeekdayLabel(String s) {
         label = new Label(s.substring(0, 3).toLowerCase());
-        label.setFont(Font.font("PT Mono", BOLD, 24)); // andale/pt mono
+        label.setFont(Font.font("Andale Mono", BOLD, 24)); // andale/pt mono
     }
 
     public Label getWeekdayLabel() {

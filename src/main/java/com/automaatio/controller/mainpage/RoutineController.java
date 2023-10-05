@@ -24,10 +24,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import com.automaatio.components.TimeSelector;
+import org.hibernate.annotations.Check;
 
 /**
  * Controller for the routines listing
@@ -54,7 +56,7 @@ public class RoutineController implements Initializable {
     private VBox routineVBox, weekdaysVBox;
 
     @FXML
-    private Button automateAllButton, addRoutineButton, deleteAllButton;
+    private Button automateAllButton, addRoutineButton, deleteAllButton, saveButton;
 
     @FXML
     private Text noRoutinesText, routineErrorText, formTitle;
@@ -68,18 +70,14 @@ public class RoutineController implements Initializable {
     @FXML
     private GridPane formGrid;
 
-
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
     private final Map<Routine, ToggleSwitch> toggleSwitches = new LinkedHashMap<>();
     private final Map<Button, Routine> deleteButtons = new LinkedHashMap<>();
     private final RoutineUtils util = new RoutineUtils();
-
     private WeekdayDAO weekdayDAO = new WeekdayDAO();
-
     private Map<Weekday, CheckBox> weekdayCheckBoxes = new LinkedHashMap<>();
-    private LinkedHashMap<String, ArrayList<Routine>> routinesByWeekday;
     private TimePicker startTimePicker, endTimePicker;
     private List<Weekday> weekdays;
     private boolean noRoutinesToShow;
@@ -120,7 +118,7 @@ public class RoutineController implements Initializable {
         boolean fetchedOk = false;
 
         try {
-            // Refetch routines from db
+            // Fetch routines from db
             map = util.getRoutinesByWeekday(weekdays, routines);
             fetchedOk = true;
         } catch (Exception e) {
@@ -150,7 +148,7 @@ public class RoutineController implements Initializable {
                     noRoutinesToShow = false;
 
                     VBox routinesContainer = new VBox(); // Routines are listed here
-                    routinesContainer.setSpacing(10);
+                    routinesContainer.setSpacing(10); // Spacing between routines on the same weekday
                     HBox.setHgrow(routinesContainer, Priority.ALWAYS); // Make routine row fill up available space
                     splitBox.getChildren().addAll(weekdayLabel, routinesContainer);
 
@@ -160,13 +158,16 @@ public class RoutineController implements Initializable {
                         routinesContainer.getChildren().add(routineRow);
                     }
                     routineVBox.getChildren().add(splitBox);
+                    routineVBox.setSpacing(20);  // Spacing between weekday groups
 
-                    // Separate days with a line (except after Sunday)
-                    if (!weekday.equals(weekdays.get(weekdays.size()-1).getName())) {
+                    // Separate days with a line
+                    /*
+                    if (!weekday.equals(weekdays.get(map.keySet().size()-1).getName())) { //
                         Separator s = new Separator(Orientation.HORIZONTAL);
                         s.setStyle("-fx-border-width: 1px; -fx-padding: 0;");
                         routineVBox.getChildren().add(s);
                     }
+                     */
                 }
             }
 
@@ -194,6 +195,7 @@ public class RoutineController implements Initializable {
         Image edit = new Image("images/edit-svgrepo-com.png");
         Image save = new Image("images/save-svgrepo-com.png");
         Image delete = new Image("images/trash-svgrepo-com.png");
+        Image cancel = new Image("images/cancel-svgrepo-com.png");
         editView.setImage(edit);
         editView.setPreserveRatio(true);
         editView.setFitHeight(ICON_DIMENSIONS);
@@ -205,13 +207,38 @@ public class RoutineController implements Initializable {
         // Automation toggle
         ToggleSwitch toggle = getToggleSwich(routine);
 
-        // Times
-        HBox clockTimes = new HBox(endTime, dash, startTime); // Start and end times
+        // Container for start and end times
+        GridPane clockTimes = new GridPane();
+        clockTimes.add(startTime, 0, 0);
+        clockTimes.add(new Label("-"), 1, 0);
+        clockTimes.add(endTime, 2, 0);
         HBox timeContainer = new HBox(clockTimes); // Wrapper box
-        clockTimes.setSpacing(10);
         timeContainer.setAlignment(Pos.CENTER);
         HBox.setHgrow(timeContainer, Priority.ALWAYS);
+        clockTimes.setHgap(5);
 
+        // Time pickers (editing mode)
+        TimePicker newStartTime = (new TimeSelector()).getTimePicker();
+        TimePicker newEndTime = (new TimeSelector()).getTimePicker();
+        newStartTime.setTime(routine.getEventTime().getStartTime().toLocalTime());
+        newEndTime.setTime(routine.getEventTime().getEndTime().toLocalTime());
+
+        // Grid containing time pickers (editing mode)
+        GridPane newClockTimes = new GridPane();
+        newClockTimes.add(newStartTime, 0, 0);
+        newClockTimes.add(new Label("-"), 1, 0);
+        newClockTimes.add(newEndTime, 2, 0);
+        clockTimes.setHgap(5);
+
+        // Store time pickers in an array
+        List<TimePicker> editingTimePickers = Arrays.asList(newStartTime, newEndTime);
+
+        // Change listeners for time pickers (editing mode)
+        for (TimePicker timePicker : editingTimePickers) {
+            timePicker.timeProperty().addListener((observable, oldValue, newValue) -> {
+                editButton.setDisable(!validateTimeInput(newStartTime, newEndTime));
+            });
+        }
 
         // Buttons
         Button deleteButton = new Button();
@@ -223,18 +250,24 @@ public class RoutineController implements Initializable {
         deleteButtons.put(deleteButton, routine);
         deleteButton.setVisible(false);
 
-        Button cancelButton = new Button("Cancel");
+        // Cancel button
+        Button cancelButton = new Button();
+        ImageView cancelView = new ImageView(cancel);
+        cancelView.setPreserveRatio(true);
+        cancelView.setFitHeight(ICON_DIMENSIONS);
+        cancelButton.setGraphic(cancelView);
         cancelButton.setVisible(false);
-        cancelButton.setOnAction(cancelEditing);
-
-
-        // Time pickers
-        TimePicker newStartTime = (new TimeSelector()).getTimePicker();
-        TimePicker newEndTime = (new TimeSelector()).getTimePicker();
-        newStartTime.setTime(routine.getEventTime().getStartTime().toLocalTime());
-        newEndTime.setTime(routine.getEventTime().getEndTime().toLocalTime());
-        HBox timePickers = new HBox(newEndTime, dash, newStartTime);
-        timePickers.setSpacing(10);
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("cancel clicked");
+                deleteButton.setVisible(!deleteButton.isVisible());
+                cancelButton.setVisible(!cancelButton.isVisible());
+                timeContainer.getChildren().clear();
+                editButton.setGraphic(editView);
+                timeContainer.getChildren().add(clockTimes);
+            }
+        });
 
         // When edit/save is clicked
         editButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -245,17 +278,13 @@ public class RoutineController implements Initializable {
                 timeContainer.getChildren().clear();
 
                 if (deleteButton.isVisible()) {
-                    // Editing
+                    // Switch out of editing mode
                     editButton.setGraphic(saveView);
-                    timeContainer.getChildren().add(timePickers);
-
+                    timeContainer.getChildren().add(newClockTimes);
                 } else {
-                    // Not editing
+                    // Switch into editing mode
                     editButton.setGraphic(editView);
                     timeContainer.getChildren().add(clockTimes);
-
-                    // save new times + automation
-
                 }
             }
         });
@@ -264,7 +293,7 @@ public class RoutineController implements Initializable {
         HBox.setHgrow(routineRow, Priority.ALWAYS);
         routineRow.setStyle("-fx-background-color: #e1e1e1; -fx-background-radius: 4;");
 
-        Label[] labels = new Label[] {startTime, dash, endTime};
+        Label[] labels = new Label[] {startTime, endTime};
         for (Label label : labels) {
             label.setFont(new Font(FONT, FONT_SIZE_TEXT));
         }
@@ -274,7 +303,7 @@ public class RoutineController implements Initializable {
         return routineRow;
     }
 
-    // Refetches routines from the database
+    // Fetches routines from the database
     private List<Routine> fetchRoutines() {
         return routineDAO.getRoutinesByDeviceId(ID);
     }
@@ -295,7 +324,6 @@ public class RoutineController implements Initializable {
         });
 
         toggleSwitches.put(routine, toggle);
-
         return toggle;
     }
 
@@ -371,18 +399,12 @@ public class RoutineController implements Initializable {
         }
     };
 
-    // When the "Cancel" button is clicked while editing
-    private final EventHandler<ActionEvent> cancelEditing = new EventHandler<>() {
-        public void handle(ActionEvent event) {
-            System.out.println("cancel");
-        }
-    };
-
     @FXML
     private void hideForm() {
         addRoutineForm.setVisible(false);
         addRoutineForm.setManaged(false);
         addRoutineButton.setVisible(true);
+        noRoutinesText.setVisible(noRoutinesToShow);
     }
 
     @FXML
@@ -390,6 +412,7 @@ public class RoutineController implements Initializable {
         addRoutineForm.setVisible(true);
         addRoutineForm.setManaged(true);
         addRoutineButton.setVisible(false);
+        noRoutinesText.setVisible(!noRoutinesText.isVisible());
 
         // Reset checkboxes
         for (CheckBox checkBox : weekdayCheckBoxes.values()) {
@@ -423,9 +446,8 @@ public class RoutineController implements Initializable {
                     Device device = cache.getDevice();
 
                     /*
-                     Save the routine to the database
-                     Feature is null for now, routines added by users
-                     are automatically on (tää kävis järkeen?)
+                     Save the routine to the database.
+                     Feature is null for now, routines added by users are automatically on.
                      */
                     Routine routine = new Routine(user, device, null, eventTime, true);
                     routineDAO.addRoutine(routine);
@@ -440,7 +462,7 @@ public class RoutineController implements Initializable {
         }
     }
 
-    public void initializeForm() {
+    private void initializeForm() {
         addRoutineForm.setPadding(new Insets(10));
         addRoutineForm.setStyle("-fx-border-color: black; -fx-border-radius: 10;");
         formTitle.setText("Add a custom routine for " + cache.getDevice().getName());
@@ -456,6 +478,25 @@ public class RoutineController implements Initializable {
         endTimePicker = (new TimeSelector()).getTimePicker();
         formGrid.add(startTimePicker, 1, 0);
         formGrid.add(endTimePicker, 1, 1);
+
+        // Prevent saving a routine where the start and end times are the same (default values)
+        saveButton.setDisable(true);
+
+        List<TimePicker> timePickers = Arrays.asList(startTimePicker, endTimePicker);
+
+        // Change listeners for time pickers
+        for (TimePicker timePicker : timePickers) {
+            timePicker.timeProperty().addListener((observable, oldValue, newValue) -> {
+                checkSaveButtonState();
+            });
+        }
+
+        // Change listeners for weekday checkboxes
+        for (Map.Entry<Weekday, CheckBox> set : weekdayCheckBoxes.entrySet()) {
+            set.getValue().selectedProperty().addListener((observable, oldValue, newValue) -> {
+                checkSaveButtonState();
+            });
+        }
     }
 
 
@@ -498,5 +539,36 @@ public class RoutineController implements Initializable {
         routineErrorText.setVisible(true);
         routineErrorText.setText("Error. Unable to load routines.");
         noRoutinesText.setVisible(false); // Don't display both disclaimers
+    }
+
+    // Checks if the values of two time pickers are in successive order
+    private boolean validateTimeInput(TimePicker startTime, TimePicker endTime) {
+        boolean timeInputOk = util.compareTimes(startTime.getTime(), endTime.getTime());
+
+        if (timeInputOk) {
+            startTime.getStyleClass().remove("inputErrorState");
+            endTime.getStyleClass().remove("inputErrorState");
+        } else {
+            startTime.getStyleClass().add("inputErrorState");
+            endTime.getStyleClass().add("inputErrorState");
+        }
+        return timeInputOk;
+    }
+
+    // Returns true if at least one checkbox is selected
+    private boolean validateWeekdaySelection() {
+        validateTimeInput(startTimePicker, endTimePicker);
+        for (Map.Entry<Weekday, CheckBox> set : weekdayCheckBoxes.entrySet()) {
+            if (set.getValue().isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Controls the clickability of the save button depending on input validations
+    private void checkSaveButtonState() {
+        saveButton.setDisable(!validateTimeInput(startTimePicker, endTimePicker) ||
+                !validateWeekdaySelection());
     }
 }

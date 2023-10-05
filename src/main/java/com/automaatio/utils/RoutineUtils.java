@@ -5,6 +5,7 @@ import com.automaatio.model.database.Weekday;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -78,5 +79,15 @@ public class RoutineUtils {
             map.get(routine.getEventTime().getWeekday().getName()).add(routine);
         }
         return map;
+    }
+
+    /**
+     * Compares the values two LocalTime objects
+     * @param startTime Start time
+     * @param endTime End time
+     * @return True if the end time is after the start time
+     */
+    public boolean compareTimes(LocalTime startTime, LocalTime endTime) {
+        return endTime.isAfter(startTime);
     }
 }

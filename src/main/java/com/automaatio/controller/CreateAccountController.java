@@ -1,6 +1,10 @@
 package com.automaatio.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
@@ -41,6 +45,7 @@ public class CreateAccountController {
     @FXML
     private GridPane formGrid;
     private boolean hidePassword;
+    private List<Text> tooltips;
 
     /*
      To keep track of what's typed in the password field
@@ -270,12 +275,16 @@ public class CreateAccountController {
         // Button containing the image
         togglePassword.setStyle("-fx-border-color: transparent; -fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent;");
         togglePassword.setGraphic(sauron);
+
+        tooltips = Arrays.asList(usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError);
+        for (Text tooltip : tooltips) {
+            // Voi muuttaa fontin mut kaikki ei tue italicia
+            tooltip.setStyle("-fx-fill: #5E5E5E; -fx-font-family: Verdana; -fx-font-style: italic; -fx-font-size: 11px;");
+            // tooltip.getStyleClass().add("tooltip"); ei toimi en tiä miks :p
+        }
     }
 
-    /*
-    Enables/disables the save button depending on
-    whether all fields are ok
-     */
+    // Enables/disables the save button depending on whether all fields are ok
     private void toggleButton() {
         getFieldValues();
 
