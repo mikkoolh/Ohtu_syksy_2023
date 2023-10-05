@@ -31,6 +31,10 @@ public class CreateVBoxColumn {
         onOff = createToggleBtn(device);
 
         Pane spacer = new Pane();
+
+        //muuttaa yksittäisen HBoxin leveyden scrollpanen kokoiseksi laiskalla tavalla
+        spacer.setPrefWidth(75);
+
         HBox buttonsRow = new HBox(hBoxSpacing);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 

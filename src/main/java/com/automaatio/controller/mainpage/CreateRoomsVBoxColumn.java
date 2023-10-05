@@ -1,6 +1,5 @@
 package com.automaatio.controller.mainpage;
 
-import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -33,14 +32,18 @@ public class CreateRoomsVBoxColumn {
         VBox newDeviceGroupVBox = new VBox(vBoxSpacing);
 
         Pane spacer = new Pane();
+
+        //muuttaa yksittäisen HBoxin leveyden scrollpanen kokoiseksi laiskalla tavalla
+        spacer.setPrefWidth(220);
+
         HBox buttonsRow = new HBox(hBoxSpacing);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         buttonsRow.getChildren().addAll(openButton, spacer);
         buttonsRow.setAlignment(Pos.TOP_LEFT);
 
-        deviceGroupVBox.getStyleClass().add("deviceRowVBox");
-        deviceGroupVBox.getChildren().addAll(label, buttonsRow);
+        newDeviceGroupVBox.getStyleClass().add("deviceRowVBox");
+        newDeviceGroupVBox.getChildren().addAll(label, buttonsRow);
 
         return newDeviceGroupVBox;
     }
