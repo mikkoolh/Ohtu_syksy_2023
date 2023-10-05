@@ -1,6 +1,8 @@
 package com.automaatio.controller.mainpage.menu;
 
 import com.automaatio.controller.mainpage.CreateRoomsVBoxColumn;
+import com.automaatio.controller.mainpage.clickActions.DeviceGroupsClick;
+import com.automaatio.controller.mainpage.clickActions.DevicesClick;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.DeviceGroupDAO;
 import com.automaatio.utils.CacheSingleton;
@@ -35,7 +37,7 @@ public class RoomsController implements Initializable, Menu {
         roomsVBox.getChildren().clear();
         List<DeviceGroup> deviceGroups = deviceGroupDAO.getRoomsByUser(cache.getUser());
         for (DeviceGroup deviceGroup : deviceGroups) {
-            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup));
+            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup, new DeviceGroupsClick()));
         }
     }
 

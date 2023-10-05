@@ -8,8 +8,8 @@ import javafx.scene.Parent;
 public class DevicesClick implements ClickActions {
     private CacheSingleton cache = CacheSingleton.getInstance();
     @Override
-    public void onEditClick(Device device) {
-            cache.setDevice(device);
+    public void onEditClick(Object object) {
+            cache.setDevice((Device) object);
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/device.fxml"));
                 Parent newView = loader.load();

@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage;
 
+import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXMLLoader;
@@ -23,9 +24,9 @@ public class CreateRoomsVBoxColumn {
 
     private final String openText = "Open";
 
-    public VBox create(DeviceGroup deviceGroup) {
+    public VBox create(DeviceGroup deviceGroup, ClickActions openAction) {
         label = createLabel(deviceGroup);
-        openButton = createOpenButton(deviceGroup);
+        openButton = createOpenButton(deviceGroup, openAction);
         VBox newDeviceGroupVBox = new VBox(vBoxSpacing);
 
         Pane spacer = new Pane();
@@ -51,20 +52,11 @@ public class CreateRoomsVBoxColumn {
         return deviceGroupLabel;
     }
 
-    private Button createOpenButton(DeviceGroup deviceGroup) {
+    private Button createOpenButton(DeviceGroup deviceGroup, ClickActions open) {
         Button openButton = new Button(openText);
         openButton.getStyleClass().add("editBtn");
-        openButton.setOnAction(event -> {
-            cache.setRoom(deviceGroup);
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/room.fxml"));
-                Parent newView = loader.load();
-                cache.getMainPane().getChildren().clear();
-                cache.getMainPane().getChildren().add(newView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        openButton.setOnAction(event -> open.onEditClick(deviceGroup));
+
         return openButton;
     }
 }
