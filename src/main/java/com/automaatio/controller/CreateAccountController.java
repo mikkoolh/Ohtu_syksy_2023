@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.automaatio.components.EyeButton;
+import com.automaatio.components.SwitchablePasswordField;
+import com.automaatio.components.TogglableButton;
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
 import com.automaatio.utils.NavigationUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -31,27 +38,17 @@ public class CreateAccountController {
     private final NavigationUtil nav;
     private final FormInputValidator validator;
     private final UserDAO userDAO;
-    private final int ICON_SIZE;
     private String firstName, lastName, email, phoneNumber, username, password;
-    private final Image show, hide;
+    private SwitchablePasswordField switchableField;
+    private TextInputControl passwordField;
     @FXML
-    private final ImageView sauron;
-    @FXML
-    private TextField firstNameField, lastNameField, emailField, phoneNumberField, usernameField, passwordField;
+    private TextField firstNameField, lastNameField, emailField, phoneNumberField, usernameField;
     @FXML
     private Text createAccountErrorText, usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError;
     @FXML
-    private Button saveButton, togglePassword;
+    private Button saveButton;
     @FXML
     private GridPane formGrid;
-    private boolean hidePassword;
-    private List<Text> tooltips;
-
-    /*
-     To keep track of what's typed in the password field
-     while switching the field type
-     */
-    private String currentPassword;
 
     /**
      * Constructor
@@ -60,14 +57,6 @@ public class CreateAccountController {
         nav = new NavigationUtil();
         validator = new FormInputValidator();
         userDAO = new UserDAO();
-        hidePassword = true;
-        currentPassword = "";
-        ICON_SIZE = 22; // Eye icon dimensions
-        sauron = new ImageView();
-
-        // Voi vaihtaa tai tehdä kokonaan erilaisen buttonin
-        show = new Image("images/eye-open-svgrepo-com.png");
-        hide = new Image("images/eye-hidden-svgrepo-com.png");
     }
 
     /**
@@ -96,7 +85,7 @@ public class CreateAccountController {
         System.out.println(phoneNumber);
         System.out.println(password);
 
-        // Käyttäjän luonti
+        // Create a new user
         User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1, 0);
         System.out.println(user);
         saveUser(user);
@@ -206,15 +195,11 @@ public class CreateAccountController {
         return true;
     }
 
-    /*
-    Creates a new user into the database
-    when the save button is clicked
-     */
+    // Creates a new user into the database when the save button is clicked
     private void saveUser(User user) {
         try {
             userDAO.addObject(user);
             System.out.println("created user");
-            // Save user in cache
         } catch (Exception e) {
             System.out.println(e);
             createAccountErrorText.setText("Error creating account");
@@ -226,6 +211,21 @@ public class CreateAccountController {
         saveButton.setDisable(true);
         Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
 
+        // Eye button
+        Button togglePasswordButton = (new EyeButton()).getButton();
+        togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
+            switchableField.toggle();
+            formGrid.getChildren().remove(passwordField);
+            passwordField = switchableField.getField();
+            formGrid.add(passwordField, 1, 10);
+        });
+        formGrid.add(togglePasswordButton, 2, 10);
+
+        // Switchable password field
+        switchableField = new SwitchablePasswordField();
+        passwordField = switchableField.getField();
+        formGrid.add(passwordField, 1, 10);
+
         getFieldValues();
 
         // Set the input guidelines on screen
@@ -236,6 +236,7 @@ public class CreateAccountController {
         validatePhoneNumber(phoneNumber);
         validatePassword(password);
 
+        // Change listeners for input fields
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             validateUsername(newValue.trim());
             toggleButton();
@@ -263,20 +264,10 @@ public class CreateAccountController {
 
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             validatePassword(newValue);
-            currentPassword = newValue;
             toggleButton();
         });
 
-        // Image view of the open/closed eye
-        sauron.setImage(show);
-        sauron.setPreserveRatio(true);
-        sauron.setFitHeight(ICON_SIZE);
-
-        // Button containing the image
-        togglePassword.setStyle("-fx-border-color: transparent; -fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent;");
-        togglePassword.setGraphic(sauron);
-
-        tooltips = Arrays.asList(usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError);
+        List<Text> tooltips = Arrays.asList(usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError);
         for (Text tooltip : tooltips) {
             // Voi muuttaa fontin mut kaikki ei tue italicia
             tooltip.setStyle("-fx-fill: #5E5E5E; -fx-font-family: Verdana; -fx-font-style: italic; -fx-font-size: 11px;");
@@ -284,7 +275,7 @@ public class CreateAccountController {
         }
     }
 
-    // Enables/disables the save button depending on whether all fields are ok
+    // Enables/disables the save button depending on whether all fields are pass validation
     private void toggleButton() {
         getFieldValues();
 
@@ -298,51 +289,12 @@ public class CreateAccountController {
         saveButton.setDisable(!inputOk);
     }
 
-    /*
-     Change the eye icon and switch the text field into
-     a password field (or vice versa) and pass whatever is typed
-     */
-    @FXML
-    private void togglePassword(ActionEvent event) {
-        if (hidePassword) {
-            // Create a text field
-            TextField textPassword = new TextField();
-            textPassword.setText(currentPassword);
-
-            //
-            textPassword.textProperty().addListener((observable, oldValue, newValue) -> {
-                currentPassword = newValue;
-                validatePassword(newValue);
-                toggleButton();
-            });
-
-            formGrid.add(textPassword, 1, 10);
-            sauron.setImage(hide);
-        } else {
-            // Create a password field
-            PasswordField hiddenPassword = new PasswordField();
-            hiddenPassword.setText(currentPassword);
-
-            //
-            hiddenPassword.textProperty().addListener((observable, oldValue, newValue) -> {
-                currentPassword = newValue;
-                validatePassword(newValue.trim());
-                toggleButton();
-            });
-
-            formGrid.add(hiddenPassword, 1, 10);
-            sauron.setImage(show);
-        }
-
-        hidePassword = !hidePassword;
-    }
-
     private void getFieldValues(){
         firstName = firstNameField.getText().trim();
         lastName = lastNameField.getText().trim();
         email = emailField.getText().trim();
         phoneNumber = phoneNumberField.getText().trim().replaceAll("\\s", ""); // Delete spaces
         username = usernameField.getText().trim();
-        password = currentPassword;
+        password = passwordField.getText();
     }
 }

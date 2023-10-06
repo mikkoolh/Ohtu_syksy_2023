@@ -51,7 +51,7 @@ public class RoutineController implements Initializable {
     EventTimeDAO eventTimeDAO = new EventTimeDAO();
 
     @FXML
-    private VBox routineVBox, weekdaysVBox;
+    private VBox routineVBox;
 
     @FXML
     private Button automateAllButton, addRoutineButton, deleteAllButton, saveButton;
@@ -67,15 +67,15 @@ public class RoutineController implements Initializable {
 
     @FXML
     private GridPane formGrid;
-
     private List<Routine> routines;
     private final int ID = cache.getDevice().getDeviceID();
 
     private final Map<Routine, ToggleSwitch> toggleSwitches = new LinkedHashMap<>();
     private final Map<Button, Routine> deleteButtons = new LinkedHashMap<>();
     private final RoutineUtils util = new RoutineUtils();
-    private WeekdayDAO weekdayDAO = new WeekdayDAO();
-    private Map<Weekday, CheckBox> weekdayCheckBoxes = new LinkedHashMap<>();
+    private final WeekdayDAO weekdayDAO = new WeekdayDAO();
+    private final Map<Weekday, CheckBox> weekdayCheckBoxes = new LinkedHashMap<>();
+    private Label weekdayTooltip;
     private TimePicker startTimePicker, endTimePicker;
     private List<Weekday> weekdays;
     private boolean noRoutinesToShow;
@@ -466,7 +466,7 @@ public class RoutineController implements Initializable {
         for (Weekday weekday : weekdayDAO.getAll()) {
             weekdayCheckBoxes.put(weekday, new CheckBox(weekday.getName()));
         }
-        weekdaysVBox = new VBox();
+        VBox weekdaysVBox = new VBox();
         weekdaysVBox.getChildren().addAll(weekdayCheckBoxes.values());
         weekdaysVBox.setSpacing(5);
 
@@ -476,6 +476,11 @@ public class RoutineController implements Initializable {
         GridPane clockTimes = new TimeSelectorGrid(startTimePicker, endTimePicker).getGrid();
         clockTimes.add(weekdaysVBox, 1, 2);
         formGrid.add(clockTimes, 0,0);
+
+        // Tooltip
+        weekdayTooltip = new Label("Select at least one day of the week");
+        weekdayTooltip.setStyle("-fx-text-fill: #5E5E5E; -fx-font-family: Verdana; -fx-font-style: italic; -fx-font-size: 11px;");
+        clockTimes.add(weekdayTooltip, 1, 3);
 
         // Prevent saving a routine where the start and end times are the same (default values)
         saveButton.setDisable(true);
@@ -550,6 +555,7 @@ public class RoutineController implements Initializable {
             startTime.getStyleClass().add("inputErrorState");
             endTime.getStyleClass().add("inputErrorState");
         }
+
         return timeInputOk;
     }
 
@@ -558,15 +564,18 @@ public class RoutineController implements Initializable {
         validateTimeInput(startTimePicker, endTimePicker);
         for (Map.Entry<Weekday, CheckBox> set : weekdayCheckBoxes.entrySet()) {
             if (set.getValue().isSelected()) {
+                weekdayTooltip.setVisible(false);
                 return true;
             }
         }
+        weekdayTooltip.setVisible(true);
         return false;
     }
 
     // Controls the clickability of the save button depending on input validations
     private void checkSaveButtonState() {
-        saveButton.setDisable(!validateTimeInput(startTimePicker, endTimePicker) ||
-                !validateWeekdaySelection());
+        boolean weekdaySelectionOk = validateWeekdaySelection();
+        boolean timeInputOk = validateTimeInput(startTimePicker, endTimePicker);
+        saveButton.setDisable(!timeInputOk || !weekdaySelectionOk);
     }
 }

@@ -1,17 +1,20 @@
 package com.automaatio.controller;
 
+import com.automaatio.components.EyeButton;
+import com.automaatio.components.SwitchablePasswordField;
+import com.automaatio.components.TogglableButton;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,10 +36,11 @@ public class LoginController {
     private TextField usernameField;
 
     @FXML
-    private PasswordField passwordField;
-
-    @FXML
     private Button loginButton;
+    private SwitchablePasswordField switchableField;
+    private TextInputControl passwordField;
+    @FXML
+    private GridPane loginFormGrid;
 
     private CacheSingleton cache = CacheSingleton.getInstance();
 
@@ -52,6 +56,22 @@ public class LoginController {
     private void initialize() {
         loginButton.setDisable(true);
 
+        // Eye button
+        Button togglePasswordButton = (new EyeButton()).getButton();
+        togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
+            switchableField.toggle();
+            loginFormGrid.getChildren().remove(passwordField);
+            passwordField = switchableField.getField();
+            loginFormGrid.add(passwordField, 1, 1);
+        });
+        loginFormGrid.add(togglePasswordButton, 2, 1);
+
+        // Switchable password field
+        switchableField = new SwitchablePasswordField();
+        passwordField = switchableField.getField();
+        loginFormGrid.add(passwordField, 1, 1);
+
+        // Change listeners for input fields
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateUI();
         });
@@ -60,7 +80,7 @@ public class LoginController {
             updateUI();
         });
 
-        //
+        // testailua yms. varten, voi poistaa lopuks
         try {
             List<User> users = userDAO.getAll();
             System.out.println(users.size() + " users in db");
@@ -70,7 +90,6 @@ public class LoginController {
         } catch (Exception e) {
             System.out.println("not connected to db");
         }
-        //
     }
 
     /**

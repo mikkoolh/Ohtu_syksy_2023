@@ -57,14 +57,12 @@
                         <Label text="Password" GridPane.rowIndex="10" />
                         <TextField fx:id="phoneNumberField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <TextField fx:id="usernameField" maxHeight="30.0" maxWidth="250" minHeight="30.0" minWidth="250" GridPane.columnIndex="1" />
-                        <PasswordField fx:id="passwordField" maxWidth="250" minWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <Text fx:id="usernameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text fx:id="firstNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Text fx:id="lastNameError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Text fx:id="emailError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Text fx:id="phoneError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <Button fx:id="togglePassword" maxHeight="30.0" mnemonicParsing="false" onAction="#togglePassword" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                     </children>
                 </GridPane>
                 <Text fx:id="createAccountErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
