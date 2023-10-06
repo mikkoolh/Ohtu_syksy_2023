@@ -115,7 +115,8 @@ public class ProfileController {
         double price = Double.parseDouble(priceLimit.getText());
         try {
             userDAO.updateMaxPrice(price, user.getUsername());
-            //user.setMaxPrice(price);
+            user.setMaxPrice(price);
+            cache.setUser(user);
         } catch (Exception e) {
             System.out.println("Ongelma hinnan päivittämisessä.");
         }
@@ -134,7 +135,7 @@ public class ProfileController {
         bdayField.setText(String.valueOf(user.getAge()));
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
-        //priceLimit.setText(Double.toString(user.getMaxPrice()));
+        priceLimit.setText(Double.toString(user.getMaxPrice()));
     }
 
 }
