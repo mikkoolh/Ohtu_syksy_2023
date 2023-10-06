@@ -19,7 +19,7 @@ public class ElectricityPriceConnector {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(url);
 
-            currentPrice = node.get("PriceWithTax").asDouble();
+            currentPrice = node.get("PriceWithTax").asDouble()/100;
             System.out.println("Hinta veroineen nyt: " + currentPrice + "snt");
         } catch (Exception e) {
             e.printStackTrace();
