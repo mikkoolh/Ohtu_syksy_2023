@@ -1,5 +1,6 @@
 package com.automaatio.controller.mainpage;
 
+import com.automaatio.components.TimeSelectorGrid;
 import com.automaatio.components.WeekdayLabel;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
@@ -16,10 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.controlsfx.control.ToggleSwitch;
@@ -106,7 +104,7 @@ public class RoutineController implements Initializable {
         }
         routineNameField.setText(cache.getDevice().getName());
         routineScrollPane.setStyle("-fx-background-color:transparent;");
-        hideForm();
+        //hideForm();
     }
 
     private void loadRoutines() {
@@ -212,6 +210,7 @@ public class RoutineController implements Initializable {
         clockTimes.add(startTime, 0, 0);
         clockTimes.add(new Label("-"), 1, 0);
         clockTimes.add(endTime, 2, 0);
+
         HBox timeContainer = new HBox(clockTimes); // Wrapper box
         timeContainer.setAlignment(Pos.CENTER);
         HBox.setHgrow(timeContainer, Priority.ALWAYS);
@@ -224,11 +223,7 @@ public class RoutineController implements Initializable {
         newEndTime.setTime(routine.getEventTime().getEndTime().toLocalTime());
 
         // Grid containing time pickers (editing mode)
-        GridPane newClockTimes = new GridPane();
-        newClockTimes.add(newStartTime, 0, 0);
-        newClockTimes.add(new Label("-"), 1, 0);
-        newClockTimes.add(newEndTime, 2, 0);
-        clockTimes.setHgap(5);
+        GridPane newClockTimes = new TimeSelectorGrid(newStartTime, newEndTime).getGrid();
 
         // Store time pickers in an array
         List<TimePicker> editingTimePickers = Arrays.asList(newStartTime, newEndTime);
@@ -471,13 +466,16 @@ public class RoutineController implements Initializable {
         for (Weekday weekday : weekdayDAO.getAll()) {
             weekdayCheckBoxes.put(weekday, new CheckBox(weekday.getName()));
         }
+        weekdaysVBox = new VBox();
         weekdaysVBox.getChildren().addAll(weekdayCheckBoxes.values());
+        weekdaysVBox.setSpacing(5);
 
         // Time pickers
         startTimePicker = (new TimeSelector()).getTimePicker();
         endTimePicker = (new TimeSelector()).getTimePicker();
-        formGrid.add(startTimePicker, 1, 0);
-        formGrid.add(endTimePicker, 1, 1);
+        GridPane clockTimes = new TimeSelectorGrid(startTimePicker, endTimePicker).getGrid();
+        clockTimes.add(weekdaysVBox, 1, 2);
+        formGrid.add(clockTimes, 0,0);
 
         // Prevent saving a routine where the start and end times are the same (default values)
         saveButton.setDisable(true);

@@ -1,6 +1,6 @@
 /* Menu -> CreateDeviceRow */
 * {
-    -fx-box-sizing: border-box;
+    -fx-clr-error: #a50000;
 }
 
 .deviceRowVBox {
@@ -33,7 +33,7 @@
 }
 
 .inputErrorState {
-    -fx-border-color: red;
+    -fx-border-color: -fx-clr-error;
     -fx-border-width: 2px;
     -fx-border-radius: 3;
 }
