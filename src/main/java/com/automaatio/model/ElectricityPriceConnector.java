@@ -19,7 +19,8 @@ public class ElectricityPriceConnector {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(url);
 
-            currentPrice = node.get("PriceWithTax").asDouble()/100;
+            currentPrice = node.get("PriceWithTax").asDouble()*100;
+            System.out.println();
             System.out.println("Hinta veroineen nyt: " + currentPrice + "snt");
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,6 +29,6 @@ public class ElectricityPriceConnector {
     }
 
     public String getElPrice(){
-        return String.format("%.4f", getElPriceNow()) + "snt/kWh";
+        return String.format("%.2f", getElPriceNow()) + "snt/kWh";
     }
 }
