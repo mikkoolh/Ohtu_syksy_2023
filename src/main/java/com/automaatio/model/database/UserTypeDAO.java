@@ -25,6 +25,28 @@ public class UserTypeDAO implements IDAO {
         em.getTransaction().commit();
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            UserType userType = em.find(UserType.class, id);
+            if (userType != null) {
+                em.remove(userType);
+                System.out.println("UserType" + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("UserType with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+
     /**
      * Fetches a User Type by its ID
      * @param id ID of UserType
@@ -40,6 +62,7 @@ public class UserTypeDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Not in use for this class");
         return null;
     }
 

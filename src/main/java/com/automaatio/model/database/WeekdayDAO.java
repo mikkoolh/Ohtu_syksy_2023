@@ -12,30 +12,51 @@ import java.util.List;
  *
  * DAO for Weekday.class
  */
-public class WeekdayDAO {
+public class WeekdayDAO implements IDAO {
 
-    /**
-     * Adds a new weekday
-     * @param weekday A new weekday
-     */
-    public void addWeekday(Weekday weekday) {
+
+      @Override
+    public void addObject(Object object) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
-        em.persist(weekday);
+        em.persist((Weekday) object);
         em.getTransaction().commit();
     }
 
-    /**
-     * Fetches a weekday by its ID
-     * @param id ID of the weekday
-     * @return Weekday object
-     */
-    public Weekday getWeekday(int id) {
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Weekday weekday = em.find(Weekday.class, id);
+            if (weekday != null) {
+                em.remove(weekday);
+                System.out.println("Weekday " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("Weekday with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public Object getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         Weekday weekday = em.find(Weekday.class, id);
         em.getTransaction().commit();
         return weekday;
+    }
+
+    @Override
+    public Object getObject(String s) {
+        System.out.println("Not in use for this class.");
+        return null;
     }
 
     /**

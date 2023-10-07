@@ -28,6 +28,27 @@ public class DeviceGroupDAO implements IDAO {
         }
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            DeviceGroup deviceGroup = em.find(DeviceGroup.class, id);
+            if (deviceGroup != null) {
+                em.remove(deviceGroup);
+                System.out.println("Group " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("Group with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
     /**
      * Fetches a device group
      * @param id ID of the device group
@@ -44,6 +65,7 @@ public class DeviceGroupDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Method not in use in this class");
         return null;
     }
 

@@ -118,7 +118,7 @@ public class CreateAccountController {
             }
         } catch (Exception e) {
             // Can't connect to the database to check if the username is available
-            System.out.println("not connected to db");
+            System.out.println("DB connection error: " + e);
             createAccountErrorText.setText("Error. Please try again shortly.");
             return false;
         }

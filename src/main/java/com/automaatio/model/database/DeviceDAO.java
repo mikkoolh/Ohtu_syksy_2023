@@ -27,7 +27,28 @@ public class DeviceDAO implements IDAO {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Device device = em.find(Device.class, id);
+            if (device != null) {
+                em.remove(device);
+                System.out.println("Device " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("Device with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
         } finally {
             em.close();
         }
@@ -47,7 +68,7 @@ public class DeviceDAO implements IDAO {
             return device;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }
@@ -55,6 +76,7 @@ public class DeviceDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Method not in use in this class");
         return null;
     }
 
@@ -72,7 +94,7 @@ public class DeviceDAO implements IDAO {
             return devices;
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }

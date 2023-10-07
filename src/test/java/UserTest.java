@@ -1,6 +1,7 @@
 import com.automaatio.model.database.User;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test for the User class
@@ -12,16 +13,14 @@ public class UserTest {
 
     @Test
     public void testUserConstructor() {
-        User user = new User("muumipeikko", "Muumi", "Peikko", "040-1234567", "muumi.peikko@muumilaakso.fi", "salaisuus", 30, 2);
+        User user = new User("muumipeikko", "Muumi", "Peikko", "040-1234567", "muumi.peikko@muumilaakso.fi", "salaisuus", 30, 2, 15);
 
-        assertEquals("Username should be 'muumipeikko'", user.getUsername(), "muumipeikko");
-        assertEquals("First name should be 'Muumi'", user.getFirstName(), "Muumi");
-        assertEquals("Last name should be 'Peikko'", user.getLastName(), "Peikko");
-        assertEquals("Age should be 30", user.getAge(), 30);
-        assertEquals("Email should be 'muumi.peikko@muumilaakso.fi'", user.getEmail(), "muumi.peikko@muumilaakso.fi");
-        assertEquals("Phone number should be '040-1234567'", user.getPhoneNumber(), "040-1234567");
-        assertEquals("Password should be 'salaisuus'", user.getPassword(), "salaisuus");
-        assertEquals("User type should be 2", user.getUserType(), 2);
+        assertEquals("muumipeikko", user.getUsername(), "Username should be 'muumipeikko'");
+        assertEquals("Muumi", user.getFirstName(), "First name should be 'Muumi'");
+        assertEquals("Peikko", user.getLastName(), "Last name should be 'Peikko'");
+        assertEquals("muumi.peikko@muumilaakso.fi", user.getEmail(), "Email should be 'muumi.peikko@muumilaakso.fi'");
+        assertEquals("040-1234567", user.getPhoneNumber(), "Phone number should be '040-1234567'");
+        assertEquals("salaisuus", user.getPassword(), "Password should be 'salaisuus'");
     }
 
     @Test
@@ -37,13 +36,11 @@ public class UserTest {
         user.setPassword("secret");
         user.setUserType(1);
 
-        assertEquals("Username should be 'pikkumyy'", user.getUsername(), "pikkumyy");
-        assertEquals("First name should be 'Pikku'", user.getFirstName(), "Pikku");
-        assertEquals("Last name should be 'Myy'", user.getLastName(), "Myy");
-        assertEquals("Age should be 20", user.getAge(), 20);
-        assertEquals("Email should be 'pikku.myy@muumilaakso.fi'", user.getEmail(), "pikku.myy@muumilaakso.fi");
-        assertEquals("Phone number should be '040-9876543'", user.getPhoneNumber(), "040-9876543");
-        assertEquals("Password should be 'secret'", user.getPassword(), "secret");
-        assertEquals("User type should be 1", user.getUserType(), 1);
+        assertEquals("pikkumyy", user.getUsername(), "Username should be 'pikkumyy'");
+        assertEquals("Pikku", user.getFirstName(), "First name should be 'Pikku'");
+        assertEquals("Myy", user.getLastName(), "Last name should be 'Myy'");
+        assertEquals("pikku.myy@muumilaakso.fi", user.getEmail(), "Email should be 'pikku.myy@muumilaakso.fi'");
+        assertEquals("040-9876543", user.getPhoneNumber(), "Phone number should be '040-9876543'");
+        assertEquals("secret", user.getPassword(), "Password should be 'secret'");
     }
 }

@@ -41,12 +41,10 @@ public class DeviceType {
 
     /**
      * Parameterized constructor
-     * @param deviceTypeId Device type ID
      * @param description Description of the device type
      * @param image Image url
      */
-    public DeviceType(int deviceTypeId, String description, String image) {
-        this.deviceTypeId = deviceTypeId;
+    public DeviceType(String description, String image) {
         this.description = description;
         this.image = image;
     }

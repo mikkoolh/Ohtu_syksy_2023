@@ -3,37 +3,85 @@ package com.automaatio.model.database;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 
 /**
  * @author Matleena Kankaanpää
  * 26.9.2023
- *
+ * <p>
  * DAO for Routine class
  */
 
-public class RoutineDAO {
+public class RoutineDAO implements IDAO {
 
     /**
-     * Adds a new routine
-     * @param routine A new routine
+     * @param object
      */
-    public void addRoutine(Routine routine) {
+
+    @Override
+    public void addObject(Object object) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
-            em.persist(routine);
+            em.persist((Routine) object);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Rethrow the exception for the caller to handle
+            throw e;
         } finally {
             em.close();
         }
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Routine routine = em.find(Routine.class, id);
+            if (routine != null) {
+                em.remove(routine);
+                System.out.println("routine " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("routine with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+
+    @Override
+    public Object getObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Routine routine = em.find(Routine.class, id);
+            em.getTransaction().commit();
+            return routine;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public Object getObject(String s) {
+        System.out.println("Not in use for this class");
+        return null;
+    }
+
     /**
      * Fetches all routines
+     *
      * @return A list of Routine objects
      */
     public List<Routine> getAll() {
@@ -54,6 +102,7 @@ public class RoutineDAO {
 
     /**
      * Fetches routines by device ID
+     *
      * @param deviceId The ID of the device
      * @return A list of Routine objects for the specified device
      */
@@ -75,7 +124,7 @@ public class RoutineDAO {
     }
 
     /**
-     * @param id ID of the routine
+     * @param id        ID of the routine
      * @param automated Boolean indicating whether the routine is automatized or not
      */
     public void toggleOnOff(int id, boolean automated) {
@@ -113,31 +162,8 @@ public class RoutineDAO {
     }
 
     /**
-     * Deletes a routine from the database
-     * @param id ID of the routine to delete
-     */
-    public void deleteRoutine(int id) {
-        EntityManager em = MysqlDBJpaConn.getInstance();
-        em.getTransaction().begin();
-        try {
-            Routine routine = em.find(Routine.class, id);
-            if (routine != null) {
-                em.remove(routine);
-                System.out.println("routine " + id + " deleted");
-            } else {
-                throw new IllegalArgumentException("routine with id  " + id + " was not found");
-            }
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw e;
-        } finally {
-            em.close();
-        }
-    }
-
-    /**
      * Delete all routines for a device by a certain user
+     *
      * @param device
      * @param user
      */

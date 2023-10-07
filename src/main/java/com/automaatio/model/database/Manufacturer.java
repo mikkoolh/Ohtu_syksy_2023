@@ -26,7 +26,6 @@ public class Manufacturer {
     @OneToMany(mappedBy = "deviceID", cascade = CascadeType.ALL)
     private List<Device> deviceList;
 
-
     /**
      * Parameterless constructor
      */
@@ -34,20 +33,14 @@ public class Manufacturer {
 
     /**
      * Parameterized constructor
-     * @param manufacturerId Manufacturer ID
      * @param name Manufacturer name
      */
-    public Manufacturer(int manufacturerId, String name) {
-        this.manufacturerId = manufacturerId;
+    public Manufacturer(String name) {
         this.name = name;
     }
 
     public int getManufacturerId() {
         return this.manufacturerId;
-    }
-
-    public void setManufacturerId(int manufacturerId) {
-        this.manufacturerId = manufacturerId;
     }
 
     public String getName() {

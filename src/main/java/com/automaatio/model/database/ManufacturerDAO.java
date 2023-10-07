@@ -33,6 +33,28 @@ public class ManufacturerDAO implements IDAO {
         }
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Manufacturer manufacturer = em.find(Manufacturer.class, id);
+            if (manufacturer != null) {
+                em.remove(manufacturer);
+                System.out.println("Manufacturer " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("Manufacturer with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+
     /**
      * Fetches a manufacturer
      * @param id ID of the manufacturer
@@ -57,6 +79,7 @@ public class ManufacturerDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Not in use for this class");
         return null;
     }
 

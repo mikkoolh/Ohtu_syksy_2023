@@ -47,15 +47,13 @@ public class Feature {
 
     /**
      * Parameterized constructor
-     * @param featureId Feature ID
      * @param affectsOthers Boolean indicating whether the feature affects other devices
      * @param isActive Boolean indicating whether the feature is currently in use
      * @param adjustable Boolean indicating whether the feature is adjustable
      * @param description Description of the feature
      * @param timesUsed The amount of times the feature has been used
      */
-    public Feature(int featureId, boolean affectsOthers, boolean isActive, boolean adjustable, String description, int timesUsed) {
-        this.featureId = featureId;
+    public Feature(boolean affectsOthers, boolean isActive, boolean adjustable, String description, int timesUsed) {
         this.affectsOthers = affectsOthers;
         this.isActive = isActive;
         this.adjustable = adjustable;

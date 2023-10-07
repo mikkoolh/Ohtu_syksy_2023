@@ -14,9 +14,9 @@ public class WeekdayTest {
 
     @Test
     public void testWeekdayConstructor() {
+
         Weekday weekday = new Weekday("Monday");
 
-        assertEquals(1, weekday.getWeekdayId());
         assertEquals(weekday.getName(), "Monday", "Name should be 'Monday'");
     }
 
@@ -25,7 +25,6 @@ public class WeekdayTest {
         Weekday weekday = new Weekday();
         weekday.setName("Friday");
 
-        assertEquals(5, weekday.getWeekdayId());
         assertEquals(weekday.getName(), "Friday", "Name should be 'Friday'");
     }
 }

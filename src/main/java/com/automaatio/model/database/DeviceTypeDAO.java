@@ -32,6 +32,27 @@ public class DeviceTypeDAO implements IDAO {
         }
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            DeviceType deviceType = em.find(DeviceType.class, id);
+            if (deviceType != null) {
+                em.remove(deviceType);
+                System.out.println("DeviceType " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("DeviceType with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
     /**
      * Fetches a device type
      * @param id ID of the device type
@@ -47,6 +68,7 @@ public class DeviceTypeDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Method not in use in this class");
         return null;
     }
 

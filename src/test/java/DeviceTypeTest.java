@@ -1,6 +1,8 @@
 import com.automaatio.model.database.DeviceType;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
  * Test for the DeviceType class
@@ -12,9 +14,9 @@ public class DeviceTypeTest {
 
     @Test
     public void testDeviceTypeConstructor() {
-        DeviceType deviceType = new DeviceType(1, "Lamp", "https://example.com/lamp.png");
-        assertEquals("Description should be 'Lamp'", deviceType.getDescription(), "Lamp");
-        assertEquals("Description should be 'https://example.com/lamp.png'", deviceType.getImage(), "https://example.com/lamp.png");
+        DeviceType deviceType = new DeviceType("Lamp", "https://example.com/lamp.png");
+        assertEquals("Lamp", deviceType.getDescription(), "Description should be 'Lamp'");
+        assertEquals("https://example.com/lamp.png", deviceType.getImage(), "Description should be 'https://example.com/lamp.png'");
     }
 
     @Test
@@ -23,7 +25,7 @@ public class DeviceTypeTest {
 
         deviceType.setDescription("Fridge");
         deviceType.setImage("https://example.com/fridge.png");
-        assertEquals("Description should be 'Fridge'", deviceType.getDescription(), "Fridge");
-        assertEquals("url should be 'https://example.com/fridge.png'", deviceType.getImage(), "https://example.com/fridge.png");
+        assertEquals("Fridge", deviceType.getDescription(), "Description should be 'Fridge'");
+        assertEquals("https://example.com/fridge.png", deviceType.getImage(), "url should be 'https://example.com/fridge.png'");
     }
 }

@@ -1,10 +1,12 @@
 package com.automaatio.model.database;
+
 import java.util.List;
 
 import jakarta.persistence.*;
 
 /**
  * DAO for Device Feature
+ *
  * @author Matleena Kankaanpää
  * 8.9.2023
  */
@@ -13,6 +15,7 @@ public class FeatureDAO implements IDAO {
 
     /**
      * Adds a new feature
+     *
      * @param feature A new feature
      */
     public void addObject(Object feature) {
@@ -31,8 +34,32 @@ public class FeatureDAO implements IDAO {
         }
     }
 
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            Feature feature = em.find(Feature.class, id);
+            if (feature != null) {
+                em.remove(feature);
+                System.out.println("Feature " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("Feature with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+
+    }
+
     /**
      * Fetches a feature
+     *
      * @param id ID of the feature
      * @return Feature object
      */
@@ -55,11 +82,13 @@ public class FeatureDAO implements IDAO {
 
     @Override
     public Object getObject(String s) {
+        System.out.println("Not in use for this class");
         return null;
     }
 
     /**
      * Fetches all features
+     *
      * @return A list of Feature objects
      */
     public List<Feature> getAll() {

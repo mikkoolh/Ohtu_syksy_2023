@@ -9,19 +9,14 @@ import jakarta.persistence.*;
  * 28.9.2023
  */
 
-public class EventTimeDAO {
+public class EventTimeDAO implements IDAO {
 
-    /**
-     * Adds a new event
-     * @param eventTime A new event
-     */
-    public EventTime addEventTime(EventTime eventTime) {
-        EventTime savedEventTime = null;
-
+    @Override
+    public void addObject(Object object) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
-            savedEventTime = em.merge(eventTime);
+            em.merge((EventTime) object);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -31,15 +26,32 @@ public class EventTimeDAO {
         } finally {
             em.close();
         }
-        return savedEventTime;
     }
 
-    /**
-     * Fetches an event
-     * @param id ID of the event
-     * @return EventTime object
-     */
-    public EventTime getEventTime(int id) {
+    @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            EventTime eventTime = em.find(EventTime.class, id);
+            if (eventTime != null) {
+                em.remove(eventTime);
+                System.out.println("EventTime " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("EventTime with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public Object getObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();
         try {
             em.getTransaction().begin();
@@ -54,6 +66,12 @@ public class EventTimeDAO {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public Object getObject(String s) {
+        System.out.println("Method not in use in this class");
+        return null;
     }
 
     /**

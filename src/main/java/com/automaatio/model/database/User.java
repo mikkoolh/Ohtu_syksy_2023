@@ -13,7 +13,12 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userID")
+    private int userID;
+
     @Column(name = "username", unique = true)
     private String username;
 
@@ -45,7 +50,6 @@ public class User {
     private double maxPrice;
 
     /**
-     * Save a new user
      *
      * @param username
      * @param firstName
@@ -54,9 +58,9 @@ public class User {
      * @param email
      * @param password
      * @param age
-
+     * @param userType
+     * @param maxPrice
      */
-//   * @param userType
 
     public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
         this.username = username;
@@ -76,7 +80,7 @@ public class User {
     public User() {}
 
     /**
-     * Parameterized constructor
+     *
      * @param username
      * @param firstName
      * @param lastName
@@ -85,6 +89,7 @@ public class User {
      * @param password
      * @param age
      * @param userType
+     * @param maxPrice
      */
     public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
         this.username = username;
@@ -168,6 +173,10 @@ public class User {
 
     public double getMaxPrice(){
         return maxPrice;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     @Override

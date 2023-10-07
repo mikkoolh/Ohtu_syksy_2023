@@ -1,8 +1,7 @@
 import com.automaatio.model.database.Device;
-import com.automaatio.model.database.DeviceGroup;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DeviceTest {
 
@@ -20,8 +19,8 @@ public class DeviceTest {
         assertTrue(device.isAutomation());
         assertEquals(100L, device.getUsageData());
         assertEquals("Name should be 'TestiLaite'", device.getName(), "TestiLaite");
-        assertEquals("Model should be 'Malli1'", device.getModelCode(), "Malli1");*/
-    }
+        assertEquals("Model should be 'Malli1'", device.getModelCode(), "Malli1");
+    }*/
 
     @Test
     public void testDeviceGettersAndSetters() {
@@ -38,9 +37,7 @@ public class DeviceTest {
         assertTrue(device.isOnOff());
         assertFalse(device.isAutomation());
         assertEquals(200L, device.getUsageData());
-        assertEquals("Name should be 'EriLaite'", device.getName(), "EriLaite");
-        assertEquals("Model should be 'Malli2'", device.getModelCode(), "Malli2");
+        assertEquals("EriLaite", device.getName(), "Name should be 'EriLaite'");
+        assertEquals("Malli2", device.getModelCode(), "Model should be 'Malli2'");
     }
-
-     */
 }

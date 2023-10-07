@@ -10,13 +10,13 @@ public class DatabaseTool {
     public static void resetWeekdays() {
         if (weekdayDAO.getAll().size() != 7) {
             weekdayDAO.deleteAll();
-            weekdayDAO.addWeekday(new Weekday("Monday"));
-            weekdayDAO.addWeekday(new Weekday("Tuesday"));
-            weekdayDAO.addWeekday(new Weekday("Wednesday"));
-            weekdayDAO.addWeekday(new Weekday("Thursday"));
-            weekdayDAO.addWeekday(new Weekday("Friday"));
-            weekdayDAO.addWeekday(new Weekday("Saturday"));
-            weekdayDAO.addWeekday(new Weekday("Sunday"));
+            weekdayDAO.addObject(new Weekday("Monday"));
+            weekdayDAO.addObject(new Weekday("Tuesday"));
+            weekdayDAO.addObject(new Weekday("Wednesday"));
+            weekdayDAO.addObject(new Weekday("Thursday"));
+            weekdayDAO.addObject(new Weekday("Friday"));
+            weekdayDAO.addObject(new Weekday("Saturday"));
+            weekdayDAO.addObject(new Weekday("Sunday"));
         }
     }
 }

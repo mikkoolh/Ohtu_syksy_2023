@@ -42,13 +42,17 @@ public class EventTime {
         this.weekday = weekday;
     }
 
-    public Long getEventTimeId() {
-        return eventTimeId;
+    public int getEventTimeId() {
+        int temp = 0;
+        try{
+            temp = Math.toIntExact(eventTimeId);
+        } catch (Exception e){
+            System.out.println("Can't convert Long to Int: " + e);
+        }
+
+        return temp;
     }
 
-    public void setEventTimeId(Long eventTimeId) {
-        this.eventTimeId = eventTimeId;
-    }
 
     public LocalDateTime getStartTime() {
         return startTime;

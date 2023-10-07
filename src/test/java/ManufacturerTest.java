@@ -1,16 +1,16 @@
 import com.automaatio.model.database.Manufacturer;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ManufacturerTest {
     
     @Test
     public void testManufacturerConstructor() {
         //Luodaan uusi valmistaja
-        Manufacturer manufacturer = new Manufacturer(1, "Philips");
+        Manufacturer manufacturer = new Manufacturer("Philips");
 
-        assertEquals(1, manufacturer.getManufacturerId());
-        assertEquals("Manufacturer name should be 'Philips'", manufacturer.getName(), "Philips");
+        assertEquals("Philips", manufacturer.getName(), "Manufacturer name should be 'Philips'");
     }
 
     @Test
@@ -19,11 +19,9 @@ public class ManufacturerTest {
         Manufacturer manufacturer = new Manufacturer();
 
         //Lisätään settereillä arvot
-        manufacturer.setManufacturerId(2);
         manufacturer.setName("Ikea");
 
         //haetaan gettereillä tiedot ja tarkistetaan ne
-        assertEquals(2, manufacturer.getManufacturerId());
-        assertEquals("Manufacturers name should be 'Ikea'", manufacturer.getName(), "Ikea");
+        assertEquals("Ikea", manufacturer.getName(), "Manufacturers name should be 'Ikea'");
     }
 }

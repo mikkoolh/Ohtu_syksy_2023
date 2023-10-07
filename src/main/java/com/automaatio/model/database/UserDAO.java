@@ -1,6 +1,7 @@
 package com.automaatio.model.database;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.mindrot.jbcrypt.BCrypt;
@@ -28,8 +29,41 @@ public class UserDAO implements IDAO {
     }
 
     @Override
+    public void deleteObject(int id) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            User user = em.find(User.class, id);
+            if (user != null) {
+                em.remove(user);
+                System.out.println("User " + id + " deleted");
+            } else {
+                throw new IllegalArgumentException("User with id  " + id + " was not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
     public Object getObject(int id) {
-        return null;
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        try {
+            User user = em.find(User.class, id);
+            em.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -41,9 +75,14 @@ public class UserDAO implements IDAO {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
-            User user = em.find(User.class, username);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            User user = query.getSingleResult();
             em.getTransaction().commit();
             return user;
+        } catch (NoResultException e) {
+            em.getTransaction().rollback();
+            return null;
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;

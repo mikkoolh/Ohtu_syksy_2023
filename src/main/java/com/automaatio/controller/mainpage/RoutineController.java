@@ -384,7 +384,7 @@ public class RoutineController implements Initializable {
             // Respond to user input
             if (alert.showAndWait().get() == ButtonType.OK) {
                 try {
-                    routineDAO.deleteRoutine(routineToDelete.getRoutineID());
+                    routineDAO.deleteObject(routineToDelete.getRoutineID());
                     routineErrorText.setText("");
                     loadRoutines();
                 } catch(Exception e) {
@@ -434,9 +434,10 @@ public class RoutineController implements Initializable {
 
                 try {
                     // Get the corresponding weekday from the database
-                    Weekday selectedWeekday = weekdayDAO.getWeekday(entry.getKey().getWeekdayId());
+                    Weekday selectedWeekday = (Weekday) weekdayDAO.getObject(entry.getKey().getWeekdayId());
                     // Create event time
-                    EventTime eventTime = eventTimeDAO.addEventTime(new EventTime(startTime, endTime, selectedWeekday));
+                    EventTime eventTime = new EventTime(startTime, endTime, selectedWeekday);
+                    eventTimeDAO.addObject(eventTime);
 
                     User user = cache.getUser();
                     Device device = cache.getDevice();
@@ -446,7 +447,7 @@ public class RoutineController implements Initializable {
                      Feature is null for now, routines added by users are automatically on.
                      */
                     Routine routine = new Routine(user, device, null, eventTime, true);
-                    routineDAO.addRoutine(routine);
+                    routineDAO.addObject(routine);
                     System.out.println("saved routine");
                     loadRoutines();
                     hideForm();
