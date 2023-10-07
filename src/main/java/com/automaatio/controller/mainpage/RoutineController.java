@@ -4,6 +4,7 @@ import com.automaatio.components.TimeSelectorGrid;
 import com.automaatio.components.WeekdayLabel;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
+import com.automaatio.utils.DatabaseTool;
 import com.automaatio.utils.RoutineUtils;
 import com.dlsc.gemsfx.TimePicker;
 import javafx.event.ActionEvent;
@@ -93,7 +94,7 @@ public class RoutineController implements Initializable {
         try {
             routines = util.sortByTime(fetchRoutines()); // Sort fetched routines by time
             updateUI();
-            resetWeekdays(); // voi poistaa sit ku ei tarvi enää tehdä testejä
+            DatabaseTool.resetWeekdays(); // voi poistaa sit ku ei tarvi enää tehdä testejä
             weekdays = weekdayDAO.getAll();
             initializeForm();
             loadRoutines();
@@ -499,22 +500,6 @@ public class RoutineController implements Initializable {
             set.getValue().selectedProperty().addListener((observable, oldValue, newValue) -> {
                 checkSaveButtonState();
             });
-        }
-    }
-
-
-
-    // ettei tarvi aina käydä lisäämässä tietokantaan uudestaan kun on ajettu testejä :D
-    private void resetWeekdays() {
-        if (weekdayDAO.getAll().size() != 7) {
-            weekdayDAO.deleteAll();
-            weekdayDAO.addWeekday(new Weekday("Monday"));
-            weekdayDAO.addWeekday(new Weekday("Tuesday"));
-            weekdayDAO.addWeekday(new Weekday("Wednesday"));
-            weekdayDAO.addWeekday(new Weekday("Thursday"));
-            weekdayDAO.addWeekday(new Weekday("Friday"));
-            weekdayDAO.addWeekday(new Weekday("Saturday"));
-            weekdayDAO.addWeekday(new Weekday("Sunday"));
         }
     }
 
