@@ -46,3 +46,8 @@
     -fx-fill: #5E5E5E;
     -fx-font-size: 11px;
 }
+
+.image-border {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}

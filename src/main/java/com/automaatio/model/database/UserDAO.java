@@ -186,4 +186,30 @@ public class UserDAO implements IDAO {
         }
         return maxPrice;
     }
+
+    public void updatePicture(String username, int selectedPictureId) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            User user = query.getSingleResult();
+
+            if (user != null) {
+                user.setSelectedPicture(selectedPictureId);
+                em.merge(user);
+                em.getTransaction().commit();
+                System.out.println("Picture updated for user: " + username);
+            } else {
+                System.out.println("User not found: " + username);
+            }
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error updating picture for user: " + username);
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }
