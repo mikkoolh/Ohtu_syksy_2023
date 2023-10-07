@@ -110,4 +110,8 @@ public class Feature {
     public void setTimesUsed(int timesUsed) {
         this.timesUsed = timesUsed;
     }
+    @Override
+    public String toString() {
+        return description;
+    }
 }

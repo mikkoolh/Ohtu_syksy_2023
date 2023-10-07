@@ -1,8 +1,8 @@
 package com.automaatio.controller.mainpage.clickActions;
 
-import com.automaatio.model.database.Device;
+import javafx.scene.layout.VBox;
 
 public interface ClickActions {
     void onEditClick(Object object);
-    void onDeleteClick(Device device);
+    void onDeleteClick(Object object, VBox mainVBox, VBox boxToDelete);
 }

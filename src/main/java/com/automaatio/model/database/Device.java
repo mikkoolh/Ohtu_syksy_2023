@@ -137,4 +137,10 @@ public class Device {
     public DeviceGroup getDeviceGroup() {
         return deviceGroup;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
+

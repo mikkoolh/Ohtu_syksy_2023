@@ -72,4 +72,9 @@ public class Routine {
     public void setAutomated(boolean automated) {
         this.automated = automated;
     }
+
+    @Override
+    public String toString() {
+        return "Routine=" + routineID;
+    }
 }

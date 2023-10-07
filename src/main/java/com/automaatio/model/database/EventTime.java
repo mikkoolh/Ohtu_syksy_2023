@@ -73,4 +73,9 @@ public class EventTime {
     public void setWeekday(Weekday weekday) {
         this.weekday = weekday;
     }
+
+    @Override
+    public String toString() {
+        return weekday.toString() +", " + startTime;
+    }
 }

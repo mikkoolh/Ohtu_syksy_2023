@@ -74,4 +74,8 @@ public class DeviceType {
     public void setImage(String image) {
         this.image = image;
     }
+    @Override
+    public String toString() {
+        return description;
+    }
 }

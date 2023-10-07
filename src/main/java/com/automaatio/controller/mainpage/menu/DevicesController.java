@@ -1,6 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.CreateVBoxColumn;
+import com.automaatio.components.CreateVBoxColumn;
 import com.automaatio.controller.mainpage.clickActions.DevicesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;

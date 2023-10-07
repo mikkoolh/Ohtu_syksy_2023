@@ -170,6 +170,11 @@ public class User {
         return maxPrice;
     }
 
+    @Override
+    public String toString() {
+        return username;
+    }
+
 
 
     /*

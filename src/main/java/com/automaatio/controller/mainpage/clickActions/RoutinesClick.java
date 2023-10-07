@@ -4,6 +4,7 @@ import com.automaatio.model.database.Device;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.layout.VBox;
 
 public class RoutinesClick implements ClickActions {
     private CacheSingleton cache = CacheSingleton.getInstance();
@@ -22,7 +23,7 @@ public class RoutinesClick implements ClickActions {
     }
 
     @Override
-    public void onDeleteClick(Device device) {
+    public void onDeleteClick(Object object, VBox mainVBox, VBox boxToDelete) {
 
     }
 }

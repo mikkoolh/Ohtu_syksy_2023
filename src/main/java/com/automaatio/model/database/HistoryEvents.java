@@ -66,4 +66,9 @@ public class HistoryEvents {
     public void setFeature(Feature feature) {
         this.feature = feature;
     }
+
+    @Override
+    public String toString() {
+        return "HistoryEvent=" + eventId;
+    }
 }

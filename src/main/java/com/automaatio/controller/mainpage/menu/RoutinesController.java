@@ -1,25 +1,14 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.controller.mainpage.CreateVBoxColumn;
+import com.automaatio.components.CreateVBoxColumn;
 import com.automaatio.controller.mainpage.clickActions.RoutinesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.utils.CacheSingleton;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.List;
