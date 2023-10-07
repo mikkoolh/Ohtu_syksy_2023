@@ -11,7 +11,7 @@ public class WeekdayLabel {
         label.setFont(Font.font("Andale Mono", BOLD, 24)); // andale/pt mono
     }
 
-    public Label getWeekdayLabel() {
+    public Label create() {
         return label;
     }
 }

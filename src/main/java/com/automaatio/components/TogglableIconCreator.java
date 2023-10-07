@@ -7,12 +7,20 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class TogglableButton {
+/**
+ * @author Matleena Kankaanpää
+ * 7.10.2023
+ *
+ * A class for creating buttons with two image
+ * options that swap when clicked.
+ */
+
+public abstract class TogglableIconCreator {
     protected Button button;
     protected ImageView defaultView, altView;
-    private final Tooltip defaultTooltip, altTooltip;
+    private Tooltip defaultTooltip, altTooltip;
 
-    public TogglableButton(String defaultImage, String altImage, String defaultTooltipText, String altTooltipText) {
+    public Button create(String defaultImage, String altImage, String defaultTooltipText, String altTooltipText) {
         button = new Button();
         defaultView = new ImageView(new Image(defaultImage));
         altView = new ImageView(new Image(altImage));
@@ -37,9 +45,6 @@ public class TogglableButton {
                 }
             }
         });
-    }
-
-    public Button getButton() {
         return button;
     }
 }

@@ -1,13 +1,11 @@
 package com.automaatio.controller;
 
-import com.automaatio.components.EyeButton;
+import com.automaatio.components.TogglableHideIconCreator;
 import com.automaatio.components.SwitchablePasswordField;
-import com.automaatio.components.TogglableButton;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -57,7 +55,7 @@ public class LoginController {
         loginButton.setDisable(true);
 
         // Eye button
-        Button togglePasswordButton = (new EyeButton()).getButton();
+        Button togglePasswordButton = (new TogglableHideIconCreator()).create();
         togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
             switchableField.toggle();
             loginFormGrid.getChildren().remove(passwordField);
