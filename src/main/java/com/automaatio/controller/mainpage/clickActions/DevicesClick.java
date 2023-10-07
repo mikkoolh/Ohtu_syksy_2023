@@ -13,7 +13,7 @@ public class DevicesClick implements ClickActions {
     private CacheSingleton cache = CacheSingleton.getInstance();
 
     @Override
-    public void onEditClick(Object object) {
+    public void onExpandClick(Object object) {
         cache.setDevice((Device) object);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/device.fxml"));

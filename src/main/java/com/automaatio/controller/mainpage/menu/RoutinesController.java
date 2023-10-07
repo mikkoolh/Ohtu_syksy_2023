@@ -20,8 +20,6 @@ public class RoutinesController implements Initializable {
 
     private final CreateVBoxColumn deviceRow = new CreateVBoxColumn();
 
-    private Pane mainPane;
-
     @FXML
     private VBox routinesVBox;
 
@@ -40,7 +38,6 @@ public class RoutinesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = cache.getMainPane();
         showRoutines();
     }
 }

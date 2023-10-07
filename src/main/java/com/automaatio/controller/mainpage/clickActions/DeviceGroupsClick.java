@@ -12,7 +12,7 @@ public class DeviceGroupsClick implements ClickActions {
     private CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     @Override
-    public void onEditClick(Object object) {
+    public void onExpandClick(Object object) {
         cache.setRoom((DeviceGroup) object);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/room.fxml"));

@@ -2,7 +2,6 @@ package com.automaatio.components;
 
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.Device;
-import com.automaatio.model.database.DeviceDAO;
 import com.automaatio.model.database.DeviceGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,7 +11,7 @@ import javafx.scene.layout.*;
 
 
 public class CreateVBoxColumn {
-    private DeviceDAO deviceDAO = new DeviceDAO();
+
     private Button deleteBtn, expandBtn;
     private ToggleButton onOff;
     private Label label;
@@ -60,8 +59,8 @@ public class CreateVBoxColumn {
 
     private Button createOpenButton(DeviceGroup deviceGroup, ClickActions open) {
         Button openButton = new Button(openText);
-        openButton.getStyleClass().add("editBtn");
-        openButton.setOnAction(event -> open.onEditClick(deviceGroup));
+        openButton.getStyleClass().add("expandBtn");
+        openButton.setOnAction(event -> open.onExpandClick(deviceGroup));
         return openButton;
     }
 
