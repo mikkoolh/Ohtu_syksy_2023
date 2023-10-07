@@ -1,7 +1,6 @@
 package com.automaatio.controller.mainpage;
 
-import com.automaatio.components.TimeSelectorGrid;
-import com.automaatio.components.WeekdayLabel;
+import com.automaatio.components.*;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.DatabaseTool;
@@ -12,23 +11,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.controlsfx.control.ToggleSwitch;
 import java.net.URL;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import com.automaatio.components.TimeSelector;
-import org.hibernate.annotations.Check;
 
 /**
  * Controller for the routines listing
@@ -105,7 +98,7 @@ public class RoutineController implements Initializable {
         }
         routineNameField.setText(cache.getDevice().getName());
         routineScrollPane.setStyle("-fx-background-color:transparent;");
-        //hideForm();
+        hideForm();
     }
 
     private void loadRoutines() {
@@ -142,7 +135,7 @@ public class RoutineController implements Initializable {
                     automateAllButton.setVisible(true);
                     deleteAllButton.setVisible(true);
                     HBox splitBox = new HBox();
-                    Label weekdayLabel = new WeekdayLabel(weekday).getWeekdayLabel();
+                    Label weekdayLabel = new WeekdayLabel(weekday).create();
                     weekdayLabel.setMinWidth(60);
                     noRoutinesToShow = false;
 
@@ -186,22 +179,8 @@ public class RoutineController implements Initializable {
     private HBox createRoutineRow(Routine routine) {
         Label startTime = new Label(util.getFormattedTime(routine.getEventTime().getStartTime()));
         Label endTime = new Label(util.getFormattedTime(routine.getEventTime().getEndTime()));
-        Label dash = new Label("-");
 
-        Button editButton = new Button();
-        ImageView editView = new ImageView();
-        ImageView saveView = new ImageView();
-        Image edit = new Image("images/edit-svgrepo-com.png");
-        Image save = new Image("images/save-svgrepo-com.png");
-        Image delete = new Image("images/trash-svgrepo-com.png");
-        Image cancel = new Image("images/cancel-svgrepo-com.png");
-        editView.setImage(edit);
-        editView.setPreserveRatio(true);
-        editView.setFitHeight(ICON_DIMENSIONS);
-        saveView.setImage(save);
-        saveView.setPreserveRatio(true);
-        saveView.setFitHeight(ICON_DIMENSIONS);
-        editButton.setGraphic(editView);
+        Button editButton = (new TogglableEditIconCreator()).create();
 
         // Automation toggle
         ToggleSwitch toggle = getToggleSwich(routine);
@@ -224,7 +203,7 @@ public class RoutineController implements Initializable {
         newEndTime.setTime(routine.getEventTime().getEndTime().toLocalTime());
 
         // Grid containing time pickers (editing mode)
-        GridPane newClockTimes = new TimeSelectorGrid(newStartTime, newEndTime).getGrid();
+        GridPane newClockTimes = (new TimeSelectorGrid()).create(newStartTime, newEndTime);
 
         // Store time pickers in an array
         List<TimePicker> editingTimePickers = Arrays.asList(newStartTime, newEndTime);
@@ -236,22 +215,14 @@ public class RoutineController implements Initializable {
             });
         }
 
-        // Buttons
-        Button deleteButton = new Button();
-        ImageView deleteView = new ImageView(delete);
-        deleteView.setPreserveRatio(true);
-        deleteView.setFitHeight(ICON_DIMENSIONS);
-        deleteButton.setGraphic(deleteView);
+        // Delete button
+        Button deleteButton = (new DeleteIconCreator()).create();
         deleteButton.setOnAction(deleteRoutine);
         deleteButtons.put(deleteButton, routine);
         deleteButton.setVisible(false);
 
         // Cancel button
-        Button cancelButton = new Button();
-        ImageView cancelView = new ImageView(cancel);
-        cancelView.setPreserveRatio(true);
-        cancelView.setFitHeight(ICON_DIMENSIONS);
-        cancelButton.setGraphic(cancelView);
+        Button cancelButton = (new CancelIconCreator()).create();
         cancelButton.setVisible(false);
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -260,28 +231,22 @@ public class RoutineController implements Initializable {
                 deleteButton.setVisible(!deleteButton.isVisible());
                 cancelButton.setVisible(!cancelButton.isVisible());
                 timeContainer.getChildren().clear();
-                editButton.setGraphic(editView);
                 timeContainer.getChildren().add(clockTimes);
             }
         });
 
         // When edit/save is clicked
-        editButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                deleteButton.setVisible(!deleteButton.isVisible());
-                cancelButton.setVisible(!cancelButton.isVisible());
-                timeContainer.getChildren().clear();
+        editButton.addEventHandler(ActionEvent.ACTION, (e)-> {
+            deleteButton.setVisible(!deleteButton.isVisible());
+            cancelButton.setVisible(!cancelButton.isVisible());
+            timeContainer.getChildren().clear();
 
-                if (deleteButton.isVisible()) {
-                    // Switch out of editing mode
-                    editButton.setGraphic(saveView);
-                    timeContainer.getChildren().add(newClockTimes);
-                } else {
-                    // Switch into editing mode
-                    editButton.setGraphic(editView);
-                    timeContainer.getChildren().add(clockTimes);
-                }
+            if (deleteButton.isVisible()) {
+                // Switch out of editing mode
+                timeContainer.getChildren().add(newClockTimes);
+            } else {
+                // Switch into editing mode
+                timeContainer.getChildren().add(clockTimes);
             }
         });
 
@@ -475,7 +440,7 @@ public class RoutineController implements Initializable {
         // Time pickers
         startTimePicker = (new TimeSelector()).getTimePicker();
         endTimePicker = (new TimeSelector()).getTimePicker();
-        GridPane clockTimes = new TimeSelectorGrid(startTimePicker, endTimePicker).getGrid();
+        GridPane clockTimes = (new TimeSelectorGrid()).create(startTimePicker, endTimePicker);
         clockTimes.add(weekdaysVBox, 1, 2);
         formGrid.add(clockTimes, 0,0);
 

@@ -3,14 +3,17 @@ package com.automaatio.components;
 import com.dlsc.gemsfx.TimePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import org.controlsfx.control.spreadsheet.Grid;
+
+/**
+ * @author Matleena Kankaanpää
+ * 7.10.2023
+ *
+ * 2x2 grid component containing two time pickers and labels
+ */
 
 public class TimeSelectorGrid {
-    private final GridPane grid;
-    public TimeSelectorGrid(TimePicker startTime, TimePicker endTime) {
-        grid = new GridPane();
+    public GridPane create(TimePicker startTime, TimePicker endTime) {
+        GridPane grid = new GridPane();
         grid.add(new Label("From"), 0, 0);
         grid.add(new Label("To"), 0, 1);
         grid.add(startTime, 1, 0);
@@ -18,9 +21,6 @@ public class TimeSelectorGrid {
         //grid.setStyle("-fx-border-color: blue;"); // testailua varten
         grid.setHgap(40);
         grid.setVgap(10);
-    }
-
-    public GridPane getGrid() {
         return grid;
     }
 }

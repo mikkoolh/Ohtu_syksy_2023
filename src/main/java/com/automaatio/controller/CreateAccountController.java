@@ -1,29 +1,21 @@
 package com.automaatio.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.automaatio.components.EyeButton;
+import com.automaatio.components.TogglableHideIconCreator;
 import com.automaatio.components.SwitchablePasswordField;
-import com.automaatio.components.TogglableButton;
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
 import com.automaatio.utils.FormInputValidator;
 import com.automaatio.utils.NavigationUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.mindrot.jbcrypt.BCrypt;
@@ -212,7 +204,7 @@ public class CreateAccountController {
         Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
 
         // Eye button
-        Button togglePasswordButton = (new EyeButton()).getButton();
+        Button togglePasswordButton = (new TogglableHideIconCreator()).create();
         togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
             switchableField.toggle();
             formGrid.getChildren().remove(passwordField);
