@@ -1,12 +1,12 @@
-package com.automaatio.components;
+package com.automaatio.components.buttons;
 
+import com.automaatio.components.buttons.IButton;
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.DeviceGroup;
 import javafx.scene.control.ToggleButton;
 
-public class ToggleButtonCreator implements IButton{
+public class ToggleButtonCreator implements IButton {
     private final String onTxt = "On", offTxt = "Off";
     private final int btnWidth = 50;
     private DeviceDAO deviceDAO = new DeviceDAO();

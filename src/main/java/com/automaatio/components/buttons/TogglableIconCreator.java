@@ -1,4 +1,4 @@
-package com.automaatio.components;
+package com.automaatio.components.buttons;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

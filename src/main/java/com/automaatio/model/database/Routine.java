@@ -55,14 +55,6 @@ public class Routine {
         return user;
     }
 
-    public Feature getFeatureID() {
-        return featureID;
-    }
-
-    public Device getDeviceID() {
-        return deviceID;
-    }
-
     public EventTime getEventTime() { return eventTime; }
 
     public boolean getAutomated() {
@@ -71,6 +63,10 @@ public class Routine {
 
     public void setAutomated(boolean automated) {
         this.automated = automated;
+    }
+
+    public void setEventTime(EventTime eventTime) {
+        this.eventTime = eventTime;
     }
 
     @Override
