@@ -34,22 +34,17 @@ public class CreateVBoxColumn {
         VBox newDeviceVBox = new VBox(vBoxSpacing);
         deleteBtn = new DeleteButtonCreator(mainVBox, newDeviceVBox).create(object, clickActions);
 
-
-
-        Pane spacer = new Pane();
-
-        //muuttaa yksittäisen HBoxin leveyden scrollpanen kokoiseksi laiskalla tavalla
-        spacer.setPrefWidth(75);
-
         HBox buttonsRow = new HBox(hBoxSpacing);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
 
+        buttonsRow.getChildren().addAll(expandBtn, deleteBtn, paneBuilder(75));
+        HBox.setHgrow(buttonsRow.getChildren().get(buttonsRow.getChildren().size()-1), Priority.ALWAYS);
 
-        buttonsRow.getChildren().addAll(expandBtn, deleteBtn, spacer);
         if (object instanceof Device){
             buttonsRow.getChildren().add(onOff);
+        } else if (object instanceof DeviceGroup) {
+            buttonsRow.getChildren().add(paneBuilder(50));
         }
-        buttonsRow.setAlignment(Pos.TOP_LEFT);
+            buttonsRow.setAlignment(Pos.TOP_LEFT);
 
         newDeviceVBox.getStyleClass().add("deviceRowVBox");
         newDeviceVBox.getChildren().addAll(label, buttonsRow);
@@ -68,6 +63,12 @@ public class CreateVBoxColumn {
         openButton.getStyleClass().add("editBtn");
         openButton.setOnAction(event -> open.onEditClick(deviceGroup));
         return openButton;
+    }
+
+    private Pane paneBuilder(double width){
+            Pane temp = new Pane();
+            temp.setPrefWidth(width);
+            return temp;
     }
 }
 
