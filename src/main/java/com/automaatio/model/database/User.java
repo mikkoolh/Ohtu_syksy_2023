@@ -89,9 +89,8 @@ public class User {
      * @param password
      * @param age
      * @param userType
-     * @param maxPrice
      */
-    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
+    public User(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -100,7 +99,7 @@ public class User {
         this.password = password;
         this.age = age;
         this.userType = userType;
-        this.maxPrice = maxPrice;
+        this.maxPrice = 30;
     }
 
     public String getUsername() {

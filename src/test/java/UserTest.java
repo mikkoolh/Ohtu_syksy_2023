@@ -13,7 +13,7 @@ public class UserTest {
 
     @Test
     public void testUserConstructor() {
-        User user = new User("muumipeikko", "Muumi", "Peikko", "040-1234567", "muumi.peikko@muumilaakso.fi", "salaisuus", 30, 2, 15);
+        User user = new User("muumipeikko", "Muumi", "Peikko", "040-1234567", "muumi.peikko@muumilaakso.fi", "salaisuus", 30, 2);
 
         assertEquals("muumipeikko", user.getUsername(), "Username should be 'muumipeikko'");
         assertEquals("Muumi", user.getFirstName(), "First name should be 'Muumi'");

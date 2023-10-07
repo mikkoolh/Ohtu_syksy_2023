@@ -96,8 +96,9 @@ public class UserDAO implements IDAO {
         em.getTransaction().begin();
 
         try {
-            User user = em.find(User.class, username);
-
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            User user = query.getSingleResult();
             if (user != null) {
                 if (BCrypt.checkpw(oldPassword, user.getPassword())) {
                     String newHashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
@@ -153,7 +154,9 @@ public class UserDAO implements IDAO {
         EntityManager em = MysqlDBJpaConn.getInstance();
         em.getTransaction().begin();
         try {
-            User user = em.find(User.class, username);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            User user = query.getSingleResult();
             user.setMaxPrice(price);
             em.merge(user);
             em.getTransaction().commit();

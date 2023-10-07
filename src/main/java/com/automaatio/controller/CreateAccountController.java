@@ -78,7 +78,7 @@ public class CreateAccountController {
         System.out.println(password);
 
         // Create a new user
-        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1, 0);
+        User user = new User(username, firstName, lastName, phoneNumber, email, BCrypt.hashpw(password, BCrypt.gensalt()), 0, 1);
         System.out.println(user);
         saveUser(user);
         createAccountErrorText.setText("");
