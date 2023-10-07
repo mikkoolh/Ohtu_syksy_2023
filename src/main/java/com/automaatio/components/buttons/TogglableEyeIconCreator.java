@@ -1,4 +1,4 @@
-package com.automaatio.components;
+package com.automaatio.components.buttons;
 
 import javafx.scene.control.Button;
 
@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
  * Creator class for a togglable "hide/show" button used with password fields
  */
 
-public class TogglableHideIconCreator extends TogglableIconCreator {
+public class TogglableEyeIconCreator extends TogglableIconCreator {
 
     public Button create() {
         super.create("images/eye-open.png", "images/eye-hidden.png", "Show password", "Hide password");

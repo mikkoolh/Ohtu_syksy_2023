@@ -1,4 +1,4 @@
-package com.automaatio.components;
+package com.automaatio.components.buttons;
 
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import javafx.scene.control.Button;

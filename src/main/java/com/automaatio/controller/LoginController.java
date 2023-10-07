@@ -1,6 +1,6 @@
 package com.automaatio.controller;
 
-import com.automaatio.components.TogglableHideIconCreator;
+import com.automaatio.components.buttons.TogglableEyeIconCreator;
 import com.automaatio.components.SwitchablePasswordField;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Controller for the login form
@@ -55,7 +54,7 @@ public class LoginController {
         loginButton.setDisable(true);
 
         // Eye button
-        Button togglePasswordButton = (new TogglableHideIconCreator()).create();
+        Button togglePasswordButton = (new TogglableEyeIconCreator()).create();
         togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
             switchableField.toggle();
             loginFormGrid.getChildren().remove(passwordField);
@@ -78,6 +77,7 @@ public class LoginController {
             updateUI();
         });
 
+        /*
         // testailua yms. varten, voi poistaa lopuks
         try {
             List<User> users = userDAO.getAll();
@@ -88,6 +88,8 @@ public class LoginController {
         } catch (Exception e) {
             System.out.println("not connected to db");
         }
+
+         */
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.automaatio.controller.mainpage;
 
 import com.automaatio.components.*;
+import com.automaatio.components.buttons.CancelIconCreator;
+import com.automaatio.components.buttons.DeleteIconCreator;
+import com.automaatio.components.buttons.EditIconCreator;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.DatabaseTool;
@@ -180,7 +183,7 @@ public class RoutineController implements Initializable {
         Label startTime = new Label(util.getFormattedTime(routine.getEventTime().getStartTime()));
         Label endTime = new Label(util.getFormattedTime(routine.getEventTime().getEndTime()));
 
-        Button editButton = (new TogglableEditIconCreator()).create();
+        Button editButton = (new EditIconCreator()).create();
 
         // Automation toggle
         ToggleSwitch toggle = getToggleSwich(routine);

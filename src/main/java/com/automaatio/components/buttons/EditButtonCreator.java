@@ -1,9 +1,10 @@
-package com.automaatio.components;
+package com.automaatio.components.buttons;
 
+import com.automaatio.components.buttons.IButton;
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import javafx.scene.control.Button;
 
-public class EditButtonCreator implements IButton{
+public class EditButtonCreator implements IButton {
     private String editTxt = "Edit";
     @Override
     public Button create(Object objectToDelete, ClickActions clickActions) {

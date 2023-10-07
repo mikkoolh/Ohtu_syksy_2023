@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.automaatio.components.TogglableHideIconCreator;
+import com.automaatio.components.buttons.TogglableEyeIconCreator;
 import com.automaatio.components.SwitchablePasswordField;
 import com.automaatio.model.database.User;
 import com.automaatio.model.database.UserDAO;
@@ -204,7 +204,7 @@ public class CreateAccountController {
         Platform.runLater(() -> usernameField.requestFocus()); // Autofocus
 
         // Eye button
-        Button togglePasswordButton = (new TogglableHideIconCreator()).create();
+        Button togglePasswordButton = (new TogglableEyeIconCreator()).create();
         togglePasswordButton.addEventHandler(ActionEvent.ACTION, (e)-> {
             switchableField.toggle();
             formGrid.getChildren().remove(passwordField);

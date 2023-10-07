@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Matleena Kankaanpää
  * 26.9.2023
- * <p>
+ *
  * DAO for Routine class
  */
 
@@ -152,6 +152,33 @@ public class RoutineDAO implements IDAO {
             Routine routine = em.find(Routine.class, id);
             routine.setAutomated(setTo);
             System.out.println("updated routine");
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Updates the time of a routine
+     * @param routineId
+     * @param newTime
+     * @param automated
+     */
+    public void updateTime(int routineId, EventTime newTime, boolean automated) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+
+        try {
+            Routine routine = em.find(Routine.class, routineId);
+
+            if (routine != null) {
+                routine.setEventTime(newTime);
+                routine.setAutomated(automated);
+                System.out.println("updated routine");
+            }
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
