@@ -38,6 +38,10 @@
     -fx-border-radius: 3;
 }
 
+.error-text {
+    -fx-text-fill: -fx-clr-error;
+}
+
 .tooltip {
     -fx-fill: #5E5E5E;
     -fx-font-size: 11px;
