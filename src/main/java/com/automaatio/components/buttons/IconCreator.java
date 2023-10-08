@@ -1,9 +1,14 @@
 package com.automaatio.components.buttons;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 
 /**
  * @author Matleena Kankaanpää
@@ -18,8 +23,12 @@ public abstract class IconCreator {
         ImageView imageView = new ImageView(new Image(image));
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(18);
+        button.setStyle("-fx-border-color: transparent; -fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent;");
         button.setGraphic(imageView);
         button.setTooltip((new Tooltip(tooltip)));
+        button.getStyleClass().clear();
+        button.setStyle("-fx-border-color: #5E5E5E; -fx-border-radius: 3;");
+        button.setPadding(new Insets(4));
         return button;
     }
 }

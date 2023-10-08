@@ -28,6 +28,26 @@ public class EventTimeDAO implements IDAO {
         }
     }
 
+    // ^tost tarvii palautusarvon mut ei pysty ylikirjottaa :/
+    public EventTime addAndReturnObject(Object object) {
+        EventTime savedEventTime = null;
+
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        try {
+            em.getTransaction().begin();
+            savedEventTime = em.merge((EventTime) object);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+        return savedEventTime;
+    }
+
     @Override
     public void deleteObject(int id) {
         EntityManager em = MysqlDBJpaConn.getInstance();

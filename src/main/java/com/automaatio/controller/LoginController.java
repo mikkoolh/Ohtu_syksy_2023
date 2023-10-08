@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller for the login form
@@ -77,7 +78,6 @@ public class LoginController {
             updateUI();
         });
 
-        /*
         // testailua yms. varten, voi poistaa lopuks
         try {
             List<User> users = userDAO.getAll();
@@ -88,8 +88,6 @@ public class LoginController {
         } catch (Exception e) {
             System.out.println("not connected to db");
         }
-
-         */
     }
 
     /**

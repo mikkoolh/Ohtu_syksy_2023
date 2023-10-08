@@ -34,7 +34,6 @@ public class UserTest {
         user.setEmail("pikku.myy@muumilaakso.fi");
         user.setPhoneNumber("040-9876543");
         user.setPassword("secret");
-        user.setUserType(1);
 
         assertEquals("pikkumyy", user.getUsername(), "Username should be 'pikkumyy'");
         assertEquals("Pikku", user.getFirstName(), "First name should be 'Pikku'");

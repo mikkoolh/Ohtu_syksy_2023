@@ -38,7 +38,16 @@
     -fx-border-radius: 3;
 }
 
+.error-text {
+    -fx-text-fill: -fx-clr-error;
+}
+
 .tooltip {
     -fx-fill: #5E5E5E;
     -fx-font-size: 11px;
+}
+
+.image-border {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
 }

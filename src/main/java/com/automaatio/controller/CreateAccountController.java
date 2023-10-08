@@ -36,7 +36,7 @@ public class CreateAccountController {
     @FXML
     private TextField firstNameField, lastNameField, emailField, phoneNumberField, usernameField;
     @FXML
-    private Text createAccountErrorText, usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError;
+    private Text createAccountErrorText, usernameTooltip, firstNameTooltip, lastNameTooltip, emailTooltip, phoneTooltip, passwordTooltip;
     @FXML
     private Button saveButton;
     @FXML
@@ -85,108 +85,6 @@ public class CreateAccountController {
         nav.openLoginPage(event);
     }
 
-    /*
-    Check that the username doesn't already exist in the
-    database and is in a valid format
-     */
-    private boolean validateUsername(String username) {
-
-        try {
-            if (username.isEmpty()) {
-                usernameError.setText("Required field");
-                return false;
-            } else if (!validator.includesNoSpaces(username)) {
-                usernameError.setText("Username cannot contain spaces");
-                return false;
-            } else if (username.length() < validator.getUSERNAME_MIN_LENGTH()) {
-                usernameError.setText("Username must be at least " + validator.getUSERNAME_MIN_LENGTH() + " characters");
-                return false;
-            } else if (username.length() > validator.getUSERNAME_MAX_LENGTH()) {
-                usernameError.setText("Username must be " + validator.getUSERNAME_MAX_LENGTH() + " characters or less");
-                return false;
-            } else if (userDAO.getObject(username) != null) {
-                usernameError.setText("Username already taken");
-                return false;
-            }
-        } catch (Exception e) {
-            // Can't connect to the database to check if the username is available
-            System.out.println("DB connection error: " + e);
-            createAccountErrorText.setText("Error. Please try again shortly.");
-            return false;
-        }
-
-        // Username valid and available
-        usernameError.setText("Username available");
-        createAccountErrorText.setText("");
-        return true;
-    }
-
-    private boolean validateFirstName(String firstName) {
-        if (firstName.isEmpty()) {
-            firstNameError.setText("Required field");
-            return false;
-        } else if (firstName.length() > validator.getFIRSTNAME_MAX_LENGTH()) {
-            firstNameError.setText("First name must be " + validator.getFIRSTNAME_MAX_LENGTH() + " characters or less");
-            return false;
-        }
-        firstNameError.setText("");
-        return true;
-    }
-
-    private boolean validateLastName(String lastName) {
-        if (lastName.isEmpty()) {
-            lastNameError.setText("Required field");
-            return false;
-        } else if (lastName.length() > validator.getLASTNAME_MAX_LENGTH()) {
-            lastNameError.setText("Last name must be " + validator.getLASTNAME_MAX_LENGTH() + " characters or less");
-            return false;
-        }
-        lastNameError.setText("");
-        return true;
-    }
-
-    private boolean validateEmail(String email) {
-        if (email.isEmpty()){
-            emailError.setText("Required field");
-            return false;
-        } else if (!validator.emailFormatCorrect(email)) {
-            emailError.setText("Invalid email address");
-            return false;
-        }
-        emailError.setText("");
-        return true;
-    }
-
-    private boolean validatePhoneNumber(String phone) {
-        if (phone.isEmpty()){
-            phoneError.setText("Required field");
-            return false;
-        } else if (!validator.phoneFormatCorrect(phone)) {
-            phoneError.setText("Invalid phone number");
-            return false;
-        }
-        phoneError.setText("");
-        return true;
-    }
-
-    private boolean validatePassword(String password) {
-        if (password.isEmpty()){
-            passwordError.setText("Required field");
-            return false;
-        } else if (password.length() < validator.getPASSWORD_MIN_LENGTH()) {
-            passwordError.setText("Password must be at least " + validator.getPASSWORD_MIN_LENGTH() + " characters");
-            return false;
-        } else if (password.length() > validator.getPASSWORD_MAX_LENGTH()) {
-            passwordError.setText("Password must be " + validator.getPASSWORD_MAX_LENGTH() + " characters or less");
-            return false;
-        } else if (!validator.includesNoSpaces(password)) {
-            passwordError.setText("Password cannot contain spaces");
-            return false;
-        }
-        passwordError.setText("");
-        return true;
-    }
-
     // Creates a new user into the database when the save button is clicked
     private void saveUser(User user) {
         try {
@@ -220,46 +118,63 @@ public class CreateAccountController {
 
         getFieldValues();
 
-        // Set the input guidelines on screen
-        validateUsername(username);
-        validateFirstName(firstName);
-        validateLastName(lastName);
-        validateEmail(email);
-        validatePhoneNumber(phoneNumber);
-        validatePassword(password);
+        // Set the input tooltips on screen
+        validator.validateUsername(username, usernameTooltip);
+        validator.validateFirstName(firstName, firstNameTooltip);
+        validator.validateLastName(lastName, lastNameTooltip);
+        validator.validateEmail(email, emailTooltip);
+        validator.validatePhoneNumber(phoneNumber, phoneTooltip);
+        validator.validatePassword(password, passwordTooltip);
 
-        // Change listeners for input fields
+        // Change listener for username field
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateUsername(newValue.trim());
-            toggleButton();
+            if (validator.validateUsername(newValue.trim(), usernameTooltip)) {
+                // If the username input passes validation, check if it's already taken
+                try {
+                    if (userDAO.getObject(newValue.trim()) != null) {
+                        usernameTooltip.setText("Username already taken");
+                    } else {
+                        usernameTooltip.setText("Username available");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    createAccountErrorText.setText("Error. Please try again shortly.");
+                }
+                toggleButton();
+            }
         });
 
+        // Change listener for first name field
         firstNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateFirstName(newValue.trim());
+            validator.validateFirstName(newValue.trim(), firstNameTooltip);
             toggleButton();
         });
 
+        // Change listener for last name field
         lastNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateLastName(newValue.trim());
+            validator.validateLastName(newValue.trim(), lastNameTooltip);
             toggleButton();
         });
 
+        // Change listener for email field
         emailField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateEmail(newValue.trim());
+            validator.validateEmail(newValue.trim(), emailTooltip);
             toggleButton();
         });
 
+        // Change listener for phone number field
         phoneNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validatePhoneNumber(newValue.trim().replaceAll("\\s", ""));
+            validator.validatePhoneNumber(newValue.trim().replaceAll("\\s", ""), phoneTooltip);
             toggleButton();
         });
 
+        // Change listener for password field
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            validatePassword(newValue);
+            validator.validatePassword(newValue, passwordTooltip);
             toggleButton();
         });
 
-        List<Text> tooltips = Arrays.asList(usernameError, firstNameError, lastNameError, emailError, phoneError, passwordError);
+        List<Text> tooltips = Arrays.asList(usernameTooltip, firstNameTooltip, lastNameTooltip, emailTooltip, phoneTooltip, passwordTooltip);
         for (Text tooltip : tooltips) {
             // Voi muuttaa fontin mut kaikki ei tue italicia
             tooltip.setStyle("-fx-fill: #5E5E5E; -fx-font-family: Verdana; -fx-font-style: italic; -fx-font-size: 11px;");
@@ -267,16 +182,16 @@ public class CreateAccountController {
         }
     }
 
-    // Enables/disables the save button depending on whether all fields are pass validation
+    // Enables/disables the save button depending on whether all fields pass validation
     private void toggleButton() {
         getFieldValues();
 
-        boolean inputOk = validateUsername(username)
-                && validateFirstName(firstName)
-                && validateLastName(lastName)
-                && validateEmail(email)
-                && validatePhoneNumber(phoneNumber)
-                && validatePassword(password);
+        boolean inputOk = validator.validateUsername(username, usernameTooltip)
+                && validator.validateFirstName(firstName, firstNameTooltip)
+                && validator.validateLastName(lastName, lastNameTooltip)
+                && validator.validateEmail(email, emailTooltip)
+                && validator.validatePhoneNumber(phoneNumber, phoneTooltip)
+                && validator.validatePassword(password, passwordTooltip);
 
         saveButton.setDisable(!inputOk);
     }

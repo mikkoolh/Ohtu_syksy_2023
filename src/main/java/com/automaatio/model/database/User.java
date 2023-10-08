@@ -13,12 +13,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userID")
-    private int userID;
-
     @Column(name = "username", unique = true)
     private String username;
 
@@ -32,6 +27,9 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
+
+    @Column(name = "selected_picture")
+    private int selectedPicture;
 
     /*
     @OneToMany(mappedBy ="user" )
@@ -62,7 +60,7 @@ public class User {
      * @param maxPrice
      */
 
-    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice) {
+    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice, int selectedPicture) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -71,6 +69,7 @@ public class User {
         this.password = password;
         this.age = age;
         this.maxPrice = maxPrice;
+        this.selectedPicture = selectedPicture;
         System.out.println("käyty saveUser");
     }
 
@@ -174,9 +173,17 @@ public class User {
         return maxPrice;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getSelectedPicture() {
+        return selectedPicture;
     }
+
+    public void setSelectedPicture(int selectedPicture) {
+        this.selectedPicture = selectedPicture;
+    }
+
+    /*public int getUserID() {
+        return userID;
+    }*/
 
     @Override
     public String toString() {

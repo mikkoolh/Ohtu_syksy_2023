@@ -4,9 +4,11 @@ import com.automaatio.components.*;
 import com.automaatio.components.buttons.CancelIconCreator;
 import com.automaatio.components.buttons.DeleteIconCreator;
 import com.automaatio.components.buttons.EditIconCreator;
+import com.automaatio.components.buttons.SaveIconCreator;
 import com.automaatio.model.database.*;
 import com.automaatio.utils.CacheSingleton;
 import com.automaatio.utils.DatabaseTool;
+import com.automaatio.utils.ErrorMessageHandler;
 import com.automaatio.utils.RoutineUtils;
 import com.dlsc.gemsfx.TimePicker;
 import javafx.event.ActionEvent;
@@ -54,7 +56,10 @@ public class RoutineController implements Initializable {
     private Button automateAllButton, addRoutineButton, deleteAllButton, saveButton;
 
     @FXML
-    private Text noRoutinesText, routineErrorText, formTitle;
+    private Text noRoutinesText, formTitle;
+
+    @FXML
+    private Label errorMessageField;
 
     @FXML
     private ScrollPane routineScrollPane;
@@ -76,16 +81,17 @@ public class RoutineController implements Initializable {
     private TimePicker startTimePicker, endTimePicker;
     private List<Weekday> weekdays;
     private boolean noRoutinesToShow;
-
     private final String FONT = "System";
     private final int FONT_SIZE_TEXT = 24;
-    private final int ICON_DIMENSIONS = 18;
+    private ErrorMessageHandler errorHandler;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         VBox.setVgrow(routineVBox, Priority.ALWAYS);
         VBox.setVgrow(routineScrollPane, Priority.ALWAYS);
+        errorHandler = new ErrorMessageHandler();
+        errorMessageField.getStyleClass().add("error-text");
         noRoutinesToShow = true;
         try {
             routines = util.sortByTime(fetchRoutines()); // Sort fetched routines by time
@@ -106,7 +112,7 @@ public class RoutineController implements Initializable {
 
     private void loadRoutines() {
         routineVBox.getChildren().clear();
-        routineErrorText.setVisible(false);
+        errorHandler.hideErrorMessage(errorMessageField);
         noRoutinesToShow = true;
         LinkedHashMap<String, ArrayList<Routine>> map = new LinkedHashMap<>();
 
@@ -184,6 +190,9 @@ public class RoutineController implements Initializable {
         Label endTime = new Label(util.getFormattedTime(routine.getEventTime().getEndTime()));
 
         Button editButton = (new EditIconCreator()).create();
+        Button saveButton = (new SaveIconCreator()).create();
+        Button cancelButton = (new CancelIconCreator()).create();
+        Button deleteButton = (new DeleteIconCreator()).create();
 
         // Automation toggle
         ToggleSwitch toggle = getToggleSwich(routine);
@@ -218,14 +227,18 @@ public class RoutineController implements Initializable {
             });
         }
 
+        // Container for edit, save, delete and cancel buttons
+        HBox routineRowButtons = new HBox(10, cancelButton, deleteButton, editButton);
+        HBox routineRow = new HBox(10, timeContainer, toggle, routineRowButtons);
+        HBox.setHgrow(routineRow, Priority.ALWAYS);
+        routineRow.setStyle("-fx-background-color: #e1e1e1; -fx-background-radius: 4;");
+
         // Delete button
-        Button deleteButton = (new DeleteIconCreator()).create();
         deleteButton.setOnAction(deleteRoutine);
         deleteButtons.put(deleteButton, routine);
         deleteButton.setVisible(false);
 
         // Cancel button
-        Button cancelButton = (new CancelIconCreator()).create();
         cancelButton.setVisible(false);
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -235,27 +248,56 @@ public class RoutineController implements Initializable {
                 cancelButton.setVisible(!cancelButton.isVisible());
                 timeContainer.getChildren().clear();
                 timeContainer.getChildren().add(clockTimes);
+                routineRowButtons.getChildren().remove(saveButton);
+                routineRowButtons.getChildren().add(editButton);
             }
         });
 
-        // When edit/save is clicked
+        // Edit button event handler
         editButton.addEventHandler(ActionEvent.ACTION, (e)-> {
-            deleteButton.setVisible(!deleteButton.isVisible());
-            cancelButton.setVisible(!cancelButton.isVisible());
+            deleteButton.setVisible(true);
+            cancelButton.setVisible(true);
             timeContainer.getChildren().clear();
-
-            if (deleteButton.isVisible()) {
-                // Switch out of editing mode
-                timeContainer.getChildren().add(newClockTimes);
-            } else {
-                // Switch into editing mode
-                timeContainer.getChildren().add(clockTimes);
-            }
+            timeContainer.getChildren().add(newClockTimes);
+            routineRowButtons.getChildren().remove(editButton);
+            routineRowButtons.getChildren().add(saveButton);
         });
 
-        HBox routineRow = new HBox(10, timeContainer, toggle, cancelButton, deleteButton, editButton);
-        HBox.setHgrow(routineRow, Priority.ALWAYS);
-        routineRow.setStyle("-fx-background-color: #e1e1e1; -fx-background-radius: 4;");
+        // Save button event handler
+        saveButton.addEventHandler(ActionEvent.ACTION, (e)-> {
+            System.out.println("save clicked");
+            boolean updateSuccessful = false;
+
+            try {
+                // New times
+                LocalDateTime updatedStartTime = newStartTime.getTime().atDate(LocalDate.now());
+                LocalDateTime updatedEndTime = newEndTime.getTime().atDate(LocalDate.now());
+
+                // Get weekday of the current routine
+                Weekday wd = (Weekday) weekdayDAO.getObject(routine.getEventTime().getWeekday().getWeekdayId());
+
+                // Create a new event time with the current weekday + new times
+                EventTime newEventTime = eventTimeDAO.addAndReturnObject(new EventTime(updatedStartTime, updatedEndTime, wd));
+                routineDAO.updateTime(routine.getRoutineID(), newEventTime, toggle.isSelected());
+                updateSuccessful = true;
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+            if (updateSuccessful) {
+                loadRoutines();
+                deleteButton.setVisible(false);
+                cancelButton.setVisible(false);
+                timeContainer.getChildren().clear();
+                timeContainer.getChildren().add(clockTimes);
+                routineRowButtons.getChildren().remove(saveButton);
+                routineRowButtons.getChildren().add(editButton);
+                errorHandler.hideErrorMessage(errorMessageField);
+            } else {
+                System.out.println("up8 failed");
+                errorHandler.showErrorMessage("An error occurred", errorMessageField);
+            }
+        });
 
         Label[] labels = new Label[] {startTime, endTime};
         for (Label label : labels) {
@@ -353,11 +395,11 @@ public class RoutineController implements Initializable {
             if (alert.showAndWait().get() == ButtonType.OK) {
                 try {
                     routineDAO.deleteObject(routineToDelete.getRoutineID());
-                    routineErrorText.setText("");
+                    errorHandler.hideErrorMessage(errorMessageField);
                     loadRoutines();
                 } catch(Exception e) {
                     e.printStackTrace();
-                    routineErrorText.setText("An error occurred");
+                    errorHandler.showErrorMessage("An error occurred", errorMessageField);
                 }
             }
         }
@@ -421,7 +463,7 @@ public class RoutineController implements Initializable {
                     hideForm();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    routineErrorText.setText("An error occurred");
+                    errorHandler.showErrorMessage("An error occurred", errorMessageField);
                 }
             }
         }
@@ -488,13 +530,12 @@ public class RoutineController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            routineErrorText.setText("An error occurred");
+            errorHandler.showErrorMessage("An error occurred", errorMessageField);
         }
     }
 
     private void displayErrorText() {
-        routineErrorText.setVisible(true);
-        routineErrorText.setText("Error. Unable to load routines.");
+        errorHandler.showErrorMessage("Error. Unable to load routines.", errorMessageField);
         noRoutinesText.setVisible(false); // Don't display both disclaimers
     }
 
@@ -532,4 +573,5 @@ public class RoutineController implements Initializable {
         boolean timeInputOk = validateTimeInput(startTimePicker, endTimePicker);
         saveButton.setDisable(!timeInputOk || !weekdaySelectionOk);
     }
+
 }
