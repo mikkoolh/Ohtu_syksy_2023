@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="478.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.menu.ProfileController" stylesheets="popup.css">
+<AnchorPane prefHeight="478.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.menu.ProfileController">
 
       <GridPane alignment="CENTER" centerShape="false" prefHeight="478.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -51,11 +50,10 @@
                               <Font name="Copperplate Gothic Bold" size="14.0" />
                           </font>
                       </Button>
-      <Button fx:id="picBtn" mnemonicParsing="false" onAction="#onBtnClick" text="Change Picture" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </Button>
+          <Button fx:id="picBtn" mnemonicParsing="false" onAction="#onBtnClick" text="Change Picture" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <minWidth>0.0</minWidth>
+              <minHeight>0.0</minHeight>
+          </Button>
 
       </GridPane>
 
