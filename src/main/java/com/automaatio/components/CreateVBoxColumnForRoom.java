@@ -1,19 +1,24 @@
 package com.automaatio.components;
 
-import com.automaatio.components.buttons.DeleteButtonCreator;
-import com.automaatio.components.buttons.EditButtonCreator;
-import com.automaatio.components.buttons.ToggleButtonCreator;
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.DeviceGroup;
+import com.automaatio.model.database.DeviceGroupDAO;
+import com.automaatio.utils.CacheSingleton;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 
-public class CreateVBoxColumn {
+public class CreateVBoxColumnForRoom {
     private DeviceDAO deviceDAO = new DeviceDAO();
+    private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
+    private final CacheSingleton cache = CacheSingleton.getInstance();
     private Button deleteBtn, editBtn;
     private ToggleButton onOff;
     private Label label;
@@ -34,7 +39,7 @@ public class CreateVBoxColumn {
         Pane spacer = new Pane();
 
         //muuttaa yksittäisen HBoxin leveyden scrollpanen kokoiseksi laiskalla tavalla
-        spacer.setPrefWidth(70);
+        spacer.setPrefWidth(550);
 
         HBox buttonsRow = new HBox(hBoxSpacing);
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -62,16 +67,10 @@ public class CreateVBoxColumn {
 
     private Button createDeleteBtn(VBox devicesVBox, VBox newDeviceVBox, Device device) {
         Button delete = new Button("Delete");
-        delete.getStyleClass().add("deleteBtn");
+        delete.getStyleClass().add("roomDeleteButton");
         delete.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Device");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to delete this device?");
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                deviceDAO.deleteDevice(device.getDeviceID());
-                devicesVBox.getChildren().remove(newDeviceVBox);
-            }
+            deviceGroupDAO.removeDeviceFromGroup(cache.getRoom(), device);
+            devicesVBox.getChildren().remove(newDeviceVBox);
         });
         return delete;
     }
@@ -93,9 +92,6 @@ public class CreateVBoxColumn {
         if (isSelected) {
             switchOnOff(device);
             onOff.setText("On");
-            device.setUsageData(device.getUsageData() + 1);
-            deviceDAO.updateUsageData(device.getDeviceID(), device.getUsageData() + 1);
-            System.out.println(device.getUsageData());
             onOff.getStyleClass().remove("toggleBtnOff");
             onOff.getStyleClass().add("toggleBtnOn");
         } else {
@@ -110,3 +106,4 @@ public class CreateVBoxColumn {
         deviceDAO.updateDeviceOnOff(device.getDeviceID());
     }
 }
+

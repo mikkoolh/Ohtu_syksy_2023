@@ -1,6 +1,7 @@
 package com.automaatio.controller.mainpage;
 
-import com.automaatio.components.CreateVBoxColumn;
+import com.automaatio.components.CreateVBoxColumnForRoom;
+import com.automaatio.controller.mainpage.IController;
 import com.automaatio.controller.mainpage.clickActions.DevicesClick;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
@@ -35,13 +36,15 @@ public class RoomController implements Initializable, IController {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
     private DeviceDAO deviceDAO = new DeviceDAO();
-    private CreateVBoxColumn deviceRow = new CreateVBoxColumn();
+    private CreateVBoxColumnForRoom deviceRow = new CreateVBoxColumnForRoom();
 
     public RoomController() {}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CacheSingleton cache = CacheSingleton.getInstance();
         roomName.setText(cache.getRoom().getName());
+
+        deleteRoom.getStyleClass().add("roomDeleteButton");
 
         populateDevicesDropdown();
 

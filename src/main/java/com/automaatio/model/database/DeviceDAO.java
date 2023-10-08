@@ -252,4 +252,23 @@ public class DeviceDAO implements IDAO {
         em.getTransaction().commit();
         em.close();
     }
+
+    /**
+     * Updates the usageData of a device.
+     * @param deviceId The ID of the device to update.
+     * @param newUsageData The new usageData for the device.
+     */
+    public void updateUsageData(int deviceId, long newUsageData) {
+        EntityManager em = MysqlDBJpaConn.getInstance();
+        em.getTransaction().begin();
+        Device device = em.find(Device.class, deviceId);
+        if (device != null) {
+            device.setUsageData(newUsageData);
+            em.merge(device);
+        } else {
+            System.out.println("Device with ID " + deviceId + " was not found.");
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
 }

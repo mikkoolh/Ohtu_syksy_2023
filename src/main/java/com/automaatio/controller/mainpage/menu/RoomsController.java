@@ -1,6 +1,6 @@
 package com.automaatio.controller.mainpage.menu;
 
-import com.automaatio.components.CreateVBoxColumn;
+import com.automaatio.components.CreateRoomsVBoxColumn;
 import com.automaatio.controller.mainpage.clickActions.DeviceGroupsClick;
 import com.automaatio.model.database.DeviceGroup;
 import com.automaatio.model.database.DeviceGroupDAO;
@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -17,9 +18,11 @@ public class RoomsController implements Initializable, Menu {
     private final CacheSingleton cache = CacheSingleton.getInstance();
     @FXML
     private TextField newRoomTextField;
+    private final CreateRoomsVBoxColumn deviceGroupRow = new CreateRoomsVBoxColumn();
 
     @FXML
     private VBox roomsVBox;
+
     private DeviceGroupDAO deviceGroupDAO = new DeviceGroupDAO();
 
     @Override
@@ -28,11 +31,10 @@ public class RoomsController implements Initializable, Menu {
     }
 
     public void show() {
-        CreateVBoxColumn deviceGroupRow = new CreateVBoxColumn();
         roomsVBox.getChildren().clear();
         List<DeviceGroup> deviceGroups = deviceGroupDAO.getRoomsByUser(cache.getUser());
         for (DeviceGroup deviceGroup : deviceGroups) {
-            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup, roomsVBox, new DeviceGroupsClick()));
+            roomsVBox.getChildren().add(deviceGroupRow.create(deviceGroup, new DeviceGroupsClick()));
         }
     }
 

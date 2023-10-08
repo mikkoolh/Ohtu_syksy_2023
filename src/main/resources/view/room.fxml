@@ -8,17 +8,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoomController">
-   <Button layoutX="250.0" layoutY="559.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
-   <Button fx:id="deleteRoom" onAction="#deleteRoom" layoutX="400.0" layoutY="559.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="Delete Room" />
-   <ComboBox fx:id="deviceComboBox" layoutX="308.0" layoutY="643.0" maxWidth="880.0" prefHeight="25.0" prefWidth="300.0" />
+<AnchorPane prefHeight="720" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.automaatio.controller.mainpage.RoomController" styleClass="anchor-pane">
+   <Button layoutX="250.0" layoutY="659.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All ON" />
+   <Button fx:id="deleteRoom" onAction="#deleteRoom" layoutX="400.0" layoutY="659.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="Delete Room" />
+   <ComboBox fx:id="deviceComboBox" layoutX="308.0" layoutY="543.0" maxWidth="880.0" prefHeight="25.0" prefWidth="300.0" styleClass="grid-paneDevice"/>
    <Text fx:id="roomName" layoutX="372.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Some Room&gt;">
       <font>
          <Font name="Copperplate Gothic Bold" size="24.0" />
       </font>
    </Text>
-   <ScrollPane fx:id="devicesScrollPane" fitToHeight="true" fitToWidth="true" layoutX="108.0" layoutY="91.0" prefWidth="700.0">
+   <ScrollPane fx:id="devicesScrollPane" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0">
       <VBox fx:id="devicesVBox" alignment="CENTER" />
    </ScrollPane>
-   <Button layoutX="550.0" layoutY="559.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
+   <Button layoutX="550.0" layoutY="659.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" text="All OFF" />
 </AnchorPane>
