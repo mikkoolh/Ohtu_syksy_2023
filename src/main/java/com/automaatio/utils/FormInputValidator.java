@@ -1,5 +1,7 @@
 package com.automaatio.utils;
 
+import javafx.scene.text.Text;
+
 /**
  * User input validation
  * @author Matleena Kankaanpää
@@ -7,111 +9,107 @@ package com.automaatio.utils;
  */
 
 public class FormInputValidator {
-    private final Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, FIRSTNAME_MIN_LENGTH, LASTNAME_MIN_LENGTH,
+    private final Integer USERNAME_MIN_LENGTH, PASSWORD_MIN_LENGTH,
             USERNAME_MAX_LENGTH, PASSWORD_MAX_LENGTH, FIRSTNAME_MAX_LENGTH, LASTNAME_MAX_LENGTH, PHONE_MIN_LENGTH, PHONE_MAX_LENGTH;
 
-    /**
-     * Constructor
-     */
     public FormInputValidator() {
         this.USERNAME_MIN_LENGTH = 5;
-        this.USERNAME_MAX_LENGTH = 20;
+        this.USERNAME_MAX_LENGTH = 40;
         this.PASSWORD_MIN_LENGTH = 8;
-        this.PASSWORD_MAX_LENGTH = 20;
-        this.FIRSTNAME_MIN_LENGTH = 1;
-        this.FIRSTNAME_MAX_LENGTH = 20;
-        this.LASTNAME_MIN_LENGTH = 1;
-        this.LASTNAME_MAX_LENGTH = 20;
+        this.PASSWORD_MAX_LENGTH = 50;
+        this.FIRSTNAME_MAX_LENGTH = 40;
+        this.LASTNAME_MAX_LENGTH = 40;
         this.PHONE_MIN_LENGTH = 7;
         this.PHONE_MAX_LENGTH = 15;
     }
-
-    /**
-     * Checks if the length of the username provided is within range
-     * @param username Username input
-     * @return Boolean True if the username length is within range
-     */
-    public Boolean usernameLengthCorrect(String username) {
-        return (username.length() >= USERNAME_MIN_LENGTH && username.length() <= USERNAME_MAX_LENGTH);
+    public boolean validateUsername(String input, Text errorField) {
+        if (input.isEmpty()) {
+            errorField.setText("Required field");
+            return false;
+        } else if (includesSpaces(input)) {
+            errorField.setText("Username cannot contain spaces");
+            return false;
+        } else if (input.length() < USERNAME_MIN_LENGTH) {
+            errorField.setText("Username must be at least " + USERNAME_MIN_LENGTH + " characters");
+            return false;
+        } else if (input.length() > USERNAME_MAX_LENGTH) {
+            errorField.setText("Username must be " + USERNAME_MAX_LENGTH + " characters or less");
+            return false;
+        }
+        return true;
     }
 
-    /**
-     * Checks that the provided string doesn't include spaces
-     * @param s The provided string
-     * @return True if the string doesn't include spaces
-     */
-    public Boolean includesNoSpaces(String s) {
-        return (s.trim().replaceAll("\\s", "").equals(s));
+    public boolean validateFirstName(String input, Text errorField) {
+        if (input.isEmpty()) {
+            errorField.setText("Required field");
+            return false;
+        } else if (input.length() > FIRSTNAME_MAX_LENGTH) {
+            errorField.setText("First name must be " + FIRSTNAME_MAX_LENGTH + " characters or less");
+            return false;
+        }
+        errorField.setText("");
+        return true;
     }
 
-    /**
-     * Checks if the length of the password provided is within range
-     * @param password Password input
-     * @return Boolean True if the password length is within range
-     */
-    public Boolean passwordLengthCorrect(String password) {
-        return (password.length() >= PASSWORD_MIN_LENGTH && password.length() <= PASSWORD_MAX_LENGTH);
+    public boolean validateLastName(String input, Text errorField) {
+        if (input.isEmpty()) {
+            errorField.setText("Required field");
+            return false;
+        } else if (input.length() > LASTNAME_MAX_LENGTH) {
+            errorField.setText("Last name must be " + LASTNAME_MAX_LENGTH + " characters or less");
+            return false;
+        }
+        errorField.setText("");
+        return true;
     }
 
-    /**
-     * Checks if the length of the first name provided is within range
-     * @param firstName First name input
-     * @return Boolean True if the first name length is within range
-     */
-    public Boolean firstNameLengthCorrect(String firstName) {
-        return (firstName.length() >= FIRSTNAME_MIN_LENGTH && firstName.length() <= FIRSTNAME_MAX_LENGTH);
+    public boolean validateEmail(String input, Text errorField) {
+        if (input.isEmpty()){
+            errorField.setText("Required field");
+            return false;
+        } else if (!input.matches("^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@"
+                + "[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$")) {
+            errorField.setText("Invalid email address");
+            return false;
+        }
+        errorField.setText("");
+        return true;
     }
 
-    /**
-     * Checks if the length of the last name provided is within range
-     * @param lastName Last name input
-     * @return Boolean True if the last name length is within range
-     */
-    public Boolean lastNameLengthCorrect(String lastName) {
-        return (lastName.length() >= LASTNAME_MIN_LENGTH && lastName.length() <= LASTNAME_MAX_LENGTH);
+    public boolean validatePhoneNumber(String input, Text errorField) {
+        if (input.isEmpty()){
+            errorField.setText("Required field");
+            return false;
+        } else if (!input.matches("^+?[0-9-]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$")) {
+            errorField.setText("Invalid phone number");
+            return false;
+        }
+        errorField.setText("");
+        return true;
     }
 
-    /**
-     * Checks if the email address provided is in a valid format
-     * @param email Email address input
-     * @return Boolean True if the email format is valid
-     */
-    public Boolean emailFormatCorrect(String email) {
-        return email.matches("^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@"
-                + "[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$");
+    public boolean validatePassword(String input, Text errorField) {
+        if (input.isEmpty()){
+            errorField.setText("Required field");
+            return false;
+        } else if (input.length() < PASSWORD_MIN_LENGTH) {
+            errorField.setText("Password must be at least " + PASSWORD_MIN_LENGTH + " characters");
+            return false;
+        } else if (input.length() > PASSWORD_MAX_LENGTH) {
+            errorField.setText("Password must be " + PASSWORD_MAX_LENGTH + " characters or less");
+            return false;
+        } else if (!input.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{0," + PASSWORD_MAX_LENGTH +"}$")) {
+            errorField.setText("Password must contain at least one letter and a number");
+            return false;
+        } else if (includesSpaces(input)) {
+            errorField.setText("Password cannot contain spaces");
+            return false;
+        }
+        errorField.setText("");
+        return true;
     }
 
-    /**
-     * Checks if the phone number provided is in a valid format
-     * @param phone Phone number input
-     * @return Boolean True if the phone number format is valid
-     */
-    public Boolean phoneFormatCorrect(String phone) {
-        return phone.matches("^+?[0-9-]{" + PHONE_MIN_LENGTH + "," + PHONE_MAX_LENGTH + "}$");
-    }
-
-
-    public Integer getUSERNAME_MIN_LENGTH() {
-        return USERNAME_MIN_LENGTH;
-    }
-
-    public Integer getPASSWORD_MIN_LENGTH() {
-        return PASSWORD_MIN_LENGTH;
-    }
-
-    public Integer getUSERNAME_MAX_LENGTH() {
-        return USERNAME_MAX_LENGTH;
-    }
-
-    public Integer getPASSWORD_MAX_LENGTH() {
-        return PASSWORD_MAX_LENGTH;
-    }
-
-    public Integer getFIRSTNAME_MAX_LENGTH() {
-        return FIRSTNAME_MAX_LENGTH;
-    }
-
-    public Integer getLASTNAME_MAX_LENGTH() {
-        return LASTNAME_MAX_LENGTH;
+    public Boolean includesSpaces(String s) {
+        return !s.trim().replaceAll("\\s", "").equals(s);
     }
 }
