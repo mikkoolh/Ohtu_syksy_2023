@@ -6,7 +6,6 @@ import com.automaatio.model.database.WeekdayDAO;
 public class DatabaseTool {
     private static WeekdayDAO weekdayDAO = new WeekdayDAO();
 
-    // ettei tarvi aina käydä lisäämässä tietokantaan uudestaan kun on ajettu testejä :D
     public static void resetWeekdays() {
         if (weekdayDAO.getAll().size() != 7) {
             weekdayDAO.deleteAll();

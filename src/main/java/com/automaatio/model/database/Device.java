@@ -106,10 +106,6 @@ public class Device {
         return usageData;
     }
 
-    public void setUserName(String userName) { this.userName = userName; }
-
-    public String getUserName() { return userName; }
-
     public void setUsageData(long usageData) {
         this.usageData = usageData;
     }

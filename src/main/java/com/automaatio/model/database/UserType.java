@@ -16,7 +16,7 @@ public class UserType {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userTypeID") // Corrected column name
+    @Column(name = "userTypeID")
     private int userTypeID;
 
     /**
@@ -37,10 +37,6 @@ public class UserType {
      */
     public UserType(String description) {
         this.description = description;
-    }
-
-    public int getUserTypeID() {
-        return userTypeID;
     }
 
     public String getDescription() {

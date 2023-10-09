@@ -20,28 +20,12 @@ public class HistoryEvents {
     private User username;
 
     @ManyToOne
-    @JoinColumn(name = "device_id") // Add the appropriate column name
+    @JoinColumn(name = "device_id")
     private Device device;
 
     @ManyToOne
-    @JoinColumn(name = "feature_id") // Add the appropriate column name
+    @JoinColumn(name = "feature_id")
     private Feature feature;
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
-    public EventTime getEventTime() {
-        return eventTime;
-    }
-
-    public void setEventTime(EventTime eventTime) {
-        this.eventTime = eventTime;
-    }
 
     public User getUser() {
         return username;
@@ -57,14 +41,6 @@ public class HistoryEvents {
 
     public void setDevice(Device device) {
         this.device = device;
-    }
-
-    public Feature getFeature() {
-        return feature;
-    }
-
-    public void setFeature(Feature feature) {
-        this.feature = feature;
     }
 
     @Override

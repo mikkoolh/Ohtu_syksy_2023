@@ -56,18 +56,6 @@ public class DeviceGroup {
         this.name = name;
     }
 
-    public void addDevice(Device device){
-        deviceList.add(device);
-    }
-
-    public void setDeviceList(List<Device> deviceList){
-        this.deviceList = deviceList;
-    }
-
-    public List<Device> getDeviceList() {
-        return deviceList;
-    }
-
     @Override
     public String toString() {
         return getName();

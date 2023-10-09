@@ -31,13 +31,6 @@ public class User {
     @Column(name = "selected_picture")
     private int selectedPicture;
 
-    /*
-    @OneToMany(mappedBy ="user" )
-    @Column(name = "history_events")
-    private List<HistoryEvents> historyEvents;
-
-
-     */
     @Column(name = "age")
     private int age;
 
@@ -46,32 +39,6 @@ public class User {
 
     @Column(name = "max_price")
     private double maxPrice;
-
-    /**
-     *
-     * @param username
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param email
-     * @param password
-     * @param age
-     * @param userType
-     * @param maxPrice
-     */
-
-    public void saveUser(String username, String firstName, String lastName, String phoneNumber, String email, String password, int age, int userType, double maxPrice, int selectedPicture) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber =phoneNumber;
-        this.email = email;
-        this.password = password;
-        this.age = age;
-        this.maxPrice = maxPrice;
-        this.selectedPicture = selectedPicture;
-        System.out.println("käyty saveUser");
-    }
 
     /**
      * Parameterless constructor
@@ -157,14 +124,6 @@ public class User {
         this.age = age;
     }
 
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
-    }
-
     public void setMaxPrice(double price){
         maxPrice = price;
     }
@@ -181,25 +140,8 @@ public class User {
         this.selectedPicture = selectedPicture;
     }
 
-    /*public int getUserID() {
-        return userID;
-    }*/
-
     @Override
     public String toString() {
         return username;
     }
-
-
-
-    /*
-    public List<HistoryEvents> getHistoryEvents() {
-        return historyEvents;
-    }
-
-    public void setHistory(List<HistoryEvents> historyEvents) {
-        this.historyEvents = historyEvents;
-    }
-
-     */
 }

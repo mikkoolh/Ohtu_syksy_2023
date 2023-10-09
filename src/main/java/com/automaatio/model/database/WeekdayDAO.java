@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class WeekdayDAO implements IDAO {
 
-
       @Override
     public void addObject(Object object) {
         EntityManager em = MysqlDBJpaConn.getInstance();

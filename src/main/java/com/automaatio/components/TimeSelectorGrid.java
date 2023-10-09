@@ -18,7 +18,6 @@ public class TimeSelectorGrid {
         grid.add(new Label("To"), 0, 1);
         grid.add(startTime, 1, 0);
         grid.add(endTime, 1, 1);
-        //grid.setStyle("-fx-border-color: blue;"); // testailua varten
         grid.setHgap(40);
         grid.setVgap(10);
         return grid;

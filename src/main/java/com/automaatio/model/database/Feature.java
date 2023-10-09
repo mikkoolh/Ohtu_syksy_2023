@@ -35,11 +35,6 @@ public class Feature {
     @Column(name = "times_used")
     private int timesUsed;
 
-    /*
-    @ManyToMany(mappedBy = "features")
-    private List<DeviceType> deviceTypes = new ArrayList<DeviceType>();
-    */
-
     /**
      * Parameterless constructor
      */
@@ -59,10 +54,6 @@ public class Feature {
         this.adjustable = adjustable;
         this.description = description;
         this.timesUsed = timesUsed;
-    }
-
-    public int getFeatureId() {
-        return this.featureId;
     }
 
     public void setFeatureId(int featureId) {

@@ -41,7 +41,7 @@ public class LoginController {
     @FXML
     private GridPane loginFormGrid;
 
-    private CacheSingleton cache = CacheSingleton.getInstance();
+    private final CacheSingleton cache = CacheSingleton.getInstance();
 
     private final NavigationUtil nav;
     private final UserDAO userDAO;
@@ -79,17 +79,6 @@ public class LoginController {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateUI();
         });
-
-        // testailua yms. varten, voi poistaa lopuks
-        try {
-            List<User> users = userDAO.getAll();
-            System.out.println(users.size() + " users in db");
-            for (User user : users) {
-                System.out.println(user.getUsername());
-            }
-        } catch (Exception e) {
-            System.out.println("not connected to db");
-        }
     }
 
     /**

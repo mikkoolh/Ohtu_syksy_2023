@@ -42,9 +42,6 @@ public class CreateAccountController {
     @FXML
     private GridPane formGrid;
 
-    /**
-     * Constructor
-     */
     public CreateAccountController() {
         nav = new NavigationUtil();
         validator = new FormInputValidator();

@@ -49,14 +49,6 @@ public class DeviceType {
         this.image = image;
     }
 
-    public int getDeviceTypeId() {
-        return this.deviceTypeId;
-    }
-
-    public void setDeviceTypeId(int deviceTypeId) {
-        this.deviceTypeId = deviceTypeId;
-    }
-
     public String getDescription() {
         return this.description;
     }

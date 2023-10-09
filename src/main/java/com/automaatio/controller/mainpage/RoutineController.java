@@ -160,15 +160,6 @@ public class RoutineController implements Initializable {
                     }
                     routineVBox.getChildren().add(splitBox);
                     routineVBox.setSpacing(20);  // Spacing between weekday groups
-
-                    // Separate days with a line
-                    /*
-                    if (!weekday.equals(weekdays.get(map.keySet().size()-1).getName())) { //
-                        Separator s = new Separator(Orientation.HORIZONTAL);
-                        s.setStyle("-fx-border-width: 1px; -fx-padding: 0;");
-                        routineVBox.getChildren().add(s);
-                    }
-                     */
                 }
             }
 
@@ -426,11 +417,7 @@ public class RoutineController implements Initializable {
     @FXML
     private void handleSaveRoutine() {
 
-        /*
-         Get start and end times from time pickers
-         (Ottaa muut tiedot nykyhetkestä atm, ei pitäis haitata jos
-         tarvitaan vaan kellonajat?)
-         */
+        // Get start and end times from time pickers
         LocalDateTime startTime = startTimePicker.getTime().atDate(LocalDate.now());
         LocalDateTime endTime = endTimePicker.getTime().atDate(LocalDate.now());
 

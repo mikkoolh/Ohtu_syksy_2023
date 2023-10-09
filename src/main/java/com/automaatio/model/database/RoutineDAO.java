@@ -15,10 +15,6 @@ import java.util.List;
 
 public class RoutineDAO implements IDAO {
 
-    /**
-     * @param object
-     */
-
     @Override
     public void addObject(Object object) {
         EntityManager em = MysqlDBJpaConn.getInstance();

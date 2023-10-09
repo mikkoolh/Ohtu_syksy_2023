@@ -39,10 +39,6 @@ public class Manufacturer {
         this.name = name;
     }
 
-    public int getManufacturerId() {
-        return this.manufacturerId;
-    }
-
     public String getName() {
         return this.name;
     }
