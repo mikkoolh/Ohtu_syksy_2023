@@ -13,7 +13,7 @@ public class TogglableEyeIconCreator extends TogglableIconCreator {
 
     public Button create() {
         super.create("images/eye-open.png", "images/eye-hidden.png", "Show password", "Hide password");
-        int icon_size = 22; // Icon dimensions
+        int icon_size = 25; // Icon dimensions
         defaultView.setFitHeight(icon_size);
         altView.setFitHeight(icon_size);
         button.setStyle("-fx-border-color: transparent; -fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent;");

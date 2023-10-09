@@ -28,7 +28,7 @@ public abstract class IconCreator {
         button.setTooltip((new Tooltip(tooltip)));
         button.getStyleClass().clear();
         button.setStyle("-fx-border-color: #5E5E5E; -fx-border-radius: 3;");
-        button.setPadding(new Insets(4));
+        button.setPadding(new Insets(3));
         return button;
     }
 }

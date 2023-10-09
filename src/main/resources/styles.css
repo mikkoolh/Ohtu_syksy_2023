@@ -1,8 +1,17 @@
-
+* {
+    -fx-clr-background: #6b7275;
+    -fx-clr-dark: #000;
+    -fx-clr-button: #000;
+    -fx-clr-button-hover: #fff;
+    -fx-clr-light: #fff;
+    -fx-clr-text: #000;
+    -fx-clr-text-secondary: #252729;
+    -fx-clr-title: #000;
+}
 
 /* Menu -> CreateDeviceRow */
 .deviceRowVBox {
-    -fx-background-color: #6b7275;
+    -fx-background-color: -fx-clr-background;
     -fx-border-width: 3;
     -fx-padding: 5;
     -fx-border-insets: 5;
@@ -37,7 +46,7 @@
 }
 
 .scroll-pane {
-    -fx-background: #6b7275;
+    -fx-background: -fx-clr-background;
     -fx-border-color: #344347;
     -fx-border-radius: 5;
     -fx-border-width: 3;
@@ -71,17 +80,17 @@
 }
 
 .anchor-pane {
-    -fx-background-color: #6b7275;
+    -fx-background-color: -fx-clr-background;
 }
 
 .main-pane {
-    -fx-background-color: #6b7275;
+    -fx-background-color: -fx-clr-background;
 }
 
 
 /*titled pane--> */
 .titled-pane {
-    -fx-background-color: #6b7275;
+    -fx-background-color: -fx-clr-background;
     -fx-text-fill: white;
 }
 
@@ -93,7 +102,7 @@
 }
 
 .titled-pane > *.content {
-    -fx-background-color: #6b7275;
+    -fx-background-color: -fx-clr-background;
 }
 
 
@@ -179,4 +188,76 @@
     -fx-font-size: 14px;
     -fx-background-color: #353535;
     -fx-border-radius: 5px;
+}
+
+.login-page {
+    -fx-background-color: -fx-clr-background;
+}
+
+.input-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #000;
+    -fx-border-radius: 5;
+    -fx-border-width: 2px;
+    -fx-font-size: 20px;
+    -fx-text-fill: -fx-clr-dark;
+}
+
+.input-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: -fx-clr-text;
+}
+
+.button-primary {
+    -fx-background-color: -fx-clr-button;
+    -fx-background-radius: 8;
+    -fx-text-fill: -fx-clr-light;
+    -fx-border-color: transparent;
+    -fx-font-size: 20px;
+}
+
+.button-primary:hover {
+    -fx-background-color: -fx-clr-button-hover;
+    -fx-text-fill: -fx-clr-dark;
+}
+
+.button-secondary {
+    -fx-background-color: transparent;
+    -fx-border-radius: 8;
+    -fx-text-fill: -fx-clr-button;
+    -fx-border-color: -fx-clr-button;
+    -fx-border-width: 2;
+    -fx-font-size: 20px;
+}
+
+.button-secondary:hover {
+    -fx-background-color: -fx-clr-button;
+    -fx-background-radius: 8;
+    -fx-text-fill: -fx-clr-light;
+    -fx-border-color: transparent;
+}
+
+.text-button {
+    -fx-text-fill: -fx-clr-light;
+    -fx-background-color: transparent;
+    -fx-underline: true;
+    -fx-font-size: 20px;
+}
+
+.text-button:hover {
+    -fx-underline: false;
+    -fx-font-size: 20px;
+}
+
+.tooltip {
+    -fx-font-size: 13;
+    -fx-font-family: verdana;
+    -fx-font-style: italic;
+    -fx-fill: -fx-clr-text-secondary;
+}
+
+.title {
+    -fx-font-family: Futura; /* voi ettii paremman jos jaksaa */
+    -fx-font-size: 40;
+    -fx-font-color: -fx-clr-title;
 }

@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -31,7 +32,7 @@ public class ProfileController {
     @FXML
     private TextField fnameField, lnameField, bdayField, emailField, phoneField, priceLimit;
     @FXML
-    Text etusivuText;
+    Label etusivuText;
     @FXML
     private PasswordField oldpassField, newpassField;
     @FXML
@@ -129,7 +130,7 @@ public class ProfileController {
      */
     @FXML
     private void initialize() {
-        etusivuText.setText("Käyttäjänimi " + loggedInUsername);
+        etusivuText.setText("Username " + loggedInUsername);
         fnameField.setText(loggedInName);
         lnameField.setText(user.getLastName());
         bdayField.setText(String.valueOf(user.getAge()));

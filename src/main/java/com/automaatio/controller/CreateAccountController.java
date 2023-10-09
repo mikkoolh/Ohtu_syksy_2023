@@ -173,13 +173,6 @@ public class CreateAccountController {
             validator.validatePassword(newValue, passwordTooltip);
             toggleButton();
         });
-
-        List<Text> tooltips = Arrays.asList(usernameTooltip, firstNameTooltip, lastNameTooltip, emailTooltip, phoneTooltip, passwordTooltip);
-        for (Text tooltip : tooltips) {
-            // Voi muuttaa fontin mut kaikki ei tue italicia
-            tooltip.setStyle("-fx-fill: #5E5E5E; -fx-font-family: Verdana; -fx-font-style: italic; -fx-font-size: 11px;");
-            // tooltip.getStyleClass().add("tooltip"); ei toimi en tiä miks :p
-        }
     }
 
     // Enables/disables the save button depending on whether all fields pass validation

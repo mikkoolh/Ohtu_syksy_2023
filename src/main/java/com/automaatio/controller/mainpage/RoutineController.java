@@ -195,7 +195,7 @@ public class RoutineController implements Initializable {
         Button deleteButton = (new DeleteIconCreator()).create();
 
         // Automation toggle
-        ToggleSwitch toggle = getToggleSwich(routine);
+        ToggleSwitch toggle = getToggleSwitch(routine);
 
         // Container for start and end times
         GridPane clockTimes = new GridPane();
@@ -315,18 +315,15 @@ public class RoutineController implements Initializable {
     }
 
     // Creates a toggle switch with an event handler to change the state of the current routine
-    private ToggleSwitch getToggleSwich(Routine routine) {
+    private ToggleSwitch getToggleSwitch(Routine routine) {
         ToggleSwitch toggle = new ToggleSwitch();
         toggle.setSelected(routine.getAutomated());
         toggle.setText("Automate");
 
-        toggle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
-                updateUI();
-                // Pitää lisätä deviceen joku tarkistus et se sit kans menee päälle sillon
-            }
+        toggle.setOnMouseClicked(mouseEvent -> {
+            routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
+            updateUI();
+            // Pitää lisätä deviceen joku tarkistus et se sit kans menee päälle sillon
         });
 
         toggleSwitches.put(routine, toggle);

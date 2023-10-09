@@ -91,12 +91,12 @@ public class ProfileController implements Initializable, Menu {
     @Override
     public void show() {
         usernameTXT.setText(username);
-        nameTXT.setText("Tervetuloa " + name + "!");
+        nameTXT.setText("Welcome " + name + "!");
         loadProfilePic();
 
         try {
             elConnect = new ElectricityPriceConnector();
-            electricityPrice.setText("Sähkön hinta nyt: " + elConnect.getElPrice());
+            electricityPrice.setText("Current electricity rate: " + elConnect.getElPrice());
         } catch (Exception e) {
             System.out.println("Ongelma sähkönhinnan lataamisessa: " + e);
         }

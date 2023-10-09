@@ -8,6 +8,7 @@ import com.automaatio.utils.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,6 +54,7 @@ public class LoginController {
     @FXML
     private void initialize() {
         loginButton.setDisable(true);
+        loginButton.setPadding(new Insets(7, 40, 7, 40));
 
         // Eye button
         Button togglePasswordButton = (new TogglableEyeIconCreator()).create();
