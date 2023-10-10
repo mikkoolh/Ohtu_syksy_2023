@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-
 public class CreateVBoxColumnForRoom {
     private DeviceDAO deviceDAO = new DeviceDAO();
     private Button deleteBtn, editBtn;

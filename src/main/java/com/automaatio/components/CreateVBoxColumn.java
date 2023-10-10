@@ -6,7 +6,6 @@ import com.automaatio.components.buttons.ToggleButtonCreator;
 import com.automaatio.controller.mainpage.clickActions.ClickActions;
 import com.automaatio.model.database.Device;
 import com.automaatio.model.database.DeviceDAO;
-import com.automaatio.model.database.DeviceGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -15,21 +14,23 @@ import javafx.scene.layout.*;
 public class CreateVBoxColumn {
     private DeviceDAO deviceDAO = new DeviceDAO();
     private Button deleteBtn, editBtn;
-    private ToggleButton onOff;
+    private ToggleButton toggleButton;
     private Label label;
+    private final int vBoxSpacing = 10, hBoxSpacing = 20;
 
-    private final int btnWidth = 50, vBoxSpacing = 10, hBoxSpacing = 20;
-    private final String editTxt = "Edit", deleteTxt = "Delete", onTxt = "On", offTxt = "Off";
-
-    public VBox create(Device device, VBox devicesVBox, ClickActions editAction) {
-
-        label = createLabel(device);
-        editBtn = createEditBtn(device, editAction);
+    public VBox create(Device device, VBox devicesVBox, ClickActions clickActions) {
 
         VBox newDeviceVBox = new VBox(vBoxSpacing);
 
-        deleteBtn = createDeleteBtn(devicesVBox, newDeviceVBox, device);
-        onOff = createToggleBtn(device);
+        EditButtonCreator editButtonCreator = new EditButtonCreator();
+        ToggleButtonCreator toggleButtonCreator= new ToggleButtonCreator();
+        DeleteButtonCreator deleteButtonCreator = new DeleteButtonCreator(devicesVBox, newDeviceVBox);
+
+        label = createLabel(device);
+        editBtn = editButtonCreator.create(device, clickActions);
+
+        deleteBtn = deleteButtonCreator.create(device, clickActions);
+        toggleButton = toggleButtonCreator.create(device, clickActions);
 
         Pane spacer = new Pane();
 
@@ -39,7 +40,7 @@ public class CreateVBoxColumn {
         HBox buttonsRow = new HBox(hBoxSpacing);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        buttonsRow.getChildren().addAll(editBtn, deleteBtn, spacer, onOff);
+        buttonsRow.getChildren().addAll(editBtn, deleteBtn, spacer, toggleButton);
         buttonsRow.setAlignment(Pos.TOP_LEFT);
 
         newDeviceVBox.getStyleClass().add("deviceRowVBox");
@@ -48,65 +49,9 @@ public class CreateVBoxColumn {
         return newDeviceVBox;
     }
 
-    private ToggleButton createToggleBtn(Device device) {
-        ToggleButton toggleButton = new ToggleButton();
-        toggleButton.setPrefWidth(btnWidth);
-        setOnOff(deviceDAO.getObject(device.getDeviceID()).isOnOff(), device, toggleButton);
-        toggleButton.getStyleClass().add("toggleBtn");
-
-        toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            setOnOff(isSelected,device, toggleButton);
-        });
-        return toggleButton;
-    }
-
-    private Button createDeleteBtn(VBox devicesVBox, VBox newDeviceVBox, Device device) {
-        Button delete = new Button("Delete");
-        delete.getStyleClass().add("deleteBtn");
-        delete.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Device");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to delete this device?");
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                deviceDAO.deleteDevice(device.getDeviceID());
-                devicesVBox.getChildren().remove(newDeviceVBox);
-            }
-        });
-        return delete;
-    }
-
     private Label createLabel(Device device) {
         Label deviceLabel = new Label(device.getName());
         deviceLabel.getStyleClass().add("deviceLabel");
         return deviceLabel;
-    }
-
-    private Button createEditBtn(Device device, ClickActions edit){
-        Button editBtn = new Button(editTxt);
-        editBtn.getStyleClass().add("editBtn");
-        editBtn.setOnAction(event -> edit.onExpandClick(device));
-        return editBtn;
-    }
-
-    private void setOnOff(boolean isSelected, Device device, ToggleButton onOff){
-        if (isSelected) {
-            switchOnOff(device);
-            onOff.setText("On");
-            device.setUsageData(device.getUsageData() + 1);
-            deviceDAO.updateUsageData(device.getDeviceID(), device.getUsageData() + 1);
-            System.out.println(device.getUsageData());
-            onOff.getStyleClass().remove("toggleBtnOff");
-            onOff.getStyleClass().add("toggleBtnOn");
-        } else {
-            switchOnOff(device);
-            onOff.setText("Off");
-            onOff.getStyleClass().remove("toggleBtnOn");
-            onOff.getStyleClass().add("toggleBtnOff");
-        }
-    }
-
-    public void switchOnOff(Device device) {
-        deviceDAO.updateDeviceOnOff(device.getDeviceID());
     }
 }
