@@ -32,6 +32,10 @@ public class ToggleButtonCreator implements IButton {
         if (isSelected) {
             switchOnOff(object);
             onOff.setText(onTxt);
+            Device device = (Device) object;
+            device.setUsageData(device.getUsageData() + 1);
+            deviceDAO.updateUsageData(device.getDeviceID(), device.getUsageData() + 1);
+            System.out.println(device.getUsageData());
             onOff.getStyleClass().remove("toggleBtnOff");
             onOff.getStyleClass().add("toggleBtnOn");
         } else {
