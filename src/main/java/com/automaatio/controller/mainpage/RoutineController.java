@@ -53,7 +53,7 @@ public class RoutineController implements Initializable {
     private VBox routineVBox;
 
     @FXML
-    private Button automateAllButton, addRoutineButton, deleteAllButton, saveButton;
+    private Button addRoutineButton, deleteAllButton, saveButton;
 
     @FXML
     private Text noRoutinesText, formTitle;
@@ -95,7 +95,6 @@ public class RoutineController implements Initializable {
         noRoutinesToShow = true;
         try {
             routines = util.sortByTime(fetchRoutines()); // Sort fetched routines by time
-            updateUI();
             DatabaseTool.resetWeekdays(); // voi poistaa sit ku ei tarvi enää tehdä testejä
             weekdays = weekdayDAO.getAll();
             initializeForm();
@@ -103,7 +102,6 @@ public class RoutineController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             displayErrorText();
-            updateUI();
         }
         routineNameField.setText(cache.getDevice().getName());
         routineScrollPane.setStyle("-fx-background-color:transparent;");
@@ -125,7 +123,6 @@ public class RoutineController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             displayErrorText();
-            updateUI();
         }
 
         // Display routines if fetched successfully
@@ -141,7 +138,6 @@ public class RoutineController implements Initializable {
                 if (!routines.isEmpty()) {
                     noSavedRoutines = false; // Set to false
                     routineVBox.setAlignment(Pos.TOP_LEFT);
-                    automateAllButton.setVisible(true);
                     deleteAllButton.setVisible(true);
                     HBox splitBox = new HBox();
                     Label weekdayLabel = new WeekdayLabel(weekday).create();
@@ -173,7 +169,6 @@ public class RoutineController implements Initializable {
                 routineVBox.setAlignment(Pos.CENTER);
             }
         }
-        updateUI();
     }
 
     private HBox createRoutineRow(Routine routine) {
@@ -313,56 +308,10 @@ public class RoutineController implements Initializable {
 
         toggle.setOnMouseClicked(mouseEvent -> {
             routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
-            updateUI();
-            // Pitää lisätä deviceen joku tarkistus et se sit kans menee päälle sillon
         });
 
         toggleSwitches.put(routine, toggle);
         return toggle;
-    }
-
-    @FXML
-    public void automateAll(ActionEvent actionEvent) {
-        boolean allAutomated = util.allAutomated(fetchRoutines());
-
-        for (Routine routine : routines) {
-            routine.setAutomated(!allAutomated);
-            routineDAO.toggleOnOff(routine.getRoutineID(), routine.getAutomated());
-        }
-
-        updateUI();
-
-        for (Routine routine : routines) {
-            ToggleSwitch toggle = toggleSwitches.get(routine);
-            if (toggle != null) {
-                toggle.setSelected(!allAutomated);
-            }
-        }
-    }
-
-    private void updateUI() {
-        System.out.println("update ui");
-
-        /*
-         If there are no routines to show,
-         hide the "Automate all" and "Delete all" buttons
-         */
-        if (noRoutinesToShow) {
-            automateAllButton.setVisible(false);
-            deleteAllButton.setVisible(false);
-        } else {
-            automateAllButton.setVisible(true);
-            deleteAllButton.setVisible(true);
-
-            // FIX
-            // Change the text on the button
-            if (util.allAutomated(fetchRoutines())) {
-                automateAllButton.setText("Deselect all");
-
-            } else {
-                automateAllButton.setText("Automate all");
-            }
-        }
     }
 
     // Shows a confirmation popup when the "Delete routine" button is clicked

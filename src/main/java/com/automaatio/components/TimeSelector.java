@@ -2,25 +2,17 @@ package com.automaatio.components;
 
 import com.dlsc.gemsfx.TimePicker;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class TimeSelector {
-    private TimePicker timePicker;
+    private final TimePicker timePicker;
 
     public TimeSelector() {
         this.timePicker = new TimePicker();
@@ -56,19 +48,6 @@ public class TimeSelector {
             }
             return "empty";
         }, timePicker.timeProperty(), timePicker.adjustedProperty()));
-
-        TextField textField = new TextField();
-        textField.setPromptText("Text field");
-
-        DatePicker datePicker = new DatePicker();
-        datePicker.setMaxWidth(Double.MAX_VALUE);
-        datePicker.valueProperty().addListener(it -> System.out.println("date: " + datePicker.getValue()));
-        datePicker.getEditor().textProperty().addListener(it -> {
-            try {
-                DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).parse(datePicker.getEditor().getText());
-            } catch (DateTimeParseException ex) {
-            }
-        });
 
         VBox box0 = new VBox(20, timePicker, valueLabel);
 
